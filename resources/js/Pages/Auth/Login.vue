@@ -1,0 +1,87 @@
+<template>
+  <GuestLayout>
+    <div id="Login" class="bg-white min-h-screen border-t-2 border-gray-500">
+      <div class="container px-5 py-24 mx-auto">
+        <div v-if="status" class="mb-4 font-medium text-sm text-green-600">{{ status }}</div>
+        <div class="flex justify-center">
+          <form @submit.prevent="submit" class="w-full md:w-1/2">
+            <div>
+              <InputLabel for="email" value="Email Address"/>
+              <TextInput
+                id="email"
+                type="email"
+                class="mt-1 block w-full"
+                v-model="form.email"
+                required
+                autofocus
+                autocomplete="username"
+              />
+              <InputError class="mt-2" :message="form.errors.email"/>
+            </div>
+            <div class="mt-4">
+              <InputLabel for="password" value="Password"/>
+              <TextInput
+                id="password"
+                type="password"
+                class="mt-1 block w-full"
+                v-model="form.password"
+                required
+                autocomplete="current-password"
+              />
+              <InputError class="mt-2" :message="form.errors.password"/>
+            </div>
+            <div class="block mt-4">
+              <label class="flex items-center">
+                <Checkbox name="remember" v-model:checked="form.remember"/>
+                <span class="ms-2 text-sm text-gray-600">Remember me</span>
+              </label>
+            </div>
+            <div class="flex justify-between mt-4">
+              <Link
+                v-if="canResetPassword"
+                :href="route('password.request')"
+                class="underline text-sm text-gray-600 hover:text-gray-900 rounded-md focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-500"
+              >
+                Forgot your password?
+              </Link>
+              <button class="flex text-white bg-gray-500 border-0 py-2 px-8 focus:outline-none hover:bg-gray-600 rounded text-lg" :class="{ 'opacity-25': form.processing }" :disabled="form.processing">Log in</button>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+  </GuestLayout>
+</template>
+
+<script setup>
+
+  import Checkbox from '@/Components/Checkbox.vue';
+  import GuestLayout from '@/Layouts/GuestLayout.vue';
+  import InputError from '@/Components/InputError.vue';
+  import InputLabel from '@/Components/InputLabel.vue';
+  // import PrimaryButton from '@/Components/PrimaryButton.vue';
+  import TextInput from '@/Components/TextInput.vue';
+  import { Head, Link, useForm } from '@inertiajs/vue3';
+
+  defineProps({
+    canResetPassword: {
+      type: Boolean,
+    },
+    status: {
+      type: String,
+    },
+  });
+
+  const form = useForm({
+    email: '',
+    password: '',
+    remember: false,
+  });
+
+  const submit = () => {
+    form.post(route('login'), {
+      onFinish: () => form.reset('password'),
+    });
+  };
+
+</script>
