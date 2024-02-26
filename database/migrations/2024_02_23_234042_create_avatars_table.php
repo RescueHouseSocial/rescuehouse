@@ -13,7 +13,7 @@ return new class extends Migration
   {
     Schema::create('avatars', function (Blueprint $table) {
       $table->id();
-      $table->uuid("avatarId")->default(\Illuminate\Support\Facades\DB::raw("uuid()"));
+      $table->uuid("avatarId")->default(\Illuminate\Support\Str::uuid());
       $table->string("userId");
       $table->string("path");
       $table->boolean("active")->default(true);

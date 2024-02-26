@@ -13,7 +13,7 @@ return new class extends Migration
   {
 
     Schema::table("users", function (Blueprint $table) {
-      $table->uuid("userId")->default(\Illuminate\Support\Facades\DB::raw("uuid()"));
+      $table->uuid("userId")->default(\Illuminate\Support\Str::uuid());
       $table->longText("location")->nullable();
       $table->text("biography")->nullable();
       $table->boolean("ban")->default(false);

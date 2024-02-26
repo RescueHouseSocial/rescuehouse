@@ -13,7 +13,7 @@ return new class extends Migration
     {
         Schema::create('posts', function (Blueprint $table) {
             $table->id();
-            $table->uuid("postId")->default(\Illuminate\Support\Facades\DB::raw("uuid()"));
+            $table->uuid("postId")->default(\Illuminate\Support\Str::uuid());
             $table->string("userId");
             $table->string("title")->nullable()->default("");
             $table->text("body");

@@ -13,7 +13,7 @@ return new class extends Migration
   {
     Schema::create('gallery', function (Blueprint $table) {
       $table->id();
-      $table->uuid("galleryId")->default(\Illuminate\Support\Facades\DB::raw("uuid()"));
+      $table->uuid("galleryId")->default(\Illuminate\Support\Str::uuid());
       $table->string("userId");
       $table->string("postId");
       $table->string("path");
