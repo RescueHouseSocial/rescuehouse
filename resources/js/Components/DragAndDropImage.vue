@@ -1,7 +1,7 @@
 <template>
   <div id="DragAndDropImage">
     <div class="flex justify-center">
-      <div class="py-0 px-4 md:py-8 md:px-8 mx-auto w-full md:w-1/2">
+      <div class="mx-auto w-full">
         Avatar
         <div class="grid gap-8 mb-4 md:grid-cols-1">
           <div class="items-center bg-gray-50 rounded-lg shadow sm:flex">
@@ -34,7 +34,7 @@
                   </div>
                 </label>
                 <div class="flex flex-wrap justify-center mt-4" v-if="files.length">
-                  <div v-for="file in files" :key="file.name" class="w-1/3 border border-gray-500 p-4">
+                  <div v-for="file in files" :key="file.name" class="border border-gray-500 p-4">
                     <a @click="remove(files.indexOf(file))" class="cursor-pointer"><img class="w-20 h-auto rounded border border-gray-200" :src="generateURL(file)"/></a>
                   </div>
                 </div>

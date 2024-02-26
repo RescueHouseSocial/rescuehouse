@@ -33,9 +33,9 @@
                 </form>
               </div>
             </div>
+            <DragAndDropImage/>
           </div>
         </div>
-        <DragAndDropImage></DragAndDropImage>
       </div>
     </div>
   </AuthenticatedLayout>
