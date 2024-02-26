@@ -11,10 +11,11 @@ return new class extends Migration
    */
   public function up(): void
   {
-    Schema::create('avatars', function (Blueprint $table) {
+    Schema::create('gallery', function (Blueprint $table) {
       $table->id();
-      $table->uuid("avatarId")->default(\Illuminate\Support\Facades\DB::raw("uuid()"));
+      $table->uuid("galleryId")->default(\Illuminate\Support\Facades\DB::raw("uuid()"));
       $table->string("userId");
+      $table->string("postId");
       $table->string("path");
       $table->boolean("active")->default(true);
       $table->timestamps();
@@ -26,6 +27,6 @@ return new class extends Migration
    */
   public function down(): void
   {
-    Schema::dropIfExists("avatars");
+    Schema::dropIfExists('gallery');
   }
 };

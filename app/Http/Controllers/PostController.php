@@ -39,10 +39,15 @@ class PostController extends Controller
   public function store(Request $request)
   {
 
+    $userId = Auth::user()->userId;
     $request->validate([
       "body" => "required",
     ]);
-    $post = Post::create($request->all());
+    $post = Post::create([
+      "userId" => $userId,
+      "body" => $request->body,
+      "datetime8601" => $request->datetime8601,
+    ]);
     $id = $post->id;
     $single = Post::find($id);
     $postId = $single->postId;

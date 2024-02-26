@@ -8,6 +8,9 @@
             <div>{{ user.name }} at {{ displayDateTime }}</div>
           </div>
           <textarea id="body" v-model="form.body" class="h-60"></textarea>
+          <div class="my-4">
+            <DragAndDropGallery></DragAndDropGallery>
+          </div>
           <div class="flex justify-end">
             <button class="flex mt-4 text-white bg-gray-500 border-0 py-2 px-8 focus:outline-none hover:bg-gray-600 rounded text-lg" type="submit">
               <span v-if="isLoading">
@@ -26,6 +29,8 @@
 
 <script setup>
 
+  import DragAndDropGallery from "../Components/DragAndDropGallery.vue";
+
   import { Head, useForm } from "@inertiajs/vue3";
 
   import { DateTime } from "luxon";
@@ -33,13 +38,11 @@
   let currentDateTime = DateTime.local();
   let formatDateTime = DateTime.now().toISO();
   let displayDateTime = `${currentDateTime.toLocaleString(DateTime.DATETIME_FULL)}`;
-  let isDragging = false;
   let isLoading = false;
 
   const props = defineProps(['users']);
 
   const form = useForm({
-    userId: props.users[0].userId,
     body: "",
     datetime8601: formatDateTime,
   });

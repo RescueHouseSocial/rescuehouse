@@ -8,6 +8,7 @@ use App\Http\Controllers\PostController;
 use App\Http\Controllers\MarketController;
 use App\Http\Controllers\CalendarController;
 use App\Http\Controllers\SettingsController;
+use App\Http\Controllers\GalleryController;
 
 use Illuminate\Foundation\Application;
 use Illuminate\Support\Facades\Route;
@@ -38,6 +39,8 @@ Route::middleware("auth")->group(function () {
 
   Route::get("/post/{postId?}", [PostController::class, "show"])->name("post");
   Route::put("/post", [PostController::class, "store"])->name("post.store");
+
+  Route::post("/gallery", [GalleryController::class, "store"])->name("gallery.store");
 
   Route::get("/market", [MarketController::class, "show"])->name("market");
   Route::get("/calendar", [CalendarController::class, "show"])->name("calendar");
