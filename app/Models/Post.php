@@ -16,10 +16,14 @@ class Post extends Model
     "title", 
     "body", 
     "datetime8601",
-    "published_at",
     "visibility",
     "type",
-    "status"
+    "status",
+    "gallery",
+  ];
+
+  protected $casts = [
+    "gallery" => "array",
   ];
 
   public function getAllPostsOrderedByCreatedAt()

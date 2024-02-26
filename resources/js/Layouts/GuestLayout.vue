@@ -117,16 +117,16 @@
             </a>
             <p class="text-sm text-gray-500 sm:ml-6 sm:mt-0 mt-4">&copy; 2023 - 2024</p>
             <span class="inline-flex sm:ml-auto sm:mt-0 mt-4 justify-center sm:justify-start">
-              <a href="facebook.com" class="text-gray-500">
+              <a href="https://facebook.com" class="text-gray-500">
                 <i class="fa-brands fa-square-facebook fa-fw fa-2xl"></i>
               </a>
-              <a href="x.com" class="ml-3 text-gray-500">
-                <i class="fa-brands fa-square-x-twitter fa-fw fa-2xl"></i>
+              <a href="https://threads.net" class="ml-3 text-gray-500">
+                <i class="fa-brands fa-square-threads fa-fw fa-2xl"></i>
               </a>
-              <a href="instagram.com" class="ml-3 text-gray-500">
+              <a href="https://instagram.com" class="ml-3 text-gray-500">
                 <i class="fa-brands fa-square-instagram fa-fw fa-2xl"></i>
               </a>
-              <a href="youtube.com" class="ml-3 text-gray-500">
+              <a href="https://youtube.com" class="ml-3 text-gray-500">
                 <i class="fa-brands fa-square-youtube fa-fw fa-2xl"></i>
               </a>
             </span>

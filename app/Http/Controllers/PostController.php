@@ -10,6 +10,7 @@ use Illuminate\Support\Facades\Auth;
 use App\Models\User;
 use App\Models\Avatar;
 use App\Models\Post;
+use App\Models\Gallery;
 
 class PostController extends Controller
 {
@@ -18,13 +19,19 @@ class PostController extends Controller
   {
 
     if ($postId) {
+      $paths = [];
       $post = Post::join('users', 'posts.userId', '=', 'users.userId')
         ->join('avatars', 'users.userId', '=', 'avatars.userId')
         ->where('posts.postId', $postId)
         ->select('posts.*', 'users.name', 'avatars.path')
         ->first();
+      foreach($post->gallery as $galleryId) {
+        $image = Gallery::find($galleryId);
+        $paths[] = $image->path;
+      }
       return Inertia::render("Single", [
         "post" => $post,
+        "gallery" => $paths,
       ]);
     } else {
       $loggedInUser = Auth::user();
@@ -47,6 +54,7 @@ class PostController extends Controller
       "userId" => $userId,
       "body" => $request->body,
       "datetime8601" => $request->datetime8601,
+      "gallery" => $request->gallery,
     ]);
     $id = $post->id;
     $single = Post::find($id);

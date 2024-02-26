@@ -9,7 +9,9 @@
           </div>
           <textarea id="body" v-model="form.body" class="h-60"></textarea>
           <div class="my-4">
-            <DragAndDropGallery></DragAndDropGallery>
+            <DragAndDropGallery
+              @gallery-add="handleGalleryAdd"
+            />
           </div>
           <div class="flex justify-end">
             <button class="flex mt-4 text-white bg-gray-500 border-0 py-2 px-8 focus:outline-none hover:bg-gray-600 rounded text-lg" type="submit">
@@ -39,13 +41,20 @@
   let formatDateTime = DateTime.now().toISO();
   let displayDateTime = `${currentDateTime.toLocaleString(DateTime.DATETIME_FULL)}`;
   let isLoading = false;
+  let gallery = [];
 
   const props = defineProps(['users']);
 
   const form = useForm({
     body: "",
+    gallery: gallery,
     datetime8601: formatDateTime,
   });
+
+  const handleGalleryAdd = (galleryId) => {
+    gallery.push(galleryId);
+    form.gallery = gallery;
+  }
 
   const handleSubmit = () => {
     isLoading = true;

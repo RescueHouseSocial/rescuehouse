@@ -80,35 +80,34 @@
       async handleUpload() {
         console.log("i am handle upload!");
         this.isLoading = true;
-        const files = this.files;
-        const formData = new FormData();
-        files.forEach((file) => {
+        for (const file of this.files) {
+          const formData = new FormData();
           formData.append("selectedFiles[]", file);
-        });
-        try {
-          const response = await axios.post(route("gallery.store"), formData, {
-            headers: {
-              "X-CSRF-TOKEN": this.csrfToken,
-              "Content-Type": "multipart/form-data",
-            },
-          });
-
-
-          console.log(response.data.galleryId);
-
-          // RESPONSE
-          // GET RESPONSE BACK for galleryId
-          // emit to parent so post has linked to the gallery
-          // this is fun!
-          if (!response.statusText == "OK") {
-            throw new Error("Failed to upload files");
+          try {
+            const response = await axios.post(route("gallery.store"), formData, {
+              headers: {
+                "X-CSRF-TOKEN": this.csrfToken,
+                "Content-Type": "multipart/form-data",
+              },
+            });
+            this.$emit("gallery-add", response.data.galleryId);
+          } catch (error) {
+            console.error(error); 
           }
-          this.isLoading = false;
-          window.location.reload();
-        } catch (error) {
-          console.error("Error uploading files:", error);
-          this.isLoading = false;
-        }
+        };
+
+
+        //   this.galleryIds.push(response.data.galleryId);
+        //   this.$emit("gallery-add", this.galleryIds);
+
+        //   if (!response.statusText == "OK") {
+        //     throw new Error("Failed to upload files");
+        //   }
+        //   this.isLoading = false;
+        // } catch (error) {
+        //   console.error("Error uploading files:", error);
+        //   this.isLoading = false;
+        // }
       },
       onChange() {
         const self = this;
@@ -124,7 +123,6 @@
         } else {
           self.files.push(...incomingFiles);
           this.handleUpload();
-          console.log("handleUPLOAD!");
         }
       },
       dragover(e) {

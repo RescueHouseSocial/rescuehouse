@@ -39,7 +39,7 @@ class SettingsController extends Controller
     $userId = Auth::user()->userId;
     $selectedFiles = $request->file("selectedFiles");
     $resizedFiles = [];
-    foreach ($selectedFiles as $file) {
+    foreach($selectedFiles as $file) {
       $resizedImage = Image::make($file)
         ->fit(400, 400)
         ->encode();

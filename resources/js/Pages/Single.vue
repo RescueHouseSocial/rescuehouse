@@ -13,6 +13,7 @@
                 <div class="flex flex-col mx-4 my-4 mx-auto p-4 w-full">
                   <DynamicPostDisplay
                     :post="post"
+                    :gallery="gallery"
                   />
                 </div>
               </div>
@@ -31,6 +32,6 @@
   import AuthenticatedLayout from "@/Layouts/AuthenticatedLayout.vue";
   import { Head } from "@inertiajs/vue3";
 
-  const props = defineProps(["post"]);
+  const props = defineProps(["post", "gallery"]);
 
 </script>
