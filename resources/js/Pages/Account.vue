@@ -9,10 +9,16 @@
         <div class="flex justify-center">
           <div class="py-8 px-8 mx-auto w-full">
             <div class="grid gap-8 mb-4 md:grid-cols-1">
-              <AccountSocial></AccountSocial>
+              <AccountSocial
+                :followerscount="followerscount"
+                :followingcount="followingcount"
+                :postcount="postcount"
+              />
               <AccountLgDisplay
                 :users="users"
                 :avatar="avatar"
+                :follow="follow"
+                @following="handleFollowing"
               />
             </div>
           </div>
@@ -24,12 +30,22 @@
 
 <script setup>
 
+  import axios from 'axios';
+
   import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout.vue';
   import { Head } from '@inertiajs/vue3';
 
   import AccountSocial from "@/Components/AccountSocial.vue";
   import AccountLgDisplay from "@/Components/AccountLgDisplay.vue";
 
-  const props = defineProps(["users", "avatar"]);
+  const props = defineProps(["users", "avatar", "follow", "followerscount", "followingcount", "postcount"]);
+
+  const handleFollowing = async (following) => {
+    try {
+      const response = await axios.post(route("account.follow"), { following });
+    } catch (error) {
+      console.error('Error:', error);
+    }
+  }
 
 </script>

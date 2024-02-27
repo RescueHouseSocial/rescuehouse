@@ -36,6 +36,7 @@ Route::middleware("auth")->group(function () {
   Route::get("/feeds", [FeedsController::class, "show"])->name("feeds");
 
   Route::get("/account/{userId?}", [AccountController::class, "show"])->name("account");
+  Route::post("/account", [AccountController::class, "follow"])->name("account.follow");
 
   Route::get("/post/{postId?}", [PostController::class, "show"])->name("post");
   Route::put("/post", [PostController::class, "store"])->name("post.store");

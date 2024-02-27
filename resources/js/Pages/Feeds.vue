@@ -22,9 +22,9 @@
                     <div class="grid grid-cols-12 gap-4">
                       <div class="col-span-1"><img :src="`/storage/avatars/medium/${post.path}`" class="min-h-10 min-w-10 rounded-lg" alt="user avatar"/></div>
                       <div class="flex col-span-8 items-center"><a :href="`/account/${post.userId}`">{{ post.name }}</a></div>
-                      <div class="flex col-span-1 items-center"><i class="fa-regular fa-heart fa-fw"></i></div>
-                      <div class="flex col-span-1 items-center"><a :href="`/post/${post.postId}`"><i class="col-span-1 fa-regular fa-comments fa-fw"></i></a></div>
-                      <div class="flex col-span-1 items-center"><i class="col-span-1 fa-solid fa-retweet fa-fw"></i></div>
+                      <div class="flex col-span-1 items-center"><i class="fa-regular fa-heart fa-fw fa-lg"></i></div>
+                      <div class="flex col-span-1 items-center"><a :href="`/post/${post.postId}`" class="hover:text-orange-400"><i class="col-span-1 fa-regular fa-comments fa-fw fa-lg"></i></a></div>
+                      <div class="flex col-span-1 items-center"><i class="col-span-1 fa-solid fa-retweet fa-fw fa-lg"></i></div>
                     </div>
                   </div>
                 </div>
