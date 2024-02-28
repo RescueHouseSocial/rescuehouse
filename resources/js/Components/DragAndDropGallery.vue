@@ -62,6 +62,7 @@
   import axios from "axios";
 
   export default {
+    props:["postId"],
     data() {
       return {
         isLoading: false,
@@ -83,6 +84,7 @@
         for (const file of this.files) {
           const formData = new FormData();
           formData.append("selectedFiles[]", file);
+          formData.append("postId", this.postId);
           try {
             const response = await axios.post(route("gallery.store"), formData, {
               headers: {
@@ -95,19 +97,6 @@
             console.error(error); 
           }
         };
-
-
-        //   this.galleryIds.push(response.data.galleryId);
-        //   this.$emit("gallery-add", this.galleryIds);
-
-        //   if (!response.statusText == "OK") {
-        //     throw new Error("Failed to upload files");
-        //   }
-        //   this.isLoading = false;
-        // } catch (error) {
-        //   console.error("Error uploading files:", error);
-        //   this.isLoading = false;
-        // }
       },
       onChange() {
         const self = this;

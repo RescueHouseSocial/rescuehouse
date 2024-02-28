@@ -12,4 +12,11 @@ class Gallery extends Model
 
   protected $fillable = ["userId", "postId", "path"];
 
+  public function galleries()
+  {
+
+    return $this->hasMany(Gallery::class, "postId");
+
+  }
+
 }

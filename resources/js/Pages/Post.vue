@@ -10,6 +10,7 @@
           <div class="py-8 px-8 mx-auto w-full">
             <div class="grid gap-8 mb-4 md:grid-cols-1">
               <DynamicPostStudio
+                :postId="postId"
                 :users="users"
               />
             </div>
@@ -26,6 +27,6 @@
 
   import AuthenticatedLayout from "@/Layouts/AuthenticatedLayout.vue";
 
-  const props = defineProps(['users']);
+  const props = defineProps(["postId", "users"]);
 
 </script>

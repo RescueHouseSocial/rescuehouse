@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use Inertia\Inertia;
 use Inertia\Response;
+use Ramsey\Uuid\Uuid;
 use Illuminate\Support\Facades\Auth;
 
 use App\Models\User;
@@ -19,24 +20,29 @@ class PostController extends Controller
   {
 
     if ($postId) {
-      $paths = [];
-      $post = Post::join('users', 'posts.userId', '=', 'users.userId')
-        ->join('avatars', 'users.userId', '=', 'avatars.userId')
-        ->where('posts.postId', $postId)
-        ->select('posts.*', 'users.name', 'avatars.path')
+      $posts = Post::join("users", "posts.userId", "=", "users.userId")
+        ->join("avatars", "users.userId", "=", "avatars.userId")
+        ->leftjoin("galleries", "posts.postId", "=", "galleries.postId")
+        ->where("posts.postId", $postId)
+        ->where("posts.active", 1)
+        ->where("users.active", 1)
+        ->where("avatars.active", 1)
+        ->select("posts.*", "users.name", "avatars.path")
         ->first();
-      foreach($post->gallery as $galleryId) {
-        $image = Gallery::find($galleryId);
-        $paths[] = $image->path;
-      }
+      $galleryItems = Gallery::whereIn("galleryId", $posts->gallery)->get();
+      $posts->galleries = $galleryItems;
+      $loggedInUser = Auth::user();
+      $relatedUsers = $loggedInUser->getRelatedUsers();
       return Inertia::render("Single", [
-        "post" => $post,
-        "gallery" => $paths,
+        "posts" => $posts,
+        "users" => $relatedUsers,
       ]);
     } else {
+      $uuid = Uuid::uuid4()->toString();
       $loggedInUser = Auth::user();
       $relatedUsers = $loggedInUser->getRelatedUsers();
       return Inertia::render("Post", [
+        "postId" => $uuid,
         "users" => $relatedUsers,
       ]);
     }
@@ -51,15 +57,13 @@ class PostController extends Controller
       "body" => "required",
     ]);
     $post = Post::create([
+      "postId" => $request->postId,
       "userId" => $userId,
       "body" => $request->body,
       "datetime8601" => $request->datetime8601,
       "gallery" => $request->gallery,
     ]);
-    $id = $post->id;
-    $single = Post::find($id);
-    $postId = $single->postId;
-    return redirect("/post/" . $postId);
+    return redirect("/post/" . $request->postId);
     
   }
 

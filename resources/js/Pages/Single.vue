@@ -10,10 +10,16 @@
           <div class="py-8 px-8 mx-auto w-full md:w-1/2">
             <div class="grid gap-8 mb-4 md:grid-cols-1">
               <div class="items-center bg-gray-50 rounded-lg shadow sm:flex">
-                <div class="flex flex-col mx-4 my-4 mx-auto p-4 w-full">
+                <div class="flex flex-col mx-auto p-4 w-full">
                   <DynamicPostDisplay
-                    :post="post"
-                    :gallery="gallery"
+                    :post="posts"
+                  />
+                </div>
+              </div>
+              <div class="items-center bg-gray-50 rounded-lg shadow sm:flex">
+                <div class="flex flex-col mx-auto p-4 w-full">
+                  <DynamicReplies
+                    :users="users"
                   />
                 </div>
               </div>
@@ -28,10 +34,11 @@
 <script setup>
 
   import DynamicPostDisplay from "../Components/DynamicPostDisplay.vue";
+  import DynamicReplies from "../Components/DynamicReplies.vue";
 
   import AuthenticatedLayout from "@/Layouts/AuthenticatedLayout.vue";
   import { Head } from "@inertiajs/vue3";
 
-  const props = defineProps(["post", "gallery"]);
+  const props = defineProps(["posts", "users"]);
 
 </script>
