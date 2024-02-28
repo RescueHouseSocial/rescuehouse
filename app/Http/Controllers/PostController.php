@@ -12,6 +12,7 @@ use App\Models\User;
 use App\Models\Avatar;
 use App\Models\Post;
 use App\Models\Gallery;
+use App\Models\Reply;
 
 class PostController extends Controller
 {
@@ -20,6 +21,8 @@ class PostController extends Controller
   {
 
     if ($postId) {
+      $loggedInUser = Auth::user();
+      $relatedUsers = $loggedInUser->getRelatedUsers();
       $posts = Post::join("users", "posts.userId", "=", "users.userId")
         ->join("avatars", "users.userId", "=", "avatars.userId")
         ->leftjoin("galleries", "posts.postId", "=", "galleries.postId")
@@ -31,11 +34,21 @@ class PostController extends Controller
         ->first();
       $galleryItems = Gallery::whereIn("galleryId", $posts->gallery)->get();
       $posts->galleries = $galleryItems;
+      $replies = Reply::join("users", "replies.userId", "=", "users.userId")
+        ->join("avatars", "users.userId", "=", "avatars.userId")
+        ->where("replies.postId", $postId)
+        ->where("replies.active", 1)
+        ->where("users.active", 1)
+        ->where("avatars.active", 1)
+        ->select("replies.*", "users.name", "avatars.path")
+        ->orderBy("replies.created_at", "desc")
+        ->get();
       $loggedInUser = Auth::user();
       $relatedUsers = $loggedInUser->getRelatedUsers();
       return Inertia::render("Single", [
         "posts" => $posts,
         "users" => $relatedUsers,
+        "replies" => $replies,
       ]);
     } else {
       $uuid = Uuid::uuid4()->toString();

@@ -1,6 +1,6 @@
 <template>
   <div id="DynamicReplies">
-    <div v-for="user in users" :key="user.id" class="items-center bg-gray-50 rounded-lg shadow sm:flex">
+    <div v-for="user in users" :key="user.id" class="items-center">
       <form @submit.prevent="handleSubmit" class="w-full p-4">
         <div class="flex flex-col mx-4 my-4 mx-auto">
           <div class="flex flex-col-reverse md:flex-row md:justify-between">
@@ -21,10 +21,19 @@
         </div>
       </form>
     </div>
+    <div v-for="post in replies" :key="post.id" class="items-center bg-gray-50 rounded-lg shadow sm:flex mb-4">
+      <div class="flex flex-col mx-auto p-4 w-full">
+        <DynamicPostDisplay
+          :post="post"
+        />
+      </div>
+    </div>
   </div>
 </template>
 
 <script setup>
+
+  import DynamicPostDisplay from "../Components/DynamicPostDisplay.vue";
 
   import { Head, useForm } from "@inertiajs/vue3";
 
@@ -35,9 +44,10 @@
   let displayDateTime = `${currentDateTime.toLocaleString(DateTime.DATETIME_FULL)}`;
   let isLoading = false;
 
-  const props = defineProps(["users"]);
+  const props = defineProps(["post", "users", "replies"]);
 
   const form = useForm({
+    postId: props.post["postId"],
     body: "",
     datetime8601: formatDateTime,
   });

@@ -19,7 +19,9 @@
               <div class="items-center bg-gray-50 rounded-lg shadow sm:flex">
                 <div class="flex flex-col mx-auto p-4 w-full">
                   <DynamicReplies
+                    :post="posts"
                     :users="users"
+                    :replies="replies"
                   />
                 </div>
               </div>
@@ -39,6 +41,6 @@
   import AuthenticatedLayout from "@/Layouts/AuthenticatedLayout.vue";
   import { Head } from "@inertiajs/vue3";
 
-  const props = defineProps(["posts", "users"]);
+  const props = defineProps(["posts", "users", "replies"]);
 
 </script>
