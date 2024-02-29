@@ -70,7 +70,7 @@ class AccountController extends Controller
   public function follow(Request $request)
   {
 
-    $action = $request->input('following');
+    $action = $request->input("following");
     $refererUrl = $request->header("referer");
     $followee_id = substr($refererUrl, strpos($refererUrl, "/account/") + strlen("/account/"));
     $follower_id = Auth::user()->userId;

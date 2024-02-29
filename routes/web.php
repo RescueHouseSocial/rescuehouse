@@ -10,6 +10,7 @@ use App\Http\Controllers\MarketController;
 use App\Http\Controllers\CalendarController;
 use App\Http\Controllers\SettingsController;
 use App\Http\Controllers\GalleryController;
+use App\Http\Controllers\FavoriteController;
 
 use Illuminate\Foundation\Application;
 use Illuminate\Support\Facades\Route;
@@ -43,6 +44,8 @@ Route::middleware("auth")->group(function () {
   Route::put("/post", [PostController::class, "store"])->name("post.store");
 
   Route::put("/reply", [ReplyController::class, "store"])->name("reply.store");
+
+  Route::post("/favorite", [FavoriteController::class, "store"])->name("favorite.store");
 
   Route::post("/gallery", [GalleryController::class, "store"])->name("gallery.store");
 

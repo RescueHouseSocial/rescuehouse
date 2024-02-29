@@ -21,7 +21,12 @@
         <div class="flex col-span-1">
           <div class="flex flex-col items-center">
             <div @click="handleFavoriteToggle(post.postId)" class="hover:text-orange-400 cursor-pointer">
-              <i class="fa-regular fa-heart fa-fw fa-lg"></i>
+              <span v-if="post.favorites && post.favorites.length > 0">
+                <i class="fa-solid fa-heart fa-fw fa-lg"></i>
+              </span>
+              <span v-else>
+                <i class="fa-regular fa-heart fa-fw fa-lg"></i>
+              </span>
             </div>
             <div class="text-sm font-light">{{ formattedFavoriteCount }}</div>
           </div>
@@ -49,10 +54,15 @@
 
 <script setup>
 
-  import { defineProps, computed } from "vue";
+  import { defineProps, computed, ref } from "vue";
+
+  import axios from 'axios';
+
   import { DateTime } from "luxon";
 
   const props = defineProps(["post"]);
+
+  let isFavoried = ref(false);
 
   const formatDate = (datetime8601) => {
     return DateTime.fromISO(datetime8601).toLocaleString(DateTime.DATETIME_FULL);
@@ -89,8 +99,13 @@
     return number;
   }
 
-  const handleFavoriteToggle = (postId) => {
-    console.log(postId);
+  const handleFavoriteToggle = async (postId) => {
+    isFavoried = isFavoried.value;
+    try {
+      const response = await axios.post(route("favorite.store"), { isFavoried, postId });
+    } catch (error) {
+      console.error('Error:', error);
+    }
   };
 
   const handleCommentToggle = (postId) => {
