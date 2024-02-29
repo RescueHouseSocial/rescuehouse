@@ -24,8 +24,8 @@ class FeedsController extends Controller
       ->leftJoin("galleries", "posts.postId", "=", "galleries.postId")
       ->leftJoin("favorites", function($join) {
         $join->on("posts.postId", "=", "favorites.postId")
-             ->where("favorites.userId", "=", auth()->user()->userId)
-             ->where("favorites.active", "=", 1);
+          ->where("favorites.userId", "=", auth()->user()->userId)
+          ->where("favorites.active", "=", 1);
     })
       ->where("posts.active", 1)
       ->where("users.active", 1)
@@ -34,20 +34,19 @@ class FeedsController extends Controller
       ->orderBy("posts.created_at", "desc")
       ->distinct()
       ->get();
-      $posts->each(function ($post) {
-        $favorites = Favorite::where("postId", $post->postId)
-          ->where("userId", auth()->user()->userId)
-          ->where("active", 1)
-          ->get();
-        $post->favorites = $favorites;
-        if (!empty($post->gallery)) {
-          $galleries = Gallery::whereIn("galleryId", $post->gallery)->get();
-          $post->galleries = $galleries;
-        } else {
-          $post->galleries = null;
-        }
-      });
-      // dd($posts);
+    $posts->each(function ($post) {
+      $favorites = Favorite::where("postId", $post->postId)
+        ->where("userId", auth()->user()->userId)
+        ->where("active", 1)
+        ->get();
+      $post->favorites = $favorites;
+      if (!empty($post->gallery)) {
+        $galleries = Gallery::whereIn("galleryId", $post->gallery)->get();
+        $post->galleries = $galleries;
+      } else {
+        $post->galleries = null;
+      }
+    });
     return Inertia::render("Feeds", [
       "posts" => $posts,
     ]);
