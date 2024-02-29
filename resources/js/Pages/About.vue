@@ -1,5 +1,6 @@
 <template>
   <GuestLayout>
+    <Head title="About" />
     <div id="About" class="bg-white min-h-screen border-t-2 border-gray-500">
       <div class="container px-5 py-24 mx-auto">
         <div class="mb-24">
@@ -20,5 +21,9 @@
 </template>
 
 <script setup>
+
+  import { Head } from '@inertiajs/vue3';
+
   import GuestLayout from "@/Layouts/GuestLayout.vue";
+
 </script>
