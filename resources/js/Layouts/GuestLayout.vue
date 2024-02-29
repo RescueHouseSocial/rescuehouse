@@ -11,7 +11,7 @@
             <a class="mr-5 hover:text-gray-900">Fourth Link</a> -->
           </nav>
           <div v-if="$page.props.auth.user" class="grid grid-cols-1 gap-4">
-            <a :href="route('dashboard')" class="text-white font-bold hover:text-orange-400 hover:underline underline-offset-1">Dashboard</a>
+            <a :href="route('feeds')" class="text-white font-bold hover:text-orange-400 hover:underline underline-offset-1">Social</a>
           </div>
           <div v-else>
             <div class="grid grid-cols-2 gap-4">
@@ -32,7 +32,7 @@
             <a class="mr-5 hover:text-gray-900">Fourth Link</a> -->
           </nav>
           <div v-if="$page.props.auth.user" class="grid grid-cols-1 gap-4">
-            <a :href="route('dashboard')" class="font-bold hover:text-orange-400 hover:underline underline-offset-1">Dashboard</a>
+            <a :href="route('home')" class="font-bold hover:text-orange-400 hover:underline underline-offset-1">Social</a>
           </div>
           <div v-else>
             <div class="grid grid-cols-2 gap-4">

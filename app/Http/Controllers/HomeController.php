@@ -20,7 +20,7 @@ class HomeController extends Controller
   public function show(Request $request): Response
   {
 
-    return Inertia::render('Home');
+    return Inertia::render("Home");
 
   }
 

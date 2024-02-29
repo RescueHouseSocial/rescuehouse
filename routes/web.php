@@ -27,10 +27,10 @@ use Inertia\Inertia;
 |
 */
 
-Route::get('/', [HomeController::class, 'show'])->name('home');
+Route::get("/", [HomeController::class, "show"])->name("home");
 
-Route::get('/about', function () {
-  return Inertia::render('About');
+Route::get("/about", function () {
+  return Inertia::render("About");
 });
 
 Route::middleware("auth")->group(function () {
