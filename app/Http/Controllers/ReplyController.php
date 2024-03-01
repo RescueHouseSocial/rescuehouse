@@ -17,39 +17,6 @@ use App\Models\Reply;
 class ReplyController extends Controller
 {
 
-  // public function show(Request $request, $postId = null): Response
-  // {
-
-  //   if ($postId) {
-  //     $posts = Post::join("users", "posts.userId", "=", "users.userId")
-  //       ->join("avatars", "users.userId", "=", "avatars.userId")
-  //       ->leftjoin("galleries", "posts.postId", "=", "galleries.postId")
-  //       ->where("posts.postId", $postId)
-  //       ->where("posts.active", 1)
-  //       ->where("users.active", 1)
-  //       ->where("avatars.active", 1)
-  //       ->select("posts.*", "users.name", "avatars.path")
-  //       ->first();
-  //     $galleryItems = Gallery::whereIn("galleryId", $posts->gallery)->get();
-  //     $posts->galleries = $galleryItems;
-  //     $loggedInUser = Auth::user();
-  //     $relatedUsers = $loggedInUser->getRelatedUsers();
-  //     return Inertia::render("Single", [
-  //       "posts" => $posts,
-  //       "users" => $relatedUsers,
-  //     ]);
-  //   } else {
-  //     $uuid = Uuid::uuid4()->toString();
-  //     $loggedInUser = Auth::user();
-  //     $relatedUsers = $loggedInUser->getRelatedUsers();
-  //     return Inertia::render("Post", [
-  //       "postId" => $uuid,
-  //       "users" => $relatedUsers,
-  //     ]);
-  //   }
-    
-  // }
-
   public function store(Request $request)
   {
 

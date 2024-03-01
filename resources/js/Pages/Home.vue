@@ -67,7 +67,7 @@
           </a>
         </div>
       </div>
-      <div class="bg-gray-300">
+      <div class="bg-orange-400">
         <div class="py-24 px-4 mx-auto max-w-screen-xl sm:py-16 lg:px-6">
           <div class="mx-auto max-w-screen-sm text-center">
             <h2 class="mb-4 text-4xl tracking-tight font-extrabold leading-tight text-gray-900 uppercase">Always Free, Start Today</h2>

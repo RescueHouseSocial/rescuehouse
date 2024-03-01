@@ -2,7 +2,7 @@
   <div id="FundraisingCards">
     <Flicking :options="{ circular: true }" :plugins="plugins">
       <div class="w-full grid grid-cols-1 md:grid-cols-2 gap-4">
-        <article class="p-6 my-4 bg-white rounded-lg border border-gray-200 shadow-md">
+        <article class="p-6 my-4 bg-white rounded-lg border border-gray-200 shadow">
           <div class="flex justify-between items-center mb-5 text-gray-500">
             <span class="bg-primary-100 text-primary-800 text-xs font-medium inline-flex items-center px-2.5 py-0.5 rounded">
             <svg class="mr-1 w-3 h-3" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path d="M2 6a2 2 0 012-2h6a2 2 0 012 2v8a2 2 0 01-2 2H4a2 2 0 01-2-2V6zM14.553 7.106A1 1 0 0014 8v4a1 1 0 00.553.894l2 1A1 1 0 0018 13V7a1 1 0 00-1.447-.894l-2 1z"></path></svg>
@@ -34,7 +34,7 @@
             <a href="#" class="inline-flex items-center font-medium text-primary-600 hover:underline">Read more<svg class="ml-2 w-4 h-4" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" d="M10.293 3.293a1 1 0 011.414 0l6 6a1 1 0 010 1.414l-6 6a1 1 0 01-1.414-1.414L14.586 11H3a1 1 0 110-2h11.586l-4.293-4.293a1 1 0 010-1.414z" clip-rule="evenodd"></path></svg></a>
           </div>
         </article>
-        <article class="p-6 my-4 bg-white rounded-lg border border-gray-200 shadow-md">
+        <article class="p-6 my-4 bg-white rounded-lg border border-gray-200 shadow">
           <div class="flex justify-between items-center mb-5 text-gray-500">
             <span class="bg-primary-100 text-primary-800 text-xs font-medium inline-flex items-center px-2.5 py-0.5 rounded">
             <svg class="mr-1 w-3 h-3" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path d="M2 6a2 2 0 012-2h6a2 2 0 012 2v8a2 2 0 01-2 2H4a2 2 0 01-2-2V6zM14.553 7.106A1 1 0 0014 8v4a1 1 0 00.553.894l2 1A1 1 0 0018 13V7a1 1 0 00-1.447-.894l-2 1z"></path></svg>
@@ -68,7 +68,7 @@
         </article>
       </div>
       <div class="w-full grid grid-cols-1 md:grid-cols-2 gap-4">
-        <article class="p-6 my-4 bg-white rounded-lg border border-gray-200 shadow-md">
+        <article class="p-6 my-4 bg-white rounded-lg border border-gray-200 shadow">
           <div class="flex justify-between items-center mb-5 text-gray-500">
             <span class="bg-primary-100 text-primary-800 text-xs font-medium inline-flex items-center px-2.5 py-0.5 rounded">
             <svg class="mr-1 w-3 h-3" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path d="M2 6a2 2 0 012-2h6a2 2 0 012 2v8a2 2 0 01-2 2H4a2 2 0 01-2-2V6zM14.553 7.106A1 1 0 0014 8v4a1 1 0 00.553.894l2 1A1 1 0 0018 13V7a1 1 0 00-1.447-.894l-2 1z"></path></svg>
@@ -100,7 +100,7 @@
             <a href="#" class="inline-flex items-center font-medium text-primary-600 hover:underline">Read more<svg class="ml-2 w-4 h-4" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" d="M10.293 3.293a1 1 0 011.414 0l6 6a1 1 0 010 1.414l-6 6a1 1 0 01-1.414-1.414L14.586 11H3a1 1 0 110-2h11.586l-4.293-4.293a1 1 0 010-1.414z" clip-rule="evenodd"></path></svg></a>
           </div>
         </article>
-        <article class="p-6 my-4 bg-white rounded-lg border border-gray-200 shadow-md">
+        <article class="p-6 my-4 bg-white rounded-lg border border-gray-200 shadow">
           <div class="flex justify-between items-center mb-5 text-gray-500">
             <span class="bg-primary-100 text-primary-800 text-xs font-medium inline-flex items-center px-2.5 py-0.5 rounded">
             <svg class="mr-1 w-3 h-3" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path d="M2 6a2 2 0 012-2h6a2 2 0 012 2v8a2 2 0 01-2 2H4a2 2 0 01-2-2V6zM14.553 7.106A1 1 0 0014 8v4a1 1 0 00.553.894l2 1A1 1 0 0018 13V7a1 1 0 00-1.447-.894l-2 1z"></path></svg>

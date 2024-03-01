@@ -1,15 +1,19 @@
 <?php
 
 namespace App\Http\Controllers;
+
 use Illuminate\Http\Request;
 use Inertia\Inertia;
 use Inertia\Response;
 use Illuminate\Support\Facades\Auth;
 
 use App\Models\User;
-use App\Models\Post;
 use App\Models\Avatar;
+use App\Models\Post;
+use App\Models\Gallery;
 use App\Models\Follow;
+use App\Models\Favorite;
+use App\Models\Reply;
 
 class AccountController extends Controller
 {
@@ -37,6 +41,44 @@ class AccountController extends Controller
       $postcount = Post::where("userId", $userId)
         ->where("active", true)
         ->count();
+      $myposts = Post::join("users", "posts.userId", "=", "users.userId")
+        ->join("avatars", "users.userId", "=", "avatars.userId")
+        ->leftJoin("galleries", "posts.postId", "=", "galleries.postId")
+        ->leftJoin("favorites", function($join) use ($userId) {
+          $join->on("posts.postId", "=", "favorites.postId")
+            ->where("favorites.userId", "=", $userId)
+            ->where("favorites.active", "=", 1);
+        })
+        ->where("posts.userId", $userId)
+        ->where("posts.active", 1)
+        ->where("users.active", 1)
+        ->where("avatars.active", 1)
+        ->select("posts.*", "users.name", "avatars.path")
+        ->orderBy("posts.created_at", "desc")
+        ->distinct()
+        ->get();
+      $myposts->each(function ($post) use ($userId) {
+        $favorites = Favorite::where("postId", $post->postId)
+          ->where("userId", $userId)
+          ->where("active", 1)
+          ->get();
+        $post->favorites = $favorites;
+        if (!empty($post->gallery)) {
+          $galleries = Gallery::whereIn("galleryId", $post->gallery)->get();
+          $post->galleries = $galleries;
+        } else {
+          $post->galleries = null;
+        }
+      });
+      $myreplies = Reply::join("users", "replies.userId", "=", "users.userId")
+        ->join("avatars", "users.userId", "=", "avatars.userId")
+        ->where("replies.userId", $userId)
+        ->where("replies.active", 1)
+        ->where("users.active", 1)
+        ->where("avatars.active", 1)
+        ->select("replies.*", "users.name", "avatars.path")
+        ->orderBy("replies.created_at", "desc")
+        ->get();
     } else {
       $userId = Auth::user()->userId;
       $user = User::where("userId", $userId)
@@ -55,6 +97,44 @@ class AccountController extends Controller
       $postcount = Post::where("userId", $userId)
         ->where("active", true)
         ->count();
+      $myposts = Post::join("users", "posts.userId", "=", "users.userId")
+        ->join("avatars", "users.userId", "=", "avatars.userId")
+        ->leftJoin("galleries", "posts.postId", "=", "galleries.postId")
+        ->leftJoin("favorites", function($join) {
+          $join->on("posts.postId", "=", "favorites.postId")
+            ->where("favorites.userId", "=", auth()->user()->userId)
+            ->where("favorites.active", "=", 1);
+        })
+        ->where("posts.userId", auth()->user()->userId)
+        ->where("posts.active", 1)
+        ->where("users.active", 1)
+        ->where("avatars.active", 1)
+        ->select("posts.*", "users.name", "avatars.path")
+        ->orderBy("posts.created_at", "desc")
+        ->distinct()
+        ->get();
+      $myposts->each(function ($post) {
+        $favorites = Favorite::where("postId", $post->postId)
+          ->where("userId", auth()->user()->userId)
+          ->where("active", 1)
+          ->get();
+        $post->favorites = $favorites;
+        if (!empty($post->gallery)) {
+          $galleries = Gallery::whereIn("galleryId", $post->gallery)->get();
+          $post->galleries = $galleries;
+        } else {
+          $post->galleries = null;
+        }
+      });
+      $myreplies = Reply::join("users", "replies.userId", "=", "users.userId")
+        ->join("avatars", "users.userId", "=", "avatars.userId")
+        ->where("replies.userId", auth()->user()->userId)
+        ->where("replies.active", 1)
+        ->where("users.active", 1)
+        ->where("avatars.active", 1)
+        ->select("replies.*", "users.name", "avatars.path")
+        ->orderBy("replies.created_at", "desc")
+        ->get();
     }
     return Inertia::render("Account", [
       "users" => $user,
@@ -63,6 +143,8 @@ class AccountController extends Controller
       "followerscount" => $followerscount,
       "followingcount" => $followingcount,
       "postcount" => $postcount,
+      "myposts" => $myposts,
+      "myreplies" => $myreplies,
     ]);
 
   }
