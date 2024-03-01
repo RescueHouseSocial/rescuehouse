@@ -63,7 +63,11 @@
         tokens
       </div>
       <div v-if="activeTab === 'galleries'">
-        galleries
+        <div class="flex flex-row flex-wrap my-4">
+          <div v-for="post in mygalleries" :key="post.id" class="w-12 h-12 mr-4 mb-4">
+            <img :src="`/storage/gallery/medium/${post.path}`" class="rounded-lg" alt="user gallery"/>
+          </div>
+        </div>
       </div>
     </div>
   </div>
@@ -77,7 +81,7 @@
 
   import axios from 'axios';
 
-  const props = defineProps(["myposts", "myreplies"]);
+  const props = defineProps(["myposts", "myreplies", "mygalleries"]);
 
   let activeTab = ref("posts"); 
 

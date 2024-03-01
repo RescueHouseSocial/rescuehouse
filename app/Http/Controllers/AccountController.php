@@ -79,6 +79,9 @@ class AccountController extends Controller
         ->select("replies.*", "users.name", "avatars.path")
         ->orderBy("replies.created_at", "desc")
         ->get();
+      $mygalleries = Gallery::where("userId", $userId)
+        ->where("active", 1)
+        ->get();
     } else {
       $userId = Auth::user()->userId;
       $user = User::where("userId", $userId)
@@ -135,6 +138,9 @@ class AccountController extends Controller
         ->select("replies.*", "users.name", "avatars.path")
         ->orderBy("replies.created_at", "desc")
         ->get();
+      $mygalleries = Gallery::where("userId", auth()->user()->userId)
+        ->where("active", 1)
+        ->get();
     }
     return Inertia::render("Account", [
       "users" => $user,
@@ -145,6 +151,7 @@ class AccountController extends Controller
       "postcount" => $postcount,
       "myposts" => $myposts,
       "myreplies" => $myreplies,
+      "mygalleries" => $mygalleries,
     ]);
 
   }
