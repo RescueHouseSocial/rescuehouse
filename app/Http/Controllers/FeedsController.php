@@ -11,6 +11,7 @@ use App\Models\User;
 use App\Models\Avatar;
 use App\Models\Post;
 use App\Models\Gallery;
+use App\Models\Reply;
 use App\Models\Favorite;
 
 class FeedsController extends Controller
@@ -26,7 +27,7 @@ class FeedsController extends Controller
         $join->on("posts.postId", "=", "favorites.postId")
           ->where("favorites.userId", "=", auth()->user()->userId)
           ->where("favorites.active", "=", 1);
-    })
+      })
       ->where("posts.active", 1)
       ->where("users.active", 1)
       ->where("avatars.active", 1)
@@ -40,6 +41,17 @@ class FeedsController extends Controller
         ->where("active", 1)
         ->get();
       $post->favorites = $favorites;
+      $favoritescount = Favorite::where("postId", $post->postId)
+        ->where("userId", auth()->user()->userId)
+        ->where("active", 1)
+        ->count();
+      $post->favoritescount = $favoritescount;
+
+      $repliescount = Reply::where("postId", $post->postId)
+        ->where("active", 1)
+        ->count();
+      $post->repliescount = $repliescount;
+
       if (!empty($post->gallery)) {
         $galleries = Gallery::whereIn("galleryId", $post->gallery)->get();
         $post->galleries = $galleries;

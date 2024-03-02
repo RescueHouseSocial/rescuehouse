@@ -13,6 +13,7 @@ use App\Models\Avatar;
 use App\Models\Post;
 use App\Models\Gallery;
 use App\Models\Reply;
+use App\Models\Favorite;
 
 class PostController extends Controller
 {
@@ -26,6 +27,11 @@ class PostController extends Controller
       $posts = Post::join("users", "posts.userId", "=", "users.userId")
         ->join("avatars", "users.userId", "=", "avatars.userId")
         ->leftjoin("galleries", "posts.postId", "=", "galleries.postId")
+        ->leftJoin("favorites", function($join) {
+          $join->on("posts.postId", "=", "favorites.postId")
+            ->where("favorites.userId", "=", auth()->user()->userId)
+            ->where("favorites.active", "=", 1);
+        })
         ->where("posts.postId", $postId)
         ->where("posts.active", 1)
         ->where("users.active", 1)
@@ -43,6 +49,20 @@ class PostController extends Controller
         ->select("replies.*", "users.name", "avatars.path")
         ->orderBy("replies.created_at", "desc")
         ->get();
+      $repliescount = Reply::where("postId", $postId)
+        ->where("active", 1)
+        ->count();
+      $posts->repliescount = $repliescount;
+      $favorites = Favorite::where("postId", $postId)
+        ->where("userId", auth()->user()->userId)
+        ->where("active", 1)
+        ->get();
+      $posts->favorites = $favorites;
+      $favoritescount = Favorite::where("postId", $postId)
+        ->where("userId", auth()->user()->userId)
+        ->where("active", 1)
+        ->count();
+      $posts->favoritescount = $favoritescount;
       $loggedInUser = Auth::user();
       $relatedUsers = $loggedInUser->getRelatedUsers();
       return Inertia::render("Single", [

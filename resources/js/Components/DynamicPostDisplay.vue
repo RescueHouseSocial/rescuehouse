@@ -16,12 +16,12 @@
     </div>
     <div class="mr-4 md:mr-0 justify-end">
       <div class="grid grid-cols-12 gap-0 place-items-left">
-        <div class="col-span-1"><img :src="`/storage/avatars/medium/${post.path}`" class="h-full w-full rounded" alt="user avatar"/></div>
-        <div class="flex col-span-8 items-center"><a :href="`/account/${post.userId}`" class="mx-2">{{ post.name }}</a></div>
+        <div class="col-span-1 items-center"><img :src="`/storage/avatars/medium/${post.path}`" class="h-full w-full rounded" alt="user avatar"/></div>
+        <div class="flex col-span-9 items-center"><a :href="`/account/${post.userId}`" class="mx-2">{{ post.name }}</a></div>
         <div class="flex col-span-1">
           <div class="flex flex-col items-center">
             <div @click="handleFavoriteToggle(post.postId)" class="hover:text-orange-400 cursor-pointer">
-              <span v-if="post.favorites && post.favorites.length > 0">
+              <span v-if="post.favorites && post.favorites.length > 0 || activeFavorite === false">
                 <i class="fa-solid fa-heart fa-fw fa-lg"></i>
               </span>
               <span v-else>
@@ -39,14 +39,14 @@
             <div class="text-sm font-light">{{ formattedCommentCount }}</div>
           </div>
         </div>
-        <div class="flex col-span-1">
+        <!-- <div class="flex col-span-1">
           <div class="flex flex-col items-center">
             <div @click="handleRepostToggle(post.postId)" class="hover:text-orange-400 cursor-pointer">
               <i class="fa-solid fa-retweet fa-fw fa-lg"></i>
             </div>
             <div class="text-sm font-light">{{ formattedRepostCount }}</div>
           </div>
-        </div>
+        </div> -->
       </div>
     </div>
   </div>
@@ -62,18 +62,18 @@
 
   const props = defineProps(["post"]);
 
-  let isFavoried = ref(false);
+  let activeFavorite = ref();
 
   const formatDate = (datetime8601) => {
     return DateTime.fromISO(datetime8601).toLocaleString(DateTime.DATETIME_FULL);
   };
 
   const formattedFavoriteCount = computed(() => {
-    return formatNumber(1000000);
+    return formatNumber(props.post.favoritescount);
   });
 
   const formattedCommentCount = computed(() => {
-    return formatNumber(1000000);
+    return formatNumber(props.post.repliescount);
   });
 
   const formattedRepostCount = computed(() => {
@@ -100,16 +100,28 @@
   }
 
   const handleFavoriteToggle = async (postId) => {
-    isFavoried = isFavoried.value;
-    try {
-      const response = await axios.post(route("favorite.store"), { isFavoried, postId });
-    } catch (error) {
-      console.error('Error:', error);
+    if (props.post.favorites.length === 0) {
+      activeFavorite.value = false;
+      let favoried = false;
+      try {
+        const response = await axios.post(route("favorite.store"), { favoried, postId });
+      } catch (error) {
+        console.error('Error:', error);
+      }
+    } else {
+      props.post.favorites = [];
+      activeFavorite.value = true;
+      let favoried = true;
+      try {
+        const response = await axios.post(route("favorite.store"), { favoried, postId });
+      } catch (error) {
+        console.error('Error:', error);
+      }
     }
   };
 
   const handleCommentToggle = (postId) => {
-    console.log(postId);
+    window.location.href = `/post/${postId}`;
   };
 
   const handleRepostToggle = (postId) => {
