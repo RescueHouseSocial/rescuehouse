@@ -1,5 +1,6 @@
 <template>
   <AuthenticatedLayout>
+    <Head title="Calendar" />
     <template #header>
       <h2 class="font-semibold text-xl text-gray-800 leading-tight">Calendar</h2>
       <p class="leading-relaxed text-base text-gray-400">Blue bottle crucifix vinyl post-ironic four dollar toast vegan taxidermy. Gastropub indxgo juice poutine, ramps microdosing banh mi pug VHS try-hard.</p>

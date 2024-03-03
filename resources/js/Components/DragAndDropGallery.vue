@@ -39,16 +39,6 @@
                   </div>
                 </div>
               </div>
-              <!-- <div class="flex justify-end">
-                <button class="flex mt-4 text-white bg-gray-500 border-0 py-2 px-8 focus:outline-none hover:bg-gray-600 rounded text-lg" type="submit">
-                  <span v-if="isLoading">
-                    <i class="fa-solid fa-spinner fa-fw fa-spin"></i>
-                  </span>
-                  <span v-else>
-                    Upload
-                  </span>
-                </button>
-              </div> -->
             </form>
           </div>
         </div>

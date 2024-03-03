@@ -104,7 +104,7 @@ class AccountController extends Controller
         ->join("avatars", "users.userId", "=", "avatars.userId")
         ->leftJoin("galleries", "posts.postId", "=", "galleries.postId")
         ->leftJoin("favorites", function($join) {
-          $join->on("posts.postId", "=", "favorites.postId")
+        $join->on("posts.postId", "=", "favorites.postId")
             ->where("favorites.userId", "=", auth()->user()->userId)
             ->where("favorites.active", "=", 1);
         })
@@ -122,6 +122,15 @@ class AccountController extends Controller
           ->where("active", 1)
           ->get();
         $post->favorites = $favorites;
+        $favoritescount = Favorite::where("postId", $post->postId)
+          ->where("userId", auth()->user()->userId)
+          ->where("active", 1)
+          ->count();
+        $post->favoritescount = $favoritescount;
+        $repliescount = Reply::where("postId", $post->postId)
+          ->where("active", 1)
+          ->count();
+        $post->repliescount = $repliescount;
         if (!empty($post->gallery)) {
           $galleries = Gallery::whereIn("galleryId", $post->gallery)->get();
           $post->galleries = $galleries;

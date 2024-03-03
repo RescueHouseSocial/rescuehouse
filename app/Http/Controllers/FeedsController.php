@@ -46,12 +46,10 @@ class FeedsController extends Controller
         ->where("active", 1)
         ->count();
       $post->favoritescount = $favoritescount;
-
       $repliescount = Reply::where("postId", $post->postId)
         ->where("active", 1)
         ->count();
       $post->repliescount = $repliescount;
-
       if (!empty($post->gallery)) {
         $galleries = Gallery::whereIn("galleryId", $post->gallery)->get();
         $post->galleries = $galleries;

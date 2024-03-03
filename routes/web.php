@@ -5,6 +5,7 @@ use App\Http\Controllers\HomeController;
 use App\Http\Controllers\FeedsController;
 use App\Http\Controllers\AccountController;
 use App\Http\Controllers\PostController;
+use App\Http\Controllers\InteractiveController;
 use App\Http\Controllers\ReplyController;
 use App\Http\Controllers\MarketController;
 use App\Http\Controllers\CalendarController;
@@ -42,6 +43,8 @@ Route::middleware("auth")->group(function () {
 
   Route::get("/post/{postId?}", [PostController::class, "show"])->name("post");
   Route::put("/post", [PostController::class, "store"])->name("post.store");
+
+  Route::put("/interactive", [InteractiveController::class, "store"])->name("interactive.store");
 
   Route::put("/reply", [ReplyController::class, "store"])->name("reply.store");
 
