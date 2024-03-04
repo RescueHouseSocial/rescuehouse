@@ -3,21 +3,28 @@
     <div v-for="user in users" :key="user.id" class="items-center bg-gray-50 rounded-lg shadow sm:flex">
       <form @submit.prevent="handleSubmit" class="w-full p-4">
         <div class="flex flex-col mx-4 my-4 mx-auto">
-          <div class="flex flex-col-reverse md:flex-row md:justify-between">
-            <label for="body" clas="leading-7 text-sm text-gray-600">Post</label>
-            <div>{{ user.name }} at {{ displayDateTime }}</div>
+          <div class="mb-8">
+            <div class="flex flex-col-reverse md:flex-row md:justify-between">
+              <label for="body" clas="leading-7 text-sm text-gray-600">Post</label>
+              <div>{{ user.name }} at {{ displayDateTime }}</div>
+            </div>
+            <textarea id="body" v-model="form.body" class="w-full h-60"></textarea>
           </div>
-          <textarea id="body" v-model="form.body" class="h-60"></textarea>
-          <div class="my-4">
+          <div class="flex flex-row justify-between">
+            <label for="body" clas="leading-7 text-sm text-gray-600">Upload Images</label>
+          </div>
+          <div class="mb-8">
             <DragAndDropGallery
               :postId="postId"
               @gallery-add="handleGalleryAdd"
             />
           </div>
-          <label for="body" clas="leading-7 text-sm text-gray-600">Interactive Sessions</label>
+          <div class="flex flex-row justify-between">
+            <label for="body" clas="leading-7 text-sm text-gray-600">Interactive Sessions</label>
+          </div>
           <div class="items-center bg-gray-50 rounded-lg shadow sm:flex mb-4">
             <div class="flex flex-col w-full p-4">
-              <div class="mb-4">
+              <div class="mb-8">
                 <DateTimePicker
                   @datetime-add="handleDateTimeAdd"
                 />
@@ -26,7 +33,7 @@
                 <div class="relative">
                   <span class="absolute end-0">{{ formattedDuration }}</span>
                   <label for="range" clas="leading-7 text-sm text-gray-600">Duration</label>
-                  <input v-model="interactive.duration" id="range" type="range" min="30" max="240" step="15" class="accent-blue-500 w-full h-3 bg-gray-200 rounded-lg cursor-pointer"/>
+                  <input v-model="interactive.duration" id="range" type="range" min="30" max="240" step="15" class="accent-blue-500 w-full appearance-none h-3 range-lg bg-gray-200 rounded-lg cursor-pointer"/>
                   <span class="font-light text-gray-400 absolute start-0 -bottom-6">30 minutes</span>
                   <span class="font-light text-gray-400 absolute end-0 -bottom-6">4 hours</span>
                 </div>
@@ -64,6 +71,7 @@
   let formatDateTime = DateTime.now().toISO();
   let isLoading = false;
   let gallery = [];
+  let isNewTime = false;
 
   const props = defineProps(["postId", "users"]);
 
@@ -116,6 +124,7 @@
   }
 
   const handleDateTimeAdd = (dateString) => {
+    isNewTime = true;
     interactive.datetime = dateString;
   }
 
@@ -132,17 +141,19 @@
         isLoading = false;
       },
     });
-    interactive.put(route("interactive.store"), {
-      preserveScroll: true,
-      onSuccess: () => {
-        interactive.reset();
-        isLoading = false;
-      },
-      onError: () => {
-        console.log("error");
-        isLoading = false;
-      },
-    });
+    if (isNewTime === true) {
+      interactive.put(route("interactive.store"), {
+        preserveScroll: true,
+        onSuccess: () => {
+          interactive.reset();
+          isLoading = false;
+        },
+        onError: () => {
+          console.log("error");
+          isLoading = false;
+        },
+      });
+    }
   };
 
 </script>

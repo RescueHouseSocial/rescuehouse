@@ -2,12 +2,12 @@
   <div id="DragAndDropImage">
     <div class="flex justify-center">
       <div class="mx-auto w-full">
-        Gallery
         <div class="grid gap-8 mb-4 md:grid-cols-1">
-          <div class="items-center bg-gray-50 rounded-lg shadow sm:flex">
-            <form @submit.prevent="handleUpload" class="w-full p-4">
+          <div class="items-center bg-gray-50 rounded-lg shadow p-4">
+            <label for="body" clas="leading-7 text-sm text-gray-600">Gallery</label>
+            <form @submit.prevent="handleUpload">
               <div
-                class="border-dashed border-2 border-gray-200 bg-gray-100 p-4 text-center"
+                class="border-dashed border-2 border-gray-200 bg-gray-100 p-16 text-center"
                 :style="isDragging && 'border-color: rgb(251 146 60);'"
                 @dragover="dragover"
                 @dragleave="dragleave"
