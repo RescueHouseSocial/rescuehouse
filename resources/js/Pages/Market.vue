@@ -6,10 +6,12 @@
       <p class="leading-relaxed text-base text-gray-400">Blue bottle crucifix vinyl post-ironic four dollar toast vegan taxidermy. Gastropub indxgo juice poutine, ramps microdosing banh mi pug VHS try-hard.</p>
     </template>
     <div class="py-4">
-      <div class="max-w-7xl min-h-screen bg-gray-100 mx-auto">
+      <div class="max-w-8xl min-h-screen bg-gray-100 mx-auto">
         <div class="flex justify-center">
-          <div class="w-full md:w-1/2 mx-4 my-24 bg-white shadow-lg rounded-lg">
-            <div class="p-6 text-gray-900">Show Market</div>
+          <div class="py-8 px-8 mx-auto w-full">
+            <div class="grid gap-8 mb-4 md:grid-cols-1">
+              <MarketDisplay></MarketDisplay>
+            </div>
           </div>
         </div>
       </div>
@@ -19,7 +21,10 @@
 
 <script setup>
 
+  import MarketDisplay from "../Components/MarketDisplay.vue";
+
   import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout.vue';
+
   import { Head } from '@inertiajs/vue3';
 
 </script>

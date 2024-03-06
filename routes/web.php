@@ -28,6 +28,10 @@ use Inertia\Inertia;
 |
 */
 
+// Route::domain('admin.site.com')->group(function () {
+//   Route::get('/', 'AdminController@index');
+// });
+
 Route::get("/", [HomeController::class, "show"])->name("home");
 
 Route::get("/about", function () {
