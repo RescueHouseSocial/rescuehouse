@@ -62,6 +62,9 @@ Route::middleware("auth")->group(function () {
   Route::post("/tokens", [TokensController::class, "store"])->name("token.store");
 
   Route::get("/market", [MarketController::class, "show"])->name("market");
+  Route::post("/marketstore", [MarketController::class, "store"])->name("market.store");
+  Route::post("/marketcart", [MarketController::class, "cart"])->name("market.cart");
+
   Route::get("/calendar", [CalendarController::class, "show"])->name("calendar");
 
   Route::get("/settings", [SettingsController::class, "show"])->name("settings");

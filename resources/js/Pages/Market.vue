@@ -10,7 +10,9 @@
         <div class="flex justify-center">
           <div class="py-8 px-8 mx-auto w-full">
             <div class="grid gap-8 mb-4 md:grid-cols-1">
-              <MarketDisplay></MarketDisplay>
+              <MarketDisplay
+                :tokens="tokens"
+              />
             </div>
           </div>
         </div>
@@ -26,5 +28,7 @@
   import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout.vue';
 
   import { Head } from '@inertiajs/vue3';
+
+  const props = defineProps(["tokens"]);
 
 </script>

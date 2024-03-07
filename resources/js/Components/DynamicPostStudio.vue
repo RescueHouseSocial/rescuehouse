@@ -131,7 +131,7 @@
   }
 
   const handleSubmit = async () => {
-    isLoading = true;
+    isLoading.value = true;
     await new Promise(resolve => setTimeout(resolve, 1500));
     form.put(route("post.store"), {
       preserveScroll: true,
