@@ -13,13 +13,27 @@
             <div class="grid gap-8 mb-4 md:grid-cols-1">
               <div v-for="user in users" :key="user.id" class="items-center bg-gray-50 rounded-lg shadow sm:flex">
                 <form @submit.prevent="handleSubmit" class="w-full p-4">
+                  <div v-if="successMessage" class="p-4 mb-4 text-sm text-orange-400 rounded-lg bg-yellow-50" role="alert">
+                    <span class="font-medium">Success:</span> {{ successMessage }}
+                  </div>
                   <div v-if="avatar" class="max-w-24 h-auto">
                     <label clas="leading-7 text-sm text-gray-600">Avatar</label>
                     <img :src="`/storage/avatars/medium/${avatar.path}`" class="rounded-md" alt="user avatar"/>
                   </div>
                   <div class="flex flex-col mx-4 my-4 mx-auto">
-                    <label for="name" clas="leading-7 text-sm text-gray-600">Name</label>
-                    <input id="name" v-model="form.name"/>
+                    <div class="mb-4">
+                      <label for="name" clas="leading-7 text-sm text-gray-600">Name</label>
+                      <input id="name" v-model="form.name" class="w-full" maxlength="26"/>
+                    </div>
+                    <div class="mb-4">
+                      <label for="location" clas="leading-7 text-sm text-gray-600">Location</label>
+                      <input id="location" v-model="form.location" class="w-full" maxlength="125"/>
+                    </div>
+                    <div class="mb-4">
+                      <label for="biography" clas="leading-7 text-sm text-gray-600">Biography</label>
+                      <textarea id="body" v-model="form.body" @input="updateCharacterCount" class="w-full h-60"></textarea>
+                      <div class="text-sm text-gray-500 mt-2">{{ characterCount }}/500 characters</div>
+                    </div>
                     <div class="flex justify-end">
                       <button class="flex mt-4 text-white bg-gray-500 border-0 py-2 px-8 focus:outline-none hover:bg-gray-600 rounded text-lg" type="submit">
                         <span v-if="isLoading">
@@ -44,31 +58,54 @@
 
 <script setup>
 
+  import axios from "axios";
+
+  import { ref } from "vue";
+
   import DragAndDropImage from "../Components/DragAndDropImage.vue";
 
   import AuthenticatedLayout from "@/Layouts/AuthenticatedLayout.vue";
   import { Head, useForm } from "@inertiajs/vue3";
 
-  let isLoading = false;
+  let isLoading = ref(false);
+  let successMessage = ref("");
+  let characterCount = ref(0);
 
   const props = defineProps(["users", "avatar"]);
 
   const form = useForm({
     name: props.users[0].name,
+    location: props.users[0].location,
+    body: props.users[0].biography,
   });
 
-  const handleSubmit = () => {
-    isLoading = true;
-    form.patch(route("settings.update"), {
-      preserveScroll: true,
-      onSuccess: () => {
-        isLoading = false;
-      },
-      onError: () => {
-        console.log("error");
-        isLoading = false;
-      },
+  const handleSubmit = async () => {
+    isLoading.value = true;
+    await new Promise(resolve => setTimeout(resolve, 1500));
+    await axios.post(route("settings.update"), {
+      name: form.name,
+      location: form.location,
+      body: form.body,
+    })
+    .then(response => {
+      successMessage.value = response.data.success;
+    })
+    .catch(error => {
+      console.error("Error:", error);
     });
+    isLoading.value = false;
   };
+
+  const updateCharacterCount = () => {
+    const maxLength = 500;
+    let limitedText = "";
+    if (form.body) {
+      limitedText = form.body.slice(0, maxLength);
+    }
+    form.body = limitedText;
+    characterCount.value = limitedText.length;
+  };
+
+  updateCharacterCount();
 
 </script>

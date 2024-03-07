@@ -8,10 +8,13 @@ use App\Http\Controllers\PostController;
 use App\Http\Controllers\InteractiveController;
 use App\Http\Controllers\ReplyController;
 use App\Http\Controllers\MarketController;
+use App\Http\Controllers\TokensController;
 use App\Http\Controllers\CalendarController;
 use App\Http\Controllers\SettingsController;
 use App\Http\Controllers\GalleryController;
 use App\Http\Controllers\FavoriteController;
+
+use App\Http\Controllers\PirateController;
 
 use Illuminate\Foundation\Application;
 use Illuminate\Support\Facades\Route;
@@ -56,12 +59,17 @@ Route::middleware("auth")->group(function () {
 
   Route::post("/gallery", [GalleryController::class, "store"])->name("gallery.store");
 
+  Route::post("/tokens", [TokensController::class, "store"])->name("token.store");
+
   Route::get("/market", [MarketController::class, "show"])->name("market");
   Route::get("/calendar", [CalendarController::class, "show"])->name("calendar");
 
   Route::get("/settings", [SettingsController::class, "show"])->name("settings");
-  Route::patch("/settings", [SettingsController::class, "update"])->name("settings.update");
-  Route::post("/settings", [SettingsController::class, "updateavatar"])->name("settings.updateavatar");
+  Route::post("/settingsupdate", [SettingsController::class, "update"])->name("settings.update");
+  Route::post("/settingsupdateavatar", [SettingsController::class, "updateavatar"])->name("settings.updateavatar");
+
+  Route::get("/pirate", [PirateController::class, "show"])->name("pirate");
+  Route::post("/piratecreatetoken", [PirateController::class, "createtoken"])->name("pirate.createtoken");
 
 });
 

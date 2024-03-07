@@ -16,6 +16,7 @@
               <NavLink :href="route('post')" :active="route().current('post')"><i class="fa-solid fa-pen-to-square fa-fw fa-2xl"></i></NavLink>
               <NavLink :href="route('market')" :active="route().current('market')"><i class="fa-solid fa-store fa-fw fa-2xl"></i></NavLink>
               <NavLink :href="route('calendar')" :active="route().current('calendar')"><i class="fa-regular fa-calendar-days fa-fw fa-2xl"></i></NavLink>
+              <NavLink v-if="$page.props.auth.user.pirate === 1" :href="route('pirate')" :active="route().current('pirate')"><i class="fa-solid fa-skull-crossbones fa-fw fa-2xl"></i></NavLink>
             </div>
           </div>
           <div class="hidden sm:flex sm:items-center sm:ms-6">
@@ -91,6 +92,7 @@
           <ResponsiveNavLink :href="route('post')" :active="route().current('post')"><i class="fa-solid fa-pen-to-square fa-fw fa-2xl"></i><span class="leading-relaxed text-base text-gray-400">Post</span></ResponsiveNavLink>
           <ResponsiveNavLink :href="route('market')" :active="route().current('market')"><i class="fa-solid fa-store fa-fw fa-2xl"></i><span class="leading-relaxed text-base text-gray-400">Market</span></ResponsiveNavLink>
           <ResponsiveNavLink :href="route('calendar')" :active="route().current('calendar')"><i class="fa-regular fa-calendar-days fa-fw fa-2xl"></i><span class="leading-relaxed text-base text-gray-400">Calendar</span></ResponsiveNavLink>
+          <ResponsiveNavLink v-if="$page.props.auth.user.pirate === 1" :href="route('pirate')" :active="route().current('pirate')"><i class="fa-solid fa-skull-crossbones fa-fw fa-2xl"></i></ResponsiveNavLink>
         </div>
         <!-- Responsive Settings Options -->
         <div class="pt-4 pb-1 border-t border-gray-200">

@@ -1,10 +1,10 @@
 <template>
-  <div id="DragAndDropGallery">
+  <div id="DragAndDropToken">
     <div class="flex justify-center">
       <div class="mx-auto w-full">
         <div class="grid gap-8 mb-4 md:grid-cols-1">
           <div class="items-center bg-gray-50 rounded-lg shadow p-4">
-            <label for="body" clas="leading-7 text-sm text-gray-600">Gallery</label>
+            <label for="body" clas="leading-7 text-sm text-gray-600">Token</label>
             <form @submit.prevent="handleUpload">
               <div
                 class="border-dashed border-2 border-gray-200 bg-gray-100 p-16 text-center"
@@ -52,7 +52,6 @@
   import axios from "axios";
 
   export default {
-    props:["postId"],
     data() {
       return {
         isLoading: false,
@@ -69,20 +68,18 @@
         return fileSrc;
       },
       async handleUpload() {
-        console.log("i am handle upload!");
         this.isLoading = true;
         for (const file of this.files) {
           const formData = new FormData();
           formData.append("selectedFiles[]", file);
-          formData.append("postId", this.postId);
           try {
-            const response = await axios.post(route("gallery.store"), formData, {
+            const response = await axios.post(route("token.store"), formData, {
               headers: {
                 "X-CSRF-TOKEN": this.csrfToken,
                 "Content-Type": "multipart/form-data",
               },
             });
-            this.$emit("gallery-add", response.data.galleryId);
+            this.$emit("token-add", response.data.tokenId);
           } catch (error) {
             console.error(error); 
           }

@@ -13,6 +13,15 @@ return new class extends Migration
     {
         Schema::create("tokens", function (Blueprint $table) {
             $table->id();
+            $table->uuid("tokenId")->default(\Illuminate\Support\Str::uuid());
+            $table->string("userId");
+            $table->string("name");
+            $table->string("path");
+            $table->decimal("price", 10, 2);
+            $table->string("visibility")->default("public");
+            $table->string("type")->default("general");
+            $table->string("status")->default("published");
+            $table->boolean("active")->default(true);
             $table->timestamps();
         });
     }

@@ -10,4 +10,6 @@ class Tokens extends Model
 
   use HasFactory;
   
+  protected $fillable = ["tokenId", "userId", "name", "path", "price"];
+
 }

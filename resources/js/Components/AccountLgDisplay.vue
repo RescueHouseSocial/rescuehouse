@@ -13,8 +13,8 @@
         </div>
         <div class="p-4">
           <h3 class="text-xl font-bold tracking-tight text-gray-900">{{ users.name }}</h3>
-          <span class="text-gray-500">Location</span>
-          <p class="mt-4 mb-4 font-light text-gray-500">Biography</p>
+          <div v-if="users.location"><i class="text-gray-500 fa-solid fa-location-dot fa-fw"></i><span class="text-gray-500 mx-1">{{ users.location }}</span></div>
+          <p class="mt-4 mb-4 font-light text-gray-500 whitespace-break-spaces">{{ users.biography }}</p>
         </div>
       </div>
     </div>

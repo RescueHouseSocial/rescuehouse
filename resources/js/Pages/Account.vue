@@ -51,7 +51,7 @@
     try {
       const response = await axios.post(route("account.follow"), { following });
     } catch (error) {
-      console.error('Error:', error);
+      console.error("Error:", error);
     }
   }
 

@@ -28,8 +28,6 @@ class SettingsController extends Controller
       "avatar" => $avatar,
     ]);
 
-    
-    
   }
 
   public function updateavatar(Request $request) 
@@ -63,8 +61,13 @@ class SettingsController extends Controller
     $request->validate([
       "name" => "required",
     ]);
-    auth()->user()->update(["name" => $request->input("name")]);
-    return redirect()->route("settings")->with("success", "Settings updated successfully.");
+    auth()->user()->update([
+      "name" => $request->input("name"),
+      "location" => $request->input("location"),
+      "biography" => $request->input("body"),
+    ]);
+    // return redirect()->route("settings")->with("success", "Settings updated successfully.");
+    return response()->json(["success" => "Settings updated successfully."]);
 
   }
 

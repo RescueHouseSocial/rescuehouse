@@ -3,6 +3,11 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use Inertia\Inertia;
+use Inertia\Response;
+use Illuminate\Support\Facades\Auth;
+use Intervention\Image\Facades\Image;
+use Illuminate\Support\Str;
 
 use App\Models\Tokens;
 
@@ -30,7 +35,33 @@ class TokensController extends Controller
    */
   public function store(Request $request)
   {
-    //
+
+    $uuid = Str::uuid();
+    $userId = Auth::user()->userId;
+    $selectedFiles = $request->file("selectedFiles");
+    $resizedFiles = [];
+    foreach ($selectedFiles as $file) {
+      $resizedImage = Image::make($file)
+        ->fit(400, 400)
+        ->encode();
+      $resizedPath = public_path("storage/tokens/medium");
+      $resizedFileName = $uuid . "." . $file->getClientOriginalExtension();
+      $resizedImage->save($resizedPath . "/" . $resizedFileName);
+      $token = Tokens::create([
+        "tokenId" => $uuid,
+        "userId" => $userId,
+        "name" => "Token",
+        "path" => $resizedFileName,
+        "price" => 0.00,
+      ]);
+    }
+
+    $id = $token->id;
+    $single = Tokens::find($id);
+    $tokenId = $single->tokenId;
+
+    return response()->json(["tokenId" => $tokenId, "message" => "Token item created successfully."]);
+    
   }
 
   /**

@@ -8,7 +8,8 @@
               <label for="body" clas="leading-7 text-sm text-gray-600">Post</label>
               <div>{{ user.name }} at {{ displayDateTime }}</div>
             </div>
-            <textarea id="body" v-model="form.body" class="w-full h-60"></textarea>
+            <textarea id="body" v-model="form.body" @input="updateCharacterCount" class="w-full h-60"></textarea>
+            <div class="text-sm text-gray-500 mt-2">{{ characterCount }}/60,000 characters</div>
           </div>
           <div class="flex flex-row justify-between">
             <label for="body" clas="leading-7 text-sm text-gray-600">Upload Images</label>
@@ -69,9 +70,10 @@
   import { DateTime } from "luxon";
 
   let formatDateTime = DateTime.now().toISO();
-  let isLoading = false;
+  let isLoading = ref(false);
   let gallery = [];
   let isNewTime = false;
+  let characterCount = ref(0);
 
   const props = defineProps(["postId", "users"]);
 
@@ -128,17 +130,18 @@
     interactive.datetime = dateString;
   }
 
-  const handleSubmit = () => {
+  const handleSubmit = async () => {
     isLoading = true;
+    await new Promise(resolve => setTimeout(resolve, 1500));
     form.put(route("post.store"), {
       preserveScroll: true,
       onSuccess: () => {
         form.reset();
-        isLoading = false;
+        isLoading.value = false;
       },
       onError: () => {
         console.log("error");
-        isLoading = false;
+        isLoading.value = false;
       },
     });
     if (isNewTime === true) {
@@ -146,14 +149,23 @@
         preserveScroll: true,
         onSuccess: () => {
           interactive.reset();
-          isLoading = false;
+          isLoading.value = false;
         },
         onError: () => {
           console.log("error");
-          isLoading = false;
+          isLoading.value = false;
         },
       });
     }
   };
+
+  const updateCharacterCount = () => {
+    const maxLength = 60000;
+    let limitedText = form.body.slice(0, maxLength);
+    form.body = limitedText;
+    characterCount.value = limitedText.length;
+  };
+
+  updateCharacterCount();
 
 </script>
