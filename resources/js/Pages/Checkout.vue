@@ -10,9 +10,11 @@
         <div class="flex justify-center">
           <div class="py-8 px-8 mx-auto w-full">
             <div class="grid gap-8 mb-4 md:grid-cols-1">
-              <!-- <MarketDisplay
+              <CheckoutDisplay
+                :checkouts="checkouts"
                 :tokens="tokens"
-              /> -->
+                :totalPrice="totalPrice"
+              />
             </div>
           </div>
         </div>
@@ -23,12 +25,12 @@
 
 <script setup>
 
-  // import MarketDisplay from "../Components/MarketDisplay.vue";
+  import CheckoutDisplay from "../Components/CheckoutDisplay.vue";
 
   import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout.vue';
 
   import { Head } from '@inertiajs/vue3';
 
-  // const props = defineProps(["tokens"]);
+  const props = defineProps(["checkouts", "tokens", "totalPrice"]);
 
 </script>
