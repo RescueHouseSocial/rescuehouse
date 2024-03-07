@@ -13,6 +13,7 @@ use App\Http\Controllers\CalendarController;
 use App\Http\Controllers\SettingsController;
 use App\Http\Controllers\GalleryController;
 use App\Http\Controllers\FavoriteController;
+use App\Http\Controllers\CheckoutController;
 
 use App\Http\Controllers\PirateController;
 
@@ -70,6 +71,8 @@ Route::middleware("auth")->group(function () {
   Route::get("/settings", [SettingsController::class, "show"])->name("settings");
   Route::post("/settingsupdate", [SettingsController::class, "update"])->name("settings.update");
   Route::post("/settingsupdateavatar", [SettingsController::class, "updateavatar"])->name("settings.updateavatar");
+
+  Route::get("/checkout/{checkoutId}", [CheckoutController::class, "show"])->name("checkout");
 
   Route::get("/pirate", [PirateController::class, "show"])->name("pirate");
   Route::post("/piratecreatetoken", [PirateController::class, "createtoken"])->name("pirate.createtoken");

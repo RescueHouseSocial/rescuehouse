@@ -1,11 +1,15 @@
 <?php
 
 namespace App\Http\Controllers;
+
 use Illuminate\Http\Request;
 use Inertia\Inertia;
 use Inertia\Response;
+use Ramsey\Uuid\Uuid;
+use Illuminate\Support\Facades\Auth;
 
 use App\Models\Tokens;
+use App\Models\Checkout;
 
 class MarketController extends Controller
 {
@@ -42,7 +46,20 @@ class MarketController extends Controller
   public function store(Request $request)
   {
 
-    dd($request);
+    $uuid = Uuid::uuid4()->toString();
+    $userId = Auth::user()->userId;
+    $checkoutTokens = $request->has("checkoutTokens") ? $request->checkoutTokens : [];
+    $processedTokens = [];
+    foreach ($checkoutTokens as $tokens) {
+      $processedTokens[] = $tokens;
+    }
+    $serializedTokens = json_encode($processedTokens);
+    $checkout = new Checkout();
+    $checkout->checkoutId = $uuid;
+    $checkout->userId = $userId;
+    $checkout->tokenId = $serializedTokens;
+    $checkout->save();
+    return response()->json(["checkoutId" => $uuid, "message" => "Cart has been updated successfully."]);
 
   }
 

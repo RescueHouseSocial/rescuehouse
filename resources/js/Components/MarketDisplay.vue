@@ -32,8 +32,9 @@
         <div class="flex flex-col mx-4 my-4 mx-auto">
           <div>
             <div v-for="(item, index) in currentCart" :key="index">
-              {{ item.name }}
-              <img :src="`/storage/tokens/medium/${item.path}`" class="rounded h-32 w-32" alt="tokens"/>
+              <p>{{ item.tokenId }}</p>
+              <p>{{ item.name }}</p>
+              <p><img :src="`/storage/tokens/medium/${item.path}`" class="rounded h-32 w-32" alt="tokens"/></p>
             </div>
           </div>
           <div class="flex justify-end">
@@ -108,7 +109,8 @@
       checkoutTokens: checkoutTokens.value,
     })
     .then(response => {
-      successMessage.value = response.data.success;
+      window.location.href = `/checkout/${response.data.checkoutId}`;
+      // successMessage.value = response.data.success;
     })
     .catch(error => {
       console.error("Error:", error);
