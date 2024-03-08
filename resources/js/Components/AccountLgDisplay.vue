@@ -29,6 +29,8 @@
 
 <script setup>
 
+  import { ref } from "vue";
+
   const emit = defineEmits(["following"]);
 
   const props = defineProps(["users", "avatar", "follow"]);

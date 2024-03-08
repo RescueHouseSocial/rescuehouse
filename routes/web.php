@@ -62,7 +62,7 @@ Route::middleware("auth")->group(function () {
 
   Route::post("/tokens", [TokensController::class, "store"])->name("token.store");
 
-  Route::get("/market", [MarketController::class, "show"])->name("market");
+  Route::get("/market/{any?}", [MarketController::class, "show"])->name("market");
   Route::post("/marketstore", [MarketController::class, "store"])->name("market.store");
   Route::post("/marketcart", [MarketController::class, "cart"])->name("market.cart");
 
@@ -73,6 +73,15 @@ Route::middleware("auth")->group(function () {
   Route::post("/settingsupdateavatar", [SettingsController::class, "updateavatar"])->name("settings.updateavatar");
 
   Route::get("/checkout/{checkoutId}", [CheckoutController::class, "show"])->name("checkout");
+  Route::post("/checkoutcreatePayment", [CheckoutController::class, "createPayment"])->name("checkout.createPayment");
+  Route::post("/checkoutprocessPayment", [CheckoutController::class, "processPayment"])->name("checkout.processPayment");
+
+  // Route::get('/payment/success', function () {
+  // return 'Payment Successful!';
+  // })->name('payment.success');
+  // Route::get('/payment/failure', function () {
+  // return 'Payment Failed!';})->name('payment.failure');
+
 
   Route::get("/pirate", [PirateController::class, "show"])->name("pirate");
   Route::post("/piratecreatetoken", [PirateController::class, "createtoken"])->name("pirate.createtoken");
