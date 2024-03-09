@@ -25,7 +25,7 @@ class PostController extends Controller
       $loggedInUser = Auth::user();
       $relatedUsers = $loggedInUser->getRelatedUsers();
       $posts = Post::join("users", "posts.userId", "=", "users.userId")
-        ->join("avatars", "users.userId", "=", "avatars.userId")
+        ->leftJoin("avatars", "users.userId", "=", "avatars.userId")
         ->leftjoin("galleries", "posts.postId", "=", "galleries.postId")
         ->leftJoin("favorites", function($join) {
           $join->on("posts.postId", "=", "favorites.postId")
@@ -35,17 +35,15 @@ class PostController extends Controller
         ->where("posts.postId", $postId)
         ->where("posts.active", 1)
         ->where("users.active", 1)
-        ->where("avatars.active", 1)
         ->select("posts.*", "users.name", "avatars.path")
         ->first();
       $galleryItems = Gallery::whereIn("galleryId", $posts->gallery)->get();
       $posts->galleries = $galleryItems;
       $replies = Reply::join("users", "replies.userId", "=", "users.userId")
-        ->join("avatars", "users.userId", "=", "avatars.userId")
+        ->leftJoin("avatars", "users.userId", "=", "avatars.userId")
         ->where("replies.postId", $postId)
         ->where("replies.active", 1)
         ->where("users.active", 1)
-        ->where("avatars.active", 1)
         ->select("replies.*", "users.name", "avatars.path")
         ->orderBy("replies.created_at", "desc")
         ->get();

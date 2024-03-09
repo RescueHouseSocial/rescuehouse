@@ -16,7 +16,7 @@
     </div>
     <div class="mr-4 md:mr-0 justify-end">
       <div class="grid grid-cols-12 gap-0 place-items-left">
-        <div class="col-span-1 items-center"><img :src="`/storage/avatars/medium/${post.path}`" class="h-full w-full rounded" alt="user avatar"/></div>
+        <div v-if="post.path" class="col-span-1 items-center"><img :src="`/storage/avatars/medium/${post.path}`" class="h-full w-full rounded" alt="user avatar"/></div>
         <div class="flex col-span-9 items-center"><a :href="`/account/${post.userId}`" class="mx-2">{{ post.name }}</a></div>
         <div class="flex col-span-1">
           <div class="flex flex-col items-center">

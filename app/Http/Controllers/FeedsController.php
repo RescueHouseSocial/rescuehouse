@@ -21,7 +21,7 @@ class FeedsController extends Controller
   {
 
     $posts = Post::join("users", "posts.userId", "=", "users.userId")
-      ->join("avatars", "users.userId", "=", "avatars.userId")
+      ->leftJoin("avatars", "users.userId", "=", "avatars.userId")
       ->leftJoin("galleries", "posts.postId", "=", "galleries.postId")
       ->leftJoin("favorites", function($join) {
         $join->on("posts.postId", "=", "favorites.postId")
@@ -30,7 +30,6 @@ class FeedsController extends Controller
       })
       ->where("posts.active", 1)
       ->where("users.active", 1)
-      ->where("avatars.active", 1)
       ->select("posts.*", "users.name", "avatars.path")
       ->orderBy("posts.created_at", "desc")
       ->distinct()

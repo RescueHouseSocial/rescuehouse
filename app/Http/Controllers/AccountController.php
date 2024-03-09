@@ -42,7 +42,7 @@ class AccountController extends Controller
         ->where("active", true)
         ->count();
       $myposts = Post::join("users", "posts.userId", "=", "users.userId")
-        ->join("avatars", "users.userId", "=", "avatars.userId")
+        ->leftJoin("avatars", "users.userId", "=", "avatars.userId")
         ->leftJoin("galleries", "posts.postId", "=", "galleries.postId")
         ->leftJoin("favorites", function($join) use ($userId) {
           $join->on("posts.postId", "=", "favorites.postId")
@@ -52,7 +52,6 @@ class AccountController extends Controller
         ->where("posts.userId", $userId)
         ->where("posts.active", 1)
         ->where("users.active", 1)
-        ->where("avatars.active", 1)
         ->select("posts.*", "users.name", "avatars.path")
         ->orderBy("posts.created_at", "desc")
         ->distinct()
@@ -71,11 +70,10 @@ class AccountController extends Controller
         }
       });
       $myreplies = Reply::join("users", "replies.userId", "=", "users.userId")
-        ->join("avatars", "users.userId", "=", "avatars.userId")
+        ->leftJoin("avatars", "users.userId", "=", "avatars.userId")
         ->where("replies.userId", $userId)
         ->where("replies.active", 1)
         ->where("users.active", 1)
-        ->where("avatars.active", 1)
         ->select("replies.*", "users.name", "avatars.path")
         ->orderBy("replies.created_at", "desc")
         ->get();
@@ -101,7 +99,7 @@ class AccountController extends Controller
         ->where("active", true)
         ->count();
       $myposts = Post::join("users", "posts.userId", "=", "users.userId")
-        ->join("avatars", "users.userId", "=", "avatars.userId")
+        ->leftJoin("avatars", "users.userId", "=", "avatars.userId")
         ->leftJoin("galleries", "posts.postId", "=", "galleries.postId")
         ->leftJoin("favorites", function($join) {
         $join->on("posts.postId", "=", "favorites.postId")
@@ -111,7 +109,6 @@ class AccountController extends Controller
         ->where("posts.userId", auth()->user()->userId)
         ->where("posts.active", 1)
         ->where("users.active", 1)
-        ->where("avatars.active", 1)
         ->select("posts.*", "users.name", "avatars.path")
         ->orderBy("posts.created_at", "desc")
         ->distinct()
@@ -139,11 +136,10 @@ class AccountController extends Controller
         }
       });
       $myreplies = Reply::join("users", "replies.userId", "=", "users.userId")
-        ->join("avatars", "users.userId", "=", "avatars.userId")
+        ->leftJoin("avatars", "users.userId", "=", "avatars.userId")
         ->where("replies.userId", auth()->user()->userId)
         ->where("replies.active", 1)
         ->where("users.active", 1)
-        ->where("avatars.active", 1)
         ->select("replies.*", "users.name", "avatars.path")
         ->orderBy("replies.created_at", "desc")
         ->get();
