@@ -74,7 +74,6 @@ class CheckoutController extends Controller
         $totalPrice += (int) $item["price"];
       }
     }
-    // $stripe = new \Stripe\StripeClient("sk_test_51OnonIBnKGyFRBtIrbLqqTPSajJNOE4hIucbwNjKKVGtaZ7YT56lLsrR7yyTKxwkEgdVUJM65scI4Ind29pUHoXQ00MOyPNgbU");
     $stripe = new \Stripe\StripeClient(env("STRIPE_SECRET"));
     try {
       $paymentIntent = $stripe->paymentIntents->create([
