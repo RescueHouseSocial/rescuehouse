@@ -6,7 +6,7 @@
         <div class="mb-24">
           <h1 class="text-3xl font-bold mb-6 text-center text-gray-700">Welcome</h1>
           <p class="text-gray-700 text-lg leading-relaxed">
-              Dive into a thriving community of passionate pet enthusiasts who share a common love for their furry, feathered, and scaled companions. Whether you're a proud cat parent, a devoted dog lover, or the proud owner of exotic pets, our social network is the perfect haven for you. Connect with like-minded individuals who understand the joys and challenges of caring for animals.
+              Dive into a thriving community of passionate pet enthusiasts who share a common love for their furry, feathered, and scaled companions. Whether you're a proud cat parent, a devoted dog lover, or the proud owner of exotic pets, our social network is the perfect haven for you. Connect with like-minded individuals who understand the joys and challenges of caring for and rescuing animals.
           </p>
           <p class="text-gray-700 text-lg leading-relaxed mt-4">
               Share heartwarming stories, exchange valuable tips on pet care, and revel in the endless stream of adorable photos and videos. Plenty of Pets isn't just a network; it's a digital sanctuary where the bond between humans and their animal friends is celebrated in all its forms.

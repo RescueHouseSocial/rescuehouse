@@ -99,6 +99,7 @@
   import DynamicPostDisplay from "../Components/DynamicPostDisplay.vue";
 
   import AuthenticatedLayout from "@/Layouts/AuthenticatedLayout.vue";
+  
   import { Head } from "@inertiajs/vue3";
 
   import { ref } from "vue";
