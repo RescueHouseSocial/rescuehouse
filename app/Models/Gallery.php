@@ -10,7 +10,7 @@ class Gallery extends Model
 
   use HasFactory;
 
-  protected $fillable = ["userId", "postId", "path"];
+  protected $fillable = ["galleryId", "userId", "postId", "path"];
 
   public function galleries()
   {

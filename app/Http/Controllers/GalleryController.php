@@ -48,6 +48,7 @@ class GalleryController extends Controller
       $resizedFileName = $uuid . "." . $file->getClientOriginalExtension();
       $resizedImage->save($resizedPath . "/" . $resizedFileName);
       $gallery = Gallery::create([
+        "galleryId" => $uuid,
         "userId" => $userId,
         "postId" => $request->postId,
         "path" => $resizedFileName,
