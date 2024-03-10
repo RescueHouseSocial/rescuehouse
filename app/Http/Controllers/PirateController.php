@@ -22,19 +22,13 @@ class PirateController extends Controller
   public function show(Request $request): Response
   {
 
-    $loggedInUser = Auth::user();
-    $userId = Auth::user()->userId;
-    $avatar = Avatar::where("userId", $userId)
-      ->where("active", 1)
-      ->first();
-    $relatedUsers = $loggedInUser->getRelatedUsers();
+    $users = User::orderBy("email", "asc")->paginate(4);
     $tokens = Tokens::where("active", 1)
       ->orderBy("name", "asc")
       ->get();
     return Inertia::render("Pirate/Home", [
-      "users" => $relatedUsers,
-      "avatar" => $avatar,
       "tokens" => $tokens,
+      "users" => $users,
     ]);
 
   }
