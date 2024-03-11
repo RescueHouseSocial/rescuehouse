@@ -77,8 +77,13 @@
                   </div>
                   <div class="flex flex-col mx-4 my-4 mx-auto">
                     <div class="flex flex-wrap mb-4">
-                      <div v-for="token in tokens" :key="token.id">
-                        <img :src="`/storage/tokens/medium/${token.path}`" class="w-12 h-12 mx-4 my-4 rounded-lg" alt="tokens"/>
+                      <div class="grid grid-cols-4 md:grid-cols-6 gap-4">
+                        <div v-for="token in tokens" :key="token.id">
+                          <TokenItem 
+                            :token="token"
+                            :selectable="false"
+                          />
+                        </div>
                       </div>
                     </div>
                     <div class="mb-4">
@@ -126,6 +131,7 @@
 
   import CurrencyInput from "../../Components/CurrencyInput.vue";
   import DragAndDropToken from "../../Components/DragAndDropToken.vue";
+  import TokenItem from "../../Components/TokenItem.vue";
 
   import AuthenticatedLayout from "@/Layouts/AuthenticatedLayout.vue";
   import { Head, useForm } from "@inertiajs/vue3";

@@ -1,22 +1,25 @@
 <template>
   <div id="TokenGallery">
-    <div class="w-full">
-      <Flicking :options="{ circular: true }" :plugins="plugins">
-        <div v-for="token in sortedTokens" :key="token.id">
-          <div 
-            @click="handleTokenSelection(token)" 
-            :class="{ 'cursor-pointer border-2 border-transparent mx-4': !token.selected, 'border-dashed border-2 border-orange-400 mx-4': token.selected }"
-          >
-            <img :src="`/storage/tokens/medium/${token.path}`" class="rounded h-32 w-32" alt="tokens"/>
+    <Flicking :options="{ circular: true }" :plugins="plugins">
+      <div v-for="token in sortedTokens" :key="token.id">
+        <div 
+          @click="handleTokenSelection(token)"
+          class="grid grid-cols-1 gap-4 content-center cursor-pointer hover:bg-gray-100"
+          :class="{ 'border-2 border-transparent': !token.selected, 'border-dashed border-2 border-orange-400': token.selected }"
+        >
+          <img :src="`/storage/tokens/small/${token.path}`" class="rounded" alt="tokens"/>
+          <div class="flex flex-col items-center">
+            <div class="font-normal text-gray-700">{{ token.name }}</div>
+            <div class="font-normal text-gray-700">${{ token.price }}</div>
           </div>
         </div>
-        <template #viewport>
-          <span class="flicking-arrow-prev h-full hover:bg-gradient-to-r from-gray-600"></span>
-          <span class="flicking-arrow-next h-full hover:bg-gradient-to-l from-gray-600"></span>
-          <div class="flicking-pagination"></div>
-        </template>
-      </Flicking>
-    </div>
+      </div>
+      <template #viewport>
+        <span class="flicking-arrow-prev h-full hover:bg-gradient-to-r from-gray-600"></span>
+        <span class="flicking-arrow-next h-full hover:bg-gradient-to-l from-gray-600"></span>
+        <div class="flicking-pagination"></div>
+      </template>
+    </Flicking>
   </div>
 </template>
 

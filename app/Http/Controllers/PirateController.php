@@ -23,8 +23,7 @@ class PirateController extends Controller
   {
 
     $users = User::orderBy("email", "asc")->paginate(4);
-    $tokens = Tokens::where("active", 1)
-      ->orderBy("name", "asc")
+    $tokens = Tokens::orderBy("name", "asc")
       ->get();
     return Inertia::render("Pirate/Home", [
       "tokens" => $tokens,

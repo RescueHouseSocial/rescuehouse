@@ -27,31 +27,33 @@
         @token-toggle="handleTokenToggle"
       />
     </div>
-    <div class="items-center bg-gray-50 rounded-lg shadow mb-4">
-      <div class="w-full p-4">
-        <div class="flex flex-col mx-4 my-4 mx-auto">
-          <div>
+    <form @submit.prevent="handleCheckoutSubmit" class="items-center bg-gray-50 rounded-lg shadow">
+      <div class="flex flex-col p-4 mx-4 my-4 mx-auto">
+        <div class="mb-8">
+          <div class="grid grid-cols-2 md:grid-cols-8 gap-4">
             <div v-for="(item, index) in currentCart" :key="index">
-              <p>{{ item.tokenId }}</p>
-              <p>{{ item.name }}</p>
-              <p><img :src="`/storage/tokens/medium/${item.path}`" class="rounded h-32 w-32" alt="tokens"/></p>
+              <div class="bg-gray-50 rounded-lg shadow">
+                <img :src="`/storage/tokens/small/${item.path}`" class="rounded" alt="tokens"/>
+                <div class="flex flex-col items-center">
+                  <div class="font-normal text-gray-700">{{ item.name }}</div>
+                  <div class="font-normal text-gray-700">${{ item.price }}</div>
+                </div>
+              </div>
             </div>
           </div>
-          <div class="flex justify-end">
-            <form @submit.prevent="handleCheckoutSubmit" class="w-full p-4">
-              <button class="flex mt-4 text-white bg-gray-500 border-0 py-2 px-8 focus:outline-none hover:bg-gray-600 rounded text-lg" type="submit">
-                <span v-if="isLoading">
-                  <i class="fa-solid fa-spinner fa-fw fa-spin"></i>
-                </span>
-                <span v-else>
-                  Checkout
-                </span>
-              </button>
-            </form>
-          </div>
+        </div>
+        <div class="flex justify-end">
+          <button class="flex mt-4 text-white bg-gray-500 border-0 py-2 px-8 focus:outline-none hover:bg-gray-600 rounded text-lg" type="submit">
+            <span v-if="isLoading">
+              <i class="fa-solid fa-spinner fa-fw fa-spin"></i>
+            </span>
+            <span v-else>
+              Checkout
+            </span>
+          </button>
         </div>
       </div>
-    </div>
+    </form>
   </div>
 </template>
 

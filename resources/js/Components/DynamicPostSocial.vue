@@ -1,6 +1,6 @@
 <template>
   <div id="DynamicPostStudio">
-    <div v-for="user in users" :key="user.id" class="items-center bg-gray-50 rounded-lg shadow sm:flex">
+    <div v-for="user in users" :key="user.id" class="items-center bg-gray-50 rounded-lg shadow">
       <form @submit.prevent="handleSubmit" class="w-full p-4">
         <div class="flex flex-col mx-4 my-4 mx-auto">
           <div class="mb-8">

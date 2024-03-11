@@ -42,9 +42,9 @@ class TokensController extends Controller
     $resizedFiles = [];
     foreach ($selectedFiles as $file) {
       $resizedImage = Image::make($file)
-        ->fit(400, 400)
+        ->fit(200, 200)
         ->encode();
-      $resizedPath = public_path("storage/tokens/medium");
+      $resizedPath = public_path("storage/tokens/small");
       $resizedFileName = $uuid . "." . $file->getClientOriginalExtension();
       $resizedImage->save($resizedPath . "/" . $resizedFileName);
       $token = Tokens::create([
@@ -52,7 +52,7 @@ class TokensController extends Controller
         "userId" => $userId,
         "name" => "Token",
         "path" => $resizedFileName,
-        "price" => 0.00,
+        "price" => 0,
       ]);
     }
 
