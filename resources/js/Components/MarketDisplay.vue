@@ -36,7 +36,7 @@
                 <img :src="`/storage/tokens/small/${item.path}`" class="rounded" alt="tokens"/>
                 <div class="flex flex-col items-center">
                   <div class="font-normal text-gray-700">{{ item.name }}</div>
-                  <div class="font-normal text-gray-700">${{ item.price * 100 }}</div>
+                  <div class="font-normal text-gray-700">${{ item.price / 100 }}</div>
                 </div>
               </div>
             </div>

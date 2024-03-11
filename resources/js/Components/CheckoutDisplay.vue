@@ -6,7 +6,7 @@
           <div v-for="item in items" :key="item.id" class="mb-16">
             <div class="flex justify-between items-end border-dashed border-b-4 border-gray-300 pb-2 mb-4">
               <img :src="`/storage/tokens/small/${item.path}`" class="h-12 w-12 rounded" alt="tokens"/>
-              <div class="font-normal text-gray-700">${{ item.price }}</div>
+              <div class="font-normal text-gray-700">${{ item.price / 100 }}</div>
             </div>
           </div>
         </div>
@@ -22,22 +22,6 @@
         <StripeCheckout></StripeCheckout>
       </div>
     </div>
-
-
-
-
-
-
-
-
-
-
-
-    <!-- CheckoutDisplay
-    <pre>{{ checkouts }}</pre>
-    <pre>{{ tokens }}</pre>
-    <pre>{{ totalPrice }}</pre>
-    <StripeCheckout></StripeCheckout> -->
   </div>
 </template>
 
