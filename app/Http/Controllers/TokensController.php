@@ -53,6 +53,7 @@ class TokensController extends Controller
         "name" => "Token",
         "path" => $resizedFileName,
         "price" => 0,
+        "type" => "premium",
       ]);
     }
 

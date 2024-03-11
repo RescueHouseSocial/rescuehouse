@@ -23,7 +23,9 @@ class PirateController extends Controller
   {
 
     $users = User::orderBy("email", "asc")->paginate(4);
-    $tokens = Tokens::orderBy("name", "asc")
+    $tokens = Tokens::where("active", 1)
+      ->where("status", "published")
+      ->orderBy("name", "asc")
       ->get();
     return Inertia::render("Pirate/Home", [
       "tokens" => $tokens,
@@ -35,10 +37,12 @@ class PirateController extends Controller
   public function createtoken(Request $request) 
   {
 
+    $price = $request->input("price");
+    $priceInCents = $price * 100;
     $file = $request->input("file");
     $token = Tokens::where("tokenId", $file)->first();
     $token->name = $request->input("name");
-    $token->price = $request->input("price");
+    $token->price = $priceInCents;
     $token->save();
 
     return redirect()->route("pirate")->with("success", "Pirate updated successfully.");

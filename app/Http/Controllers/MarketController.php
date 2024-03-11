@@ -19,6 +19,7 @@ class MarketController extends Controller
 
     $tokens = Tokens::where("active", 1)
       ->where("visibility", "public")
+      ->where("status", "published")
       ->orderBy("name", "asc")
       ->get();
     return Inertia::render("Market", [
