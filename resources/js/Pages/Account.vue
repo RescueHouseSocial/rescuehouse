@@ -25,6 +25,7 @@
                 :myposts="myposts"
                 :myreplies="myreplies"
                 :mygalleries="mygalleries"
+                :mybank="mybank"
               />
             </div>
           </div>
@@ -45,7 +46,7 @@
   import AccountLgDisplay from "@/Components/AccountLgDisplay.vue";
   import AccountLgPosts from "@/Components/AccountLgPosts.vue";
 
-  const props = defineProps(["users", "avatar", "follow", "followerscount", "followingcount", "postcount", "myposts", "myreplies", "mygalleries"]);
+  const props = defineProps(["users", "avatar", "follow", "followerscount", "followingcount", "postcount", "myposts", "myreplies", "mygalleries", "mybank"]);
 
   const handleFollowing = async (following) => {
     try {

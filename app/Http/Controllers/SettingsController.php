@@ -44,8 +44,8 @@ class SettingsController extends Controller
       $resizedPath = public_path("storage/avatars/medium");
       $resizedFileName = $uuid . "." . $file->getClientOriginalExtension();
       $resizedImage->save($resizedPath . "/" . $resizedFileName);
-      Avatar::where('userId', $userId)
-        ->update(['active' => 0]);
+      Avatar::where("userId", $userId)
+        ->update(["active" => 0]);
       Avatar::create([
         "userId" => $userId,
         "path" => $resizedFileName,
@@ -66,7 +66,6 @@ class SettingsController extends Controller
       "location" => $request->input("location"),
       "biography" => $request->input("body"),
     ]);
-    // return redirect()->route("settings")->with("success", "Settings updated successfully.");
     return response()->json(["success" => "Settings updated successfully."]);
 
   }

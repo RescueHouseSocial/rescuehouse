@@ -77,11 +77,10 @@
                   </div>
                   <div class="flex flex-col mx-4 my-4 mx-auto">
                     <div class="flex flex-wrap mb-4">
-                      <div class="grid grid-cols-4 md:grid-cols-6 gap-4">
+                      <div class="grid grid-cols-2 md:grid-cols-6 gap-4">
                         <div v-for="token in tokens" :key="token.id">
                           <TokenItem 
                             :token="token"
-                            :selectable="false"
                           />
                         </div>
                       </div>

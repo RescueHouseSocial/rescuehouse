@@ -33,7 +33,7 @@
         <div class="flex justify-center">
           <div class="py-4 px-4 mx-auto w-full md:w-1/2">
             <div class="grid gap-4 mb-4 md:grid-cols-1">
-              <div v-for="post in myposts" :key="post.id" class="items-center bg-gray-50 rounded-lg shadow sm:flex">
+              <div v-for="post in myposts" :key="post.id" class="items-center bg-gray-50 rounded-lg shadow">
                 <div class="flex flex-col mx-auto p-4 w-full">
                   <DynamicPostDisplay
                     :post="post"
@@ -48,7 +48,7 @@
         <div class="flex justify-center">
           <div class="py-4 px-4 mx-auto w-full md:w-1/2">
             <div class="grid gap-4 mb-4 md:grid-cols-1">
-              <div v-for="post in myreplies" :key="post.id" class="items-center bg-gray-50 rounded-lg shadow sm:flex">
+              <div v-for="post in myreplies" :key="post.id" class="items-center bg-gray-50 rounded-lg shadow">
                 <div class="flex flex-col mx-auto p-4 w-full">
                   <DynamicPostDisplay
                     :post="post"
@@ -60,7 +60,17 @@
         </div>
       </div>
       <div v-if="activeTab === 'tokens'">
-        tokens
+        <div class="flex flex-wrap my-4">
+          <div class="grid grid-cols-2 md:grid-cols-6 gap-4">
+            <div v-for="tokens in mybank" :key="tokens.id">
+              <div v-for="token in tokens" :key="tokens.id">
+              <TokenItem 
+                :token="token"
+              />
+              </div>
+            </div>
+          </div>
+        </div>
       </div>
       <div v-if="activeTab === 'galleries'">
         <div class="flex flex-row flex-wrap my-4">
@@ -76,12 +86,13 @@
 <script setup>
 
   import DynamicPostDisplay from "../Components/DynamicPostDisplay.vue";
+  import TokenItem from "../Components/TokenItem.vue";
 
   import { defineProps, computed, ref } from "vue";
 
   import axios from 'axios';
 
-  const props = defineProps(["myposts", "myreplies", "mygalleries"]);
+  const props = defineProps(["myposts", "myreplies", "mygalleries", "mybank"]);
 
   let activeTab = ref("posts"); 
 

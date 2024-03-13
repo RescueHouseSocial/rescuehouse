@@ -14,6 +14,8 @@ use App\Models\Gallery;
 use App\Models\Follow;
 use App\Models\Favorite;
 use App\Models\Reply;
+use App\Models\Bank;
+use App\Models\Tokens;
 
 class AccountController extends Controller
 {
@@ -143,6 +145,21 @@ class AccountController extends Controller
         ->select("replies.*", "users.name", "avatars.path")
         ->orderBy("replies.created_at", "desc")
         ->get();
+      $banks = Bank::where("userId", auth()->user()->userId)
+        ->where("active", 1)
+        ->get();
+      $mybank = [];
+      foreach ($banks as $bank) {
+        $processedTokens = json_decode($bank->tokenId, true);
+        foreach ($processedTokens as $token) {
+          $bankForToken = Tokens::where("active", 1)
+            ->where("tokenId", $token)
+            ->get();
+          if ($bankForToken) {
+            $mybank[$token] = $bankForToken;
+          }
+        }
+      }
       $mygalleries = Gallery::where("userId", auth()->user()->userId)
         ->where("active", 1)
         ->get();
@@ -157,6 +174,7 @@ class AccountController extends Controller
       "myposts" => $myposts,
       "myreplies" => $myreplies,
       "mygalleries" => $mygalleries,
+      "mybank" => $mybank,
     ]);
 
   }

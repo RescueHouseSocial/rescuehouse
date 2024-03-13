@@ -6,13 +6,13 @@ use Illuminate\Http\Request;
 use Inertia\Inertia;
 use Inertia\Response;
 use Ramsey\Uuid\Uuid;
-use Stripe\Math\Math;
 use Illuminate\Support\Facades\Auth;
 use Stripe\Stripe;
 use Stripe\Charge;
 
 use App\Models\Tokens;
 use App\Models\Checkout;
+use App\Models\Bank;
 
 class CheckoutController extends Controller
 {
@@ -120,6 +120,30 @@ class CheckoutController extends Controller
   public function processPayment(Request $request)
   {
 
+    $uuid = Uuid::uuid4()->toString();
+    $userId = Auth::user()->userId;
+    $checkouts = Checkout::where("active", 1)
+      ->where("status", "open")
+      ->where("checkoutId", $request->checkoutId)
+      ->get();
+    $banks = Bank::where("active", 1)
+      ->where("userId", $userId)
+      ->get();
+    $tokens = [];
+    foreach ($checkouts as $checkout) {
+      $tokens = json_decode($checkout->tokenId, true);
+    }
+    foreach ($banks as $bank) {
+      $tokens = json_decode($bank->tokenId, true);
+    }
+    $tokenId = json_encode($tokens);
+    Bank::where("userId", $userId)
+      ->update(["active" => 0]);
+    Bank::create([
+      "bankId" => $uuid,
+      "userId" => $userId,
+      "tokenId" => $tokenId,
+    ]);
     Checkout::where("checkoutId", $request->checkoutId)
       ->where("active", 1)
       ->update(["active" => 0, "status" => "closed"]);

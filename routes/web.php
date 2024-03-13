@@ -8,6 +8,7 @@ use App\Http\Controllers\PostController;
 use App\Http\Controllers\InteractiveController;
 use App\Http\Controllers\ReplyController;
 use App\Http\Controllers\MarketController;
+use App\Http\Controllers\BankController;
 use App\Http\Controllers\TokensController;
 use App\Http\Controllers\CalendarController;
 use App\Http\Controllers\SettingsController;
