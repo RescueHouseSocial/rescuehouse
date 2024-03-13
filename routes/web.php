@@ -6,6 +6,7 @@ use App\Http\Controllers\FeedsController;
 use App\Http\Controllers\AccountController;
 use App\Http\Controllers\PostController;
 use App\Http\Controllers\InteractiveController;
+use App\Http\Controllers\RescueController;
 use App\Http\Controllers\ReplyController;
 use App\Http\Controllers\MarketController;
 use App\Http\Controllers\BankController;
@@ -54,6 +55,7 @@ Route::middleware("auth")->group(function () {
   Route::put("/post", [PostController::class, "store"])->name("post.store");
 
   Route::put("/interactive", [InteractiveController::class, "store"])->name("interactive.store");
+  Route::put("/rescue", [RescueController::class, "store"])->name("rescue.store");
 
   Route::put("/reply", [ReplyController::class, "store"])->name("reply.store");
 

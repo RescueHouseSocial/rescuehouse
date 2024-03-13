@@ -10,17 +10,7 @@ class Post extends Model
 
   use HasFactory;
 
-  protected $fillable = [
-    "postId", 
-    "userId",
-    "title", 
-    "body", 
-    "datetime8601",
-    "visibility",
-    "type",
-    "status",
-    "gallery",
-  ];
+  protected $fillable = ["postId", "userId", "title", "body", "datetime8601", "visibility", "type", "status", "gallery"];
 
   protected $casts = [
     "gallery" => "array",

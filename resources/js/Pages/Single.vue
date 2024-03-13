@@ -11,11 +11,9 @@
           <div class="py-8 px-8 mx-auto w-full md:w-1/2">
             <div class="grid gap-8 mb-4 md:grid-cols-1">
               <div class="items-center bg-gray-50 rounded-lg shadow sm:flex">
-                <div class="flex flex-col mx-auto p-4 w-full">
-                  <DynamicPostDisplay
-                    :post="posts"
-                  />
-                </div>
+                <DynamicPostDisplay
+                  :post="posts"
+                />
               </div>
               <div class="items-center bg-gray-50 rounded-lg shadow sm:flex">
                 <div class="flex flex-col mx-auto p-4 w-full">

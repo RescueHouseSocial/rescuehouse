@@ -22,11 +22,9 @@
       </form>
     </div>
     <div v-for="post in replies" :key="post.id" class="items-center bg-gray-50 rounded-lg shadow sm:flex mb-4">
-      <div class="flex flex-col mx-auto p-4 w-full">
-        <DynamicPostDisplay
-          :post="post"
-        />
-      </div>
+      <DynamicPostDisplay
+        :post="post"
+      />
     </div>
   </div>
 </template>

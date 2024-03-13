@@ -34,11 +34,9 @@
           <div class="py-4 px-4 mx-auto w-full md:w-1/2">
             <div class="grid gap-4 mb-4 md:grid-cols-1">
               <div v-for="post in myposts" :key="post.id" class="items-center bg-gray-50 rounded-lg shadow">
-                <div class="flex flex-col mx-auto p-4 w-full">
-                  <DynamicPostDisplay
-                    :post="post"
-                  />
-                </div>
+                <DynamicPostDisplay
+                  :post="post"
+                />
               </div>
             </div>
           </div>
@@ -49,11 +47,9 @@
           <div class="py-4 px-4 mx-auto w-full md:w-1/2">
             <div class="grid gap-4 mb-4 md:grid-cols-1">
               <div v-for="post in myreplies" :key="post.id" class="items-center bg-gray-50 rounded-lg shadow">
-                <div class="flex flex-col mx-auto p-4 w-full">
-                  <DynamicPostDisplay
-                    :post="post"
-                  />
-                </div>
+                <DynamicPostDisplay
+                  :post="post"
+                />
               </div>
             </div>
           </div>

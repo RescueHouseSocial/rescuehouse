@@ -92,6 +92,7 @@ class PostController extends Controller
       "userId" => $userId,
       "body" => $request->body,
       "datetime8601" => $request->datetime8601,
+      "type" => "social",
       "gallery" => $request->gallery,
     ]);
     return redirect("/post/" . $request->postId);

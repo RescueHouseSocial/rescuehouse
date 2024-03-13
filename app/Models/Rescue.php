@@ -5,11 +5,11 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class Interactive extends Model
+class Rescue extends Model
 {
 
   use HasFactory;
 
-  protected $fillable = ["interactiveId", "postId", "userId", "datetime", "datetime8601", "duration"];
+  protected $fillable = ["rescueId", "postId", "userId", "datetime8601"];
 
 }

@@ -8,6 +8,7 @@ use Inertia\Response;
 use Ramsey\Uuid\Uuid;
 use Illuminate\Support\Facades\Auth;
 
+use App\Models\Post;
 use App\Models\Interactive;
 
 class InteractiveController extends Controller
@@ -16,14 +17,28 @@ class InteractiveController extends Controller
   public function store(Request $request)
   {
 
+    $uuid = Uuid::uuid4()->toString();
     $userId = Auth::user()->userId;
-    $post = Interactive::create([
+
+    $request->validate([
+      "body" => "required",
+    ]);
+    $post = Post::create([
       "postId" => $request->postId,
       "userId" => $userId,
-      // add body
-      "datetime8601" => $request->datetime,
+      "body" => $request->body,
+      "datetime8601" => $request->datetime8601,
+      "type" => "interactive",
+      "gallery" => $request->gallery,
+    ]);
+
+    $interactive = Interactive::create([
+      "interactiveId" => $uuid,
+      "postId" => $request->postId,
+      "userId" => $userId,
+      "datetime" => $request->datetime,
+      "datetime8601" => $request->datetime8601,
       "duration" => $request->duration,
-      // add gallery
     ]);
     return redirect("/post/" . $request->postId);
     

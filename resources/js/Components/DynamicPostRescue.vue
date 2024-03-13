@@ -11,6 +11,16 @@
             <textarea id="body" v-model="form.body" @input="updateCharacterCount" class="w-full h-60"></textarea>
             <div class="text-sm text-gray-500 mt-2">{{ characterCount }}/60,000 characters</div>
           </div>
+          <div class="flex justify-end">
+            <button class="flex mt-4 text-white bg-gray-500 border-0 py-2 px-8 focus:outline-none hover:bg-gray-600 rounded text-lg" type="submit">
+              <span v-if="isLoading">
+                <i class="fa-solid fa-spinner fa-fw fa-spin"></i>
+              </span>
+              <span v-else>
+                Post
+              </span>
+            </button>
+          </div>
         </div>
       </form>
     </div>
@@ -27,6 +37,7 @@
 
   let formatDateTime = DateTime.now().toISO();
   let isLoading = ref(false);
+  let gallery = [];
   let characterCount = ref(0);
 
   const props = defineProps(["postId", "users"]);
@@ -34,6 +45,8 @@
   const form = useForm({
     postId: props.postId,
     body: "",
+    gallery: gallery,
+    datetime8601: formatDateTime,
   });
 
   const displayDateTime = ref(DateTime.now().toLocaleString(DateTime.DATETIME_FULL));
@@ -46,7 +59,18 @@
 
   const handleSubmit = async () => {
     isLoading.value = true;
-    isLoading.value = false;
+    await new Promise(resolve => setTimeout(resolve, 1500));
+    form.put(route("rescue.store"), {
+      preserveScroll: true,
+      onSuccess: () => {
+        form.reset();
+        isLoading.value = false;
+      },
+      onError: () => {
+        console.log("error");
+        isLoading.value = false;
+      },
+    });
   };
 
   const updateCharacterCount = () => {
