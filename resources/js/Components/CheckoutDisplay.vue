@@ -12,9 +12,9 @@
         </div>
         <div class="flex justify-end">
           <div class="flex flex-col text-end">
-            <span class="font-normal text-gray-700">Sub Total: ${{ totalPrice }}</span>
-            <span class="font-normal text-gray-700">Fee: ${{ totalPrice }}</span>
-            <span class="font-normal text-gray-700">Total: ${{ totalPrice }}</span>
+            <span class="font-normal text-gray-700">Sub Total: ${{ totalPrice / 100 }}</span>
+            <span class="font-normal text-gray-700">Fee: ${{ fees / 100 }}</span>
+            <span class="font-normal text-gray-700">Total: ${{ totalAndFees / 100 }}</span>
           </div>
         </div>
       </div>
@@ -27,8 +27,10 @@
 
 <script setup>
 
+  import { onMounted, ref } from "vue";
+
   import StripeCheckout from "../Components/StripeCheckout.vue";
 
-  const props = defineProps(["checkouts", "tokens", "totalPrice"]);
+  const props = defineProps(["checkouts", "tokens", "totalPrice", "fees", "totalAndFees"]);
 
 </script>

@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use Inertia\Inertia;
 use Inertia\Response;
 use Ramsey\Uuid\Uuid;
+use Stripe\Math\Math;
 use Illuminate\Support\Facades\Auth;
 use Stripe\Stripe;
 use Stripe\Charge;
@@ -41,10 +42,23 @@ class CheckoutController extends Controller
         $totalPrice += (int) $item["price"];
       }
     }
+
+    $platformFee = config("helper.platform");
+    $stripePercentageFee = config("helper.percentage");
+    $stripeFee = config("helper.fee");
+
+    $stripeFeeInCents = $stripeFee * 100;
+    $stripePercentageInCents = round($totalPrice * $stripePercentageFee);
+    $totalStripeFeesInCents = $stripeFeeInCents + $stripePercentageInCents;
+    $totalTransactionFeesInCents = $totalStripeFeesInCents + $platformFee;
+    $totalPriceAndFeesInCents = $totalPrice + $totalTransactionFeesInCents;
+
     return Inertia::render("Checkout", [
       "checkouts" => $checkouts,
       "tokens" => $tokens,
       "totalPrice" => $totalPrice,
+      "fees" => $totalTransactionFeesInCents,
+      "totalAndFees" => $totalPriceAndFeesInCents,
     ]);
 
   }
@@ -74,10 +88,21 @@ class CheckoutController extends Controller
         $totalPrice += (int) $item["price"];
       }
     }
+
+    $platformFee = config("helper.platform");
+    $stripePercentageFee = config("helper.percentage");
+    $stripeFee = config("helper.fee");
+
+    $stripeFeeInCents = $stripeFee * 100;
+    $stripePercentageInCents = round($totalPrice * $stripePercentageFee);
+    $totalStripeFeesInCents = $stripeFeeInCents + $stripePercentageInCents;
+    $totalTransactionFeesInCents = $totalStripeFeesInCents + $platformFee;
+    $totalPriceAndFeesInCents = $totalPrice + $totalTransactionFeesInCents;
+
     $stripe = new \Stripe\StripeClient(env("STRIPE_SECRET"));
     try {
       $paymentIntent = $stripe->paymentIntents->create([
-        "amount" => $totalPrice,
+        "amount" => $totalPriceAndFeesInCents,
         "currency" => "usd",
         "automatic_payment_methods" => [
           "enabled" => true,

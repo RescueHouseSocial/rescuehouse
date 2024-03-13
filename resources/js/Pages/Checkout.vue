@@ -14,6 +14,8 @@
                 :checkouts="checkouts"
                 :tokens="tokens"
                 :totalPrice="totalPrice"
+                :fees="fees"
+                :totalAndFees="totalAndFees"
               />
             </div>
           </div>
@@ -31,6 +33,6 @@
 
   import { Head } from '@inertiajs/vue3';
 
-  const props = defineProps(["checkouts", "tokens", "totalPrice"]);
+  const props = defineProps(["checkouts", "tokens", "totalPrice", "fees", "totalAndFees"]);
 
 </script>
