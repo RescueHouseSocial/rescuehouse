@@ -24,7 +24,7 @@
                       <div>a pirate</div>
                     </div>
                     <div v-for="user in users.data" :key="user.id" class="grid grid-rows-1 md:grid-cols-12 gap-1 text-start md:text-center bg-gray-200 my-2 py-2 px-2">
-                      <div>({{user.id}})</div>
+                      <div>(<a :href="`/account/${user.userId}`" class="hover:border-b-2 border-gray-400 text-sm font-medium leading-5 text-orange-400" title="Account">{{ user.id }}</a>)</div>
                       <div class="col-span-2">{{ user.name }}</div>
                       <div class="col-span-2">{{ user.email }}</div>
                       <div class="col-span-4">{{ user.created_at }}</div>
@@ -43,29 +43,98 @@
             </div>
             Social Posts
             <div class="grid gap-8 mb-4 md:grid-cols-1">
-              <!-- v-for="user in users" :key="user.id"  -->
               <div class="items-center bg-gray-50 rounded-lg shadow sm:flex">
-                <form @submit.prevent="handleSubmit" class="w-full p-4">
-                  Edit Posts
-                </form>
+                <div class="w-full p-4">
+                  <div class="py-4 mb-4 border-b-2 border-gray-200">
+                    <div class="invisible md:visible grid grid-cols-12 gap-1 text-center bg-gray-200 my-2 py-2 px-2">
+                      <div>(id)</div>
+                      <div class="col-span-2">postId</div>
+                      <div class="col-span-2">userId</div>
+                      <div class="col-span-4">created at</div>
+                      <div>status</div>
+                      <div>ban</div>
+                      <div>active</div>
+                    </div>
+                    <div v-for="post in socialposts.data" :key="post.id" class="grid grid-rows-1 md:grid-cols-12 gap-1 text-start md:text-center bg-gray-200 my-2 py-2 px-2">
+                      <div>({{ post.id }})</div>
+                      <div class="col-span-2"><a :href="`/post/${post.postId}`" class="hover:border-b-2 border-gray-400 text-sm font-medium leading-5 text-orange-400" title="Post">{{ post.postId }}</a></div>
+                      <div class="col-span-2"><a :href="`/account/${post.userId}`" class="hover:border-b-2 border-gray-400 text-sm font-medium leading-5 text-orange-400" title="Account">{{ post.userId }}</a></div>
+                      <div class="col-span-4">{{ post.created_at }}</div>
+                      <div>{{ post.status }}</div>                      
+                      <div>{{ post.ban }}</div>
+                      <div>{{ post.active }}</div>
+                    </div>
+                  </div>
+                  <ul class="flex flex-wrap pt-2 my-2 items-center justify-center text-gray-900">
+                    <li v-for="link in socialposts.links" :key="link.id" class="mx-2">
+                      <a :href="link.url" :title="link.active" v-html="link.label" :class="link.active ? 'inline-flex items-center px-1 pt-1 border-b-2 border-gray-400 text-sm font-medium leading-5 text-orange-400 focus:outline-none focus:border-gray-700 transition duration-150 ease-in-out' : 'inline-flex items-center px-1 pt-1 border-b-2 border-transparent text-sm font-medium leading-5 text-gray-500 hover:text-gray-700 hover:border-gray-300 focus:outline-none focus:text-gray-700 focus:border-gray-300 transition duration-150 ease-in-out'"></a>
+                    </li>
+                  </ul>
+                </div>
               </div>
             </div>
             Rescue Posts
             <div class="grid gap-8 mb-4 md:grid-cols-1">
-              <!-- v-for="user in users" :key="user.id"  -->
               <div class="items-center bg-gray-50 rounded-lg shadow sm:flex">
-                <form @submit.prevent="handleSubmit" class="w-full p-4">
-                  Edit Posts
-                </form>
+                <div class="w-full p-4">
+                  <div class="py-4 mb-4 border-b-2 border-gray-200">
+                    <div class="invisible md:visible grid grid-cols-12 gap-1 text-center bg-gray-200 my-2 py-2 px-2">
+                      <div>(id)</div>
+                      <div class="col-span-2">postId</div>
+                      <div class="col-span-2">userId</div>
+                      <div class="col-span-4">created at</div>
+                      <div>status</div>
+                      <div>ban</div>
+                      <div>active</div>
+                    </div>
+                    <div v-for="post in rescueposts.data" :key="post.id" class="grid grid-rows-1 md:grid-cols-12 gap-1 text-start md:text-center bg-gray-200 my-2 py-2 px-2">
+                      <div>({{ post.id }})</div>
+                      <div class="col-span-2"><a :href="`/post/${post.postId}`" class="hover:border-b-2 border-gray-400 text-sm font-medium leading-5 text-orange-400" title="Post">{{ post.postId }}</a></div>
+                      <div class="col-span-2"><a :href="`/account/${post.userId}`" class="hover:border-b-2 border-gray-400 text-sm font-medium leading-5 text-orange-400" title="Account">{{ post.userId }}</a></div>
+                      <div class="col-span-4">{{ post.created_at }}</div>
+                      <div>{{ post.status }}</div>                      
+                      <div>{{ post.ban }}</div>
+                      <div>{{ post.active }}</div>
+                    </div>
+                  </div>
+                  <ul class="flex flex-wrap pt-2 my-2 items-center justify-center text-gray-900">
+                    <li v-for="link in rescueposts.links" :key="link.id" class="mx-2">
+                      <a :href="link.url" :title="link.active" v-html="link.label" :class="link.active ? 'inline-flex items-center px-1 pt-1 border-b-2 border-gray-400 text-sm font-medium leading-5 text-orange-400 focus:outline-none focus:border-gray-700 transition duration-150 ease-in-out' : 'inline-flex items-center px-1 pt-1 border-b-2 border-transparent text-sm font-medium leading-5 text-gray-500 hover:text-gray-700 hover:border-gray-300 focus:outline-none focus:text-gray-700 focus:border-gray-300 transition duration-150 ease-in-out'"></a>
+                    </li>
+                  </ul>
+                </div>
               </div>
             </div>
             Interactive Posts
             <div class="grid gap-8 mb-4 md:grid-cols-1">
-              <!-- v-for="user in users" :key="user.id"  -->
               <div class="items-center bg-gray-50 rounded-lg shadow sm:flex">
-                <form @submit.prevent="handleSubmit" class="w-full p-4">
-                  Edit Posts
-                </form>
+                <div class="w-full p-4">
+                  <div class="py-4 mb-4 border-b-2 border-gray-200">
+                    <div class="invisible md:visible grid grid-cols-12 gap-1 text-center bg-gray-200 my-2 py-2 px-2">
+                      <div>(id)</div>
+                      <div class="col-span-2">postId</div>
+                      <div class="col-span-2">userId</div>
+                      <div class="col-span-4">created at</div>
+                      <div>status</div>
+                      <div>ban</div>
+                      <div>active</div>
+                    </div>
+                    <div v-for="post in interactiveposts.data" :key="post.id" class="grid grid-rows-1 md:grid-cols-12 gap-1 text-start md:text-center bg-gray-200 my-2 py-2 px-2">
+                      <div>({{ post.id }})</div>
+                      <div class="col-span-2"><a :href="`/post/${post.postId}`" class="hover:border-b-2 border-gray-400 text-sm font-medium leading-5 text-orange-400" title="Post">{{ post.postId }}</a></div>
+                      <div class="col-span-2"><a :href="`/account/${post.userId}`" class="hover:border-b-2 border-gray-400 text-sm font-medium leading-5 text-orange-400" title="Account">{{ post.userId }}</a></div>
+                      <div class="col-span-4">{{ post.created_at }}</div>
+                      <div>{{ post.status }}</div>                      
+                      <div>{{ post.ban }}</div>
+                      <div>{{ post.active }}</div>
+                    </div>
+                  </div>
+                  <ul class="flex flex-wrap pt-2 my-2 items-center justify-center text-gray-900">
+                    <li v-for="link in interactiveposts.links" :key="link.id" class="mx-2">
+                      <a :href="link.url" :title="link.active" v-html="link.label" :class="link.active ? 'inline-flex items-center px-1 pt-1 border-b-2 border-gray-400 text-sm font-medium leading-5 text-orange-400 focus:outline-none focus:border-gray-700 transition duration-150 ease-in-out' : 'inline-flex items-center px-1 pt-1 border-b-2 border-transparent text-sm font-medium leading-5 text-gray-500 hover:text-gray-700 hover:border-gray-300 focus:outline-none focus:text-gray-700 focus:border-gray-300 transition duration-150 ease-in-out'"></a>
+                    </li>
+                  </ul>
+                </div>
               </div>
             </div>
             Tokens
@@ -139,7 +208,7 @@
   let successMessage = ref("");
   let files = [];
 
-  const props = defineProps(["tokens", "users"]);
+  const props = defineProps(["tokens", "users", "socialposts", "rescueposts", "interactiveposts"]);
 
   const form = useForm({
     name: "",

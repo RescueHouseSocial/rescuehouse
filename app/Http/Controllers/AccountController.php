@@ -79,6 +79,21 @@ class AccountController extends Controller
         ->select("replies.*", "users.name", "avatars.path")
         ->orderBy("replies.created_at", "desc")
         ->get();
+      $banks = Bank::where("userId", $userId)
+        ->where("active", 1)
+        ->get();
+      $mybank = [];
+      foreach ($banks as $bank) {
+        $processedTokens = json_decode($bank->tokenId, true);
+        foreach ($processedTokens as $token) {
+          $bankForToken = Tokens::where("active", 1)
+            ->where("tokenId", $token)
+            ->get();
+          if ($bankForToken) {
+            $mybank[$token] = $bankForToken;
+          }
+        }
+      }
       $mygalleries = Gallery::where("userId", $userId)
         ->where("active", 1)
         ->get();

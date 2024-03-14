@@ -22,7 +22,16 @@ class PirateController extends Controller
   public function show(Request $request): Response
   {
 
-    $users = User::orderBy("email", "asc")->paginate(4);
+    $users = User::orderBy("email", "desc")->paginate($perPage = 4, $columns = ["*"], $pageName = "users");
+    $socialposts = Post::orderBy("id", "desc")
+      ->where("type", "social")
+      ->paginate($perPage = 4, $columns = ["*"], $pageName = "social");
+    $rescueposts = Post::orderBy("id", "desc")
+      ->where("type", "rescue")
+      ->paginate($perPage = 4, $columns = ["*"], $pageName = "rescue");
+    $interactiveposts = Post::orderBy("id", "desc")
+      ->where("type", "interactive")
+      ->paginate($perPage = 4, $columns = ["*"], $pageName = "interactive");
     $tokens = Tokens::where("active", 1)
       ->where("status", "published")
       ->orderBy("name", "asc")
@@ -30,6 +39,9 @@ class PirateController extends Controller
     return Inertia::render("Pirate/Home", [
       "tokens" => $tokens,
       "users" => $users,
+      "socialposts" => $socialposts,
+      "rescueposts" => $rescueposts,
+      "interactiveposts" => $interactiveposts,
     ]);
 
   }
