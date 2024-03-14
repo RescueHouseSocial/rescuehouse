@@ -31,36 +31,63 @@
             </div>
           </div>
         </div>
-        <div class="w-full">
-          <div class="flex justify-center">
-            <div class="py-8 px-8 mx-auto w-full md:w-1/2">
-              <div class="grid gap-8 mb-4 md:grid-cols-1">
-                <div class="items-center bg-gray-50 rounded-lg shadow">
-                  <div v-for="post in posts" :key="post.id">
-                    <div v-if="activeTab === 'social'">
-                      <div v-if="post.type === 'social'">
-                        <DynamicPostDisplay
-                          :post="post"
-                        />
-                      </div>
-                    </div>
-                    <div v-if="activeTab === 'rescue'">
-                      <div v-if="post.type === 'rescue'">
-                        <DynamicPostDisplay
-                          :post="post"
-                        />
-                      </div>
-                    </div>
-                    <div v-if="activeTab === 'interactive'">
-                      <div v-if="post.type === 'interactive'">
-                        <DynamicPostDisplay
-                          :post="post"
-                        />
-                      </div>
+        <div v-if="activeTab === 'social'">
+          <div class="w-full">
+            <div class="flex justify-center">
+              <span v-if="isLoading" class="my-8">
+                <i class="fa-solid fa-spinner fa-fw fa-spin"></i>
+              </span>
+              <span v-else>
+                <div class="py-8 px-8 mx-auto w-full md:w-1/2">
+                  <div class="grid gap-8 mb-4 md:grid-cols-1">
+                    <div v-for="post in socialposts" :key="post.id" class="items-center bg-gray-50 rounded-lg shadow">
+                      <DynamicPostDisplay
+                        :post="post"
+                      />
                     </div>
                   </div>
                 </div>
-              </div>
+              </span>
+            </div>
+          </div>
+        </div>
+        <div v-if="activeTab === 'rescue'">
+          <div class="w-full">
+            <div class="flex justify-center">
+              <span v-if="isLoading" class="my-8">
+                <i class="fa-solid fa-spinner fa-fw fa-spin"></i>
+              </span>
+              <span v-else>
+                <div class="py-8 px-8 mx-auto w-full md:w-1/2">
+                  <div class="grid gap-8 mb-4 md:grid-cols-1">
+                    <div v-for="post in rescueposts" :key="post.id" class="items-center bg-gray-50 rounded-lg shadow">
+                      <DynamicPostDisplay
+                        :post="post"
+                      />
+                    </div>
+                  </div>
+                </div>
+              </span>
+            </div>
+          </div>
+        </div>
+        <div v-if="activeTab === 'interactive'">
+          <div class="w-full">
+            <div class="flex justify-center">
+              <span v-if="isLoading" class="my-8">
+                <i class="fa-solid fa-spinner fa-fw fa-spin"></i>
+              </span>
+              <span v-else>
+                <div class="py-8 px-8 mx-auto w-full md:w-1/2">
+                  <div class="grid gap-8 mb-4 md:grid-cols-1">
+                    <div v-for="post in interactiveposts" :key="post.id" class="items-center bg-gray-50 rounded-lg shadow">
+                      <DynamicPostDisplay
+                        :post="post"
+                      />
+                    </div>
+                  </div>
+                </div>
+              </span>
             </div>
           </div>
         </div>
@@ -71,28 +98,52 @@
 
 <script setup>
 
+  import axios from "axios";
+
   import DynamicPostDisplay from "../Components/DynamicPostDisplay.vue";
 
   import AuthenticatedLayout from "@/Layouts/AuthenticatedLayout.vue";
   
   import { Head } from "@inertiajs/vue3";
 
-  import { ref } from "vue";
+  import { ref, onMounted } from "vue";
 
-  const props = defineProps(["posts"]);
-
+  let isLoading = ref(false);
   let activeTab = ref("social");
+  let socialposts = ref([]);
+  let rescueposts = ref([]);
+  let interactiveposts = ref([]);
+
+  onMounted(async () => {
+    const response = await axios.get(route("feeds.social"));
+    socialposts.value = response.data.posts;
+  });
 
   const social = async () => {
     activeTab.value = "social";
+    isLoading.value = true;
+    await new Promise(resolve => setTimeout(resolve, 1500));
+    const response = await axios.get(route("feeds.social"));
+    socialposts.value = response.data.posts;
+    isLoading.value = false;
   }
 
   const rescue = async () => {
     activeTab.value = "rescue";
+    isLoading.value = true;
+    await new Promise(resolve => setTimeout(resolve, 1500));
+    const response = await axios.get(route("feeds.rescue"));
+    rescueposts.value = response.data.posts;
+    isLoading.value = false;
   }
 
   const interactive = async () => {
     activeTab.value = "interactive";
+    isLoading.value = true;
+    await new Promise(resolve => setTimeout(resolve, 1500));
+    const response = await axios.get(route("feeds.interactive"));
+    interactiveposts.value = response.data.posts;
+    isLoading.value = false;
   }
 
 </script>

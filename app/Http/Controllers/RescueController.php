@@ -8,6 +8,8 @@ use Inertia\Response;
 use Ramsey\Uuid\Uuid;
 use Illuminate\Support\Facades\Auth;
 
+use App\Models\User;
+use App\Models\Avatar;
 use App\Models\Post;
 use App\Models\Rescue;
 
@@ -18,7 +20,19 @@ class RescueController extends Controller
    */
   public function index()
   {
-  //
+    
+    $posts = Post::join("users", "posts.userId", "=", "users.userId")
+      ->leftJoin("avatars", "users.userId", "=", "avatars.userId")
+      ->where("posts.type", "rescue")
+      ->where("posts.active", 1)
+      ->select("posts.*", "users.name", "avatars.path")
+      ->inRandomOrder()
+      ->limit(2)
+      ->distinct()
+      ->get();
+
+    return response()->json(["posts" => $posts, "message" => "Got posts successful"]);
+
   }
 
   /**

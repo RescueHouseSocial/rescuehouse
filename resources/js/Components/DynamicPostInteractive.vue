@@ -138,7 +138,6 @@
         isLoading.value = false;
       },
     });
-    isLoading.value = false;
   };
 
   const updateCharacterCount = () => {

@@ -16,6 +16,13 @@ class Post extends Model
     "gallery" => "array",
   ];
 
+  // public function user()
+  // {
+
+  //   return $this->belongsTo(User::class, "userId");
+
+  // }
+
   public function getAllPostsOrderedByCreatedAt()
   {
 

@@ -47,6 +47,9 @@ Route::get("/about", function () {
 Route::middleware("auth")->group(function () {
 
   Route::get("/feeds", [FeedsController::class, "show"])->name("feeds");
+  Route::get("/feedssocial", [FeedsController::class, "showsocial"])->name("feeds.social");
+  Route::get("/feedsrescue", [FeedsController::class, "showrescue"])->name("feeds.rescue");
+  Route::get("/feedsinteractive", [FeedsController::class, "showinteractive"])->name("feeds.interactive");
 
   Route::get("/account/{userId?}", [AccountController::class, "show"])->name("account");
   Route::post("/account", [AccountController::class, "follow"])->name("account.follow");
@@ -56,6 +59,7 @@ Route::middleware("auth")->group(function () {
 
   Route::put("/interactive", [InteractiveController::class, "store"])->name("interactive.store");
   Route::put("/rescue", [RescueController::class, "store"])->name("rescue.store");
+  Route::get("/rescueindex", [RescueController::class, "index"])->name("rescue.index");
 
   Route::put("/reply", [ReplyController::class, "store"])->name("reply.store");
 

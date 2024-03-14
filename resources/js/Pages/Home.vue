@@ -96,7 +96,7 @@
           <p class="mb-8 leading-relaxed">
             At the heart of our mission to provide loving homes for animals in need lies our commitment to hosting impactful fundraising events. These gatherings serve as vital pillars of support, enabling us to continue our work of rehoming animals to safety and security.
           </p>
-          <FundraisingCards></FundraisingCards>
+          <RescuingCards></RescuingCards>
         </div>
       </div>
     </div>
@@ -110,6 +110,6 @@
   import GuestLayout from "@/Layouts/GuestLayout.vue";
 
   import SliderGallery from "../Components/SliderGallery.vue";
-  import FundraisingCards from "../Components/FundraisingCards.vue";
+  import RescuingCards from "../Components/RescuingCards.vue";
 
 </script>
