@@ -15,7 +15,8 @@
               <NavLink :href="route('account')" :active="route().current('account')"><i class="fa-solid fa-circle-user fa-fw fa-2xl"></i></NavLink>
               <NavLink :href="route('post')" :active="route().current('post')"><i class="fa-solid fa-pen-to-square fa-fw fa-2xl"></i></NavLink>
               <NavLink :href="route('market')" :active="route().current('market')"><i class="fa-solid fa-store fa-fw fa-2xl"></i></NavLink>
-              <NavLink :href="route('calendar')" :active="route().current('calendar')"><i class="fa-regular fa-calendar-days fa-fw fa-2xl"></i></NavLink>
+              <NavLink :href="route('interactive')" :active="route().current('interactive')"><i class="fa-solid fa-video fa-fw fa-2xl"></i></NavLink>
+              <NavLink :href="route('search')" :active="route().current('search')"><i class="fa-solid fa-magnifying-glass fa-fw fa-2xl"></i></NavLink>
               <NavLink v-if="$page.props.auth.user.pirate === 1" :href="route('pirate')" :active="route().current('pirate')"><i class="fa-solid fa-skull-crossbones fa-fw fa-2xl"></i></NavLink>
             </div>
           </div>
@@ -47,6 +48,7 @@
                 </template>
                 <template #content>
                   <DropdownLink :href="route('settings')"> Settings </DropdownLink>
+                  <DropdownLink :href="route('subscription')"> Subscription </DropdownLink>
                   <DropdownLink :href="route('logout')" method="post" as="button">Log Out</DropdownLink>
                 </template>
               </Dropdown>
@@ -91,7 +93,8 @@
           <ResponsiveNavLink :href="route('account')" :active="route().current('account')"><i class="fa-solid fa-circle-user fa-fw fa-2xl"></i><span class="leading-relaxed text-base text-gray-400">Account</span></ResponsiveNavLink>
           <ResponsiveNavLink :href="route('post')" :active="route().current('post')"><i class="fa-solid fa-pen-to-square fa-fw fa-2xl"></i><span class="leading-relaxed text-base text-gray-400">Post</span></ResponsiveNavLink>
           <ResponsiveNavLink :href="route('market')" :active="route().current('market')"><i class="fa-solid fa-store fa-fw fa-2xl"></i><span class="leading-relaxed text-base text-gray-400">Market</span></ResponsiveNavLink>
-          <ResponsiveNavLink :href="route('calendar')" :active="route().current('calendar')"><i class="fa-regular fa-calendar-days fa-fw fa-2xl"></i><span class="leading-relaxed text-base text-gray-400">Calendar</span></ResponsiveNavLink>
+          <ResponsiveNavLink :href="route('interactive')" :active="route().current('interactive')"><i class="fa-solid fa-video fa-fw fa-2xl"></i><span class="leading-relaxed text-base text-gray-400">Interactive</span></ResponsiveNavLink>
+          <ResponsiveNavLink :href="route('search')" :active="route().current('search')"><i class="fa-solid fa-magnifying-glass fa-fw fa-2xl"></i><span class="leading-relaxed text-base text-gray-400">Search</span></ResponsiveNavLink>
           <ResponsiveNavLink v-if="$page.props.auth.user.pirate === 1" :href="route('pirate')" :active="route().current('pirate')"><i class="fa-solid fa-skull-crossbones fa-fw fa-2xl"></i></ResponsiveNavLink>
         </div>
         <!-- Responsive Settings Options -->
@@ -104,6 +107,7 @@
           </div>
           <div class="mt-3 space-y-1">
             <ResponsiveNavLink :href="route('settings')"> Settings </ResponsiveNavLink>
+            <ResponsiveNavLink :href="route('subscription')"> Subscription </ResponsiveNavLink>
             <ResponsiveNavLink :href="route('logout')" method="post" as="button">Log Out</ResponsiveNavLink>
           </div>
         </div>

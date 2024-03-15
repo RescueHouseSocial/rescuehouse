@@ -14,6 +14,13 @@ use App\Models\Interactive;
 class InteractiveController extends Controller
 {
 
+  public function show(Request $request): Response
+  {
+
+    return Inertia::render("Interactive");
+
+  }
+
   public function store(Request $request)
   {
 

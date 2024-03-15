@@ -12,6 +12,8 @@ use App\Http\Controllers\MarketController;
 use App\Http\Controllers\BankController;
 use App\Http\Controllers\TokensController;
 use App\Http\Controllers\CalendarController;
+use App\Http\Controllers\SearchController;
+use App\Http\Controllers\SubscriptionController;
 use App\Http\Controllers\SettingsController;
 use App\Http\Controllers\GalleryController;
 use App\Http\Controllers\FavoriteController;
@@ -57,7 +59,8 @@ Route::middleware("auth")->group(function () {
   Route::get("/post/{postId?}", [PostController::class, "show"])->name("post");
   Route::put("/post", [PostController::class, "store"])->name("post.store");
 
-  Route::put("/interactive", [InteractiveController::class, "store"])->name("interactive.store");
+  Route::get("/interactive", [InteractiveController::class, "show"])->name("interactive");
+  Route::put("/interactivestore", [InteractiveController::class, "store"])->name("interactive.store");
   Route::put("/rescue", [RescueController::class, "store"])->name("rescue.store");
   Route::get("/rescueindex", [RescueController::class, "index"])->name("rescue.index");
 
@@ -74,6 +77,10 @@ Route::middleware("auth")->group(function () {
   Route::post("/marketcart", [MarketController::class, "cart"])->name("market.cart");
 
   Route::get("/calendar", [CalendarController::class, "show"])->name("calendar");
+
+  Route::get("/search", [SearchController::class, "show"])->name("search");
+  
+  Route::get("/subscription", [SubscriptionController::class, "show"])->name("subscription");
 
   Route::get("/settings", [SettingsController::class, "show"])->name("settings");
   Route::post("/settingsupdate", [SettingsController::class, "update"])->name("settings.update");

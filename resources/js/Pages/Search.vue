@@ -1,15 +1,15 @@
 <template>
   <AuthenticatedLayout>
-    <Head title="Calendar" />
+    <Head title="Search" />
     <template #header>
-      <h2 class="font-semibold text-xl text-gray-800 leading-tight">Calendar</h2>
+      <h2 class="font-semibold text-xl text-gray-800 leading-tight">Search</h2>
       <p class="leading-relaxed text-base text-gray-400">Blue bottle crucifix vinyl post-ironic four dollar toast vegan taxidermy. Gastropub indxgo juice poutine, ramps microdosing banh mi pug VHS try-hard.</p>
     </template>
     <div class="py-4">
       <div class="max-w-7xl min-h-screen bg-gray-100 mx-auto">
         <div class="flex justify-center">
           <div class="w-full md:w-1/2 mx-4 my-24 bg-white shadow-lg rounded-lg">
-            <div class="p-6 text-gray-900">Show Calendar</div>
+            <div class="p-6 text-gray-900">Show Search</div>
           </div>
         </div>
       </div>
