@@ -1,31 +1,22 @@
 <template>
   <div id="MarketDisplay">
-    <!-- <p>free</p> -->
-    <div class="items-center bg-gray-50 rounded-lg shadow mb-4 box">
-      <!-- <div class="ribbon ribbon-top-right"><span>ribbon</span></div> -->
-      <TokensDisplay
-        :tokens="tokens"
-        :type="freeType"
-        @token-toggle="handleTokenToggle"
-      />
-    </div>
-    <!-- <p>exclusive</p> -->
-    <div class="items-center bg-gray-50 rounded-lg shadow mb-4 box">
-      <!-- <div class="ribbon ribbon-top-right"><span>ribbon</span></div> -->
-      <TokensDisplay
-        :tokens="tokens"
-        :type="exclusiveType"
-        @token-toggle="handleTokenToggle"
-      />
-    </div>
-    <!-- <p>premium</p> -->
-    <div class="items-center bg-gray-50 rounded-lg shadow mb-4 box">
-      <!-- <div class="ribbon ribbon-top-right"><span>ribbon</span></div> -->
-      <TokensDisplay
-        :tokens="tokens"
-        :type="premiumType"
-        @token-toggle="handleTokenToggle"
-      />
+    <div class="flex flex-wrap my-4">
+      <div class="grid grid-cols-2 md:grid-cols-6 gap-4">
+        <div v-for="token in tokens" :key="token.id" class="items-center bg-gray-50 rounded-lg shadow mb-4 box">
+          <!-- <div class="ribbon ribbon-top-right"><span>ribbon</span></div> -->
+          <div 
+            @click="handleTokenToggle(token)"
+            class="grid grid-cols-1 gap-4 content-center cursor-pointer hover:bg-gray-100"
+            :class="{ 'border-2 border-transparent': !token.selected, 'border-dashed border-2 border-orange-400': token.selected }"
+          >
+            <img :src="`/storage/tokens/small/${token.path}`" class="rounded" alt="tokens"/>
+            <div class="flex flex-col items-center">
+              <div class="font-normal text-gray-700">{{ token.name }}</div>
+              <div class="font-normal text-gray-700">${{ token.price / 100 }}</div>
+            </div>
+          </div>
+        </div>
+      </div>
     </div>
     <form @submit.prevent="handleCheckoutSubmit" class="items-center bg-gray-50 rounded-lg shadow">
       <div class="flex flex-col p-4 mx-4 my-4 mx-auto">
@@ -63,8 +54,6 @@
 
   import { ref, computed } from "vue";
 
-  import TokensDisplay from "../Components/TokensDisplay.vue";
-
   const props = defineProps(["tokens"]);
 
   const freeType = "free";
@@ -90,10 +79,11 @@
     isLoading.value = false;
   }
 
-  const handleTokenToggle = async (tokenId) => {
-    const index = checkoutTokens.value.indexOf(tokenId);
+  const handleTokenToggle = async (token) => {
+    token.selected = !token.selected;
+    const index = checkoutTokens.value.indexOf(token.tokenId);
     if (index === -1) {
-      checkoutTokens.value.push(tokenId);
+      checkoutTokens.value.push(token.tokenId);
     } else {
       checkoutTokens.value.splice(index, 1);
     }
@@ -106,18 +96,17 @@
 
   const handleCheckoutSubmit = async () => {
     isLoading.value = true;
-    await new Promise(resolve => setTimeout(resolve, 1500));
+    await new Promise(resolve => setTimeout(resolve, 500));
     await axios.post(route("market.store"), { 
       checkoutTokens: checkoutTokens.value,
     })
     .then(response => {
       window.location.href = `/checkout/${response.data.checkoutId}`;
-      // successMessage.value = response.data.success;
     })
     .catch(error => {
+      isLoading.value = false;
       console.error("Error:", error);
     });
-    isLoading.value = false;
   }
 
 </script>
