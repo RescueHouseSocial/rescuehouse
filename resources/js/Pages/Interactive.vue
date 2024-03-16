@@ -7,18 +7,20 @@
     </template>
     <div class="py-4">
       <div class="max-w-8xl min-h-screen bg-gray-100 mx-auto">
-        <div v-if="postId">
-          <DynamicLiveSession 
-            :posts="posts"
-            :opentok_api_key="opentok_api_key"
-            :sessionId="sessionId"
-            :token="token"
-          />
-        </div>
-        <div v-else>
-          <InteractivesDisplay
-            :posts="posts"
-          />
+        <div class="flex justify-center">
+          <div v-if="postId">
+            <DynamicLiveSession 
+              :posts="posts"
+              :opentok_api_key="opentok_api_key"
+              :sessionId="sessionId"
+              :token="token"
+            />
+          </div>
+          <div v-else>
+            <InteractivesDisplay
+              :posts="posts"
+            />
+          </div>
         </div>
       </div>
     </div>

@@ -60,6 +60,12 @@ class InteractiveController extends Controller
           $interactive = Interactive::where("postId", $postId)->firstOrFail();
           $interactive->sessionId = $sessionId;
           $interactive->save();
+          $token = $opentok->generateToken($sessionId, array(
+            "role"                   => Role::MODERATOR,
+            "expireTime"             => time()+(7 * 24 * 60 * 60),
+            "data"                   => "name=RHS",
+            "initialLayoutClassList" => array("focus")
+          ));
         }
       } else {
         if($post->sessionId != "") {
@@ -70,7 +76,7 @@ class InteractiveController extends Controller
             "initialLayoutClassList" => array("focus")
           ));
         } else {
-          // you are too early tell the user to wait
+          return redirect("/interactive");
         }
       }
     }
