@@ -10,6 +10,9 @@
         <div v-if="postId">
           <DynamicLiveSession 
             :posts="posts"
+            :opentok_api_key="opentok_api_key"
+            :sessionId="sessionId"
+            :token="token"
           />
         </div>
         <div v-else>
@@ -31,6 +34,6 @@
 
   import { Head } from "@inertiajs/vue3";
 
-  const props = defineProps(["postId", "posts"]);
+  const props = defineProps(["postId", "posts", "opentok_api_key", "sessionId", "token"]);
 
 </script>

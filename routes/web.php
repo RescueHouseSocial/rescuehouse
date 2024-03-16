@@ -59,8 +59,8 @@ Route::middleware("auth")->group(function () {
   Route::get("/post/{postId?}", [PostController::class, "show"])->name("post");
   Route::put("/post", [PostController::class, "store"])->name("post.store");
 
-  Route::get("/interactive", [InteractiveController::class, "index"])->name("interactive.index");
-  Route::get("/interactive/{postId?}", [InteractiveController::class, "show"])->name("interactive");
+  Route::get("/interactive", [InteractiveController::class, "index"])->name("interactive");
+  Route::get("/interactive/{postId?}", [InteractiveController::class, "show"])->name("interactive.show");
   Route::put("/interactivestore", [InteractiveController::class, "store"])->name("interactive.store");
 
   Route::get("/rescueindex", [RescueController::class, "index"])->name("rescue.index");

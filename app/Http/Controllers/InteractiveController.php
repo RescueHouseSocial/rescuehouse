@@ -6,10 +6,13 @@ use Illuminate\Http\Request;
 use Inertia\Inertia;
 use Inertia\Response;
 use Ramsey\Uuid\Uuid;
+use OpenTok\OpenTok;
+use OpenTok\Session;
+use OpenTok\Role;
 use Illuminate\Support\Facades\Auth;
 
 use App\Models\Post;
-// use App\Models\Interactive;
+use App\Models\Interactive;
 
 class InteractiveController extends Controller
 {
@@ -31,15 +34,53 @@ class InteractiveController extends Controller
   public function show(Request $request, $postId = null): Response
   {
 
+    $opentok_api_key = env("OPENTOK_API_KEY");
+    $opentok_secret = env("OPENTOK_SECRET");
+    $opentok = new OpenTok($opentok_api_key, $opentok_secret);
+    $userId = Auth::user()->userId;
+
     $posts = Post::join("interactives", "posts.postId", "=", "interactives.postId")
       ->where("posts.postId", $postId)
       ->where("posts.active", 1)
       ->where("posts.type", "interactive")
-      ->get(["posts.*", "interactives.datetime"]);
+      ->get(["posts.*", "interactives.datetime", "interactives.sessionId", "interactives.userId"]);
+
+    foreach($posts as $post) {
+      if($post->userId === $userId) {
+        if($post->sessionId != "") {
+          $token = $opentok->generateToken($post->sessionId, array(
+            "role"                   => Role::MODERATOR,
+            "expireTime"             => time()+(7 * 24 * 60 * 60),
+            "data"                   => "name=RHS",
+            "initialLayoutClassList" => array("focus")
+          ));
+        } else {
+          $session = $opentok->createSession();
+          $sessionId = $session->getSessionId();
+          $interactive = Interactive::where("postId", $postId)->firstOrFail();
+          $interactive->sessionId = $sessionId;
+          $interactive->save();
+        }
+      } else {
+        if($post->sessionId != "") {
+          $token = $opentok->generateToken($post->sessionId, array(
+            "role"                   => Role::PUBLISHER,
+            "expireTime"             => time()+(7 * 24 * 60 * 60),
+            "data"                   => "name=RHS",
+            "initialLayoutClassList" => array("focus")
+          ));
+        } else {
+          // you are too early tell the user to wait
+        }
+      }
+    }
 
     return Inertia::render("Interactive", [
       "postId" => $postId,
       "posts" => $posts,
+      "opentok_api_key" => $opentok_api_key,
+      "sessionId" => $post->sessionId,
+      "token" => $token,
     ]);
 
   }

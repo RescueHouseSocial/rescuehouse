@@ -10,6 +10,6 @@ class Interactive extends Model
 
   use HasFactory;
 
-  protected $fillable = ["interactiveId", "postId", "userId", "datetime", "datetime8601", "duration"];
+  protected $fillable = ["interactiveId", "postId", "userId", "datetime", "datetime8601", "duration", "sessionId"];
 
 }
