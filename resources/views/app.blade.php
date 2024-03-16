@@ -17,7 +17,7 @@
     <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
     <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
     <script src="https://js.stripe.com/v3/"></script>
-    <script src="https://cdn.jsdelivr.net/npm/@vonage/client-sdk-video@latest/dist/js/opentok.min.js"></script>
+    <script src="https://unpkg.com/@vonage/client-sdk-video@latest/dist/js/opentok.js"></script>
     <!-- <script type="module" src="https://unpkg.com/@vonage/video-publisher@latest/video-publisher.js?module"></script>
     <script type="module" src="https://unpkg.com/@vonage/video-subscribers@latest/video-subscribers.js?module"></script> -->
     <link rel="preconnect" href="https://fonts.bunny.net">
