@@ -76,7 +76,7 @@ class InteractiveController extends Controller
             "initialLayoutClassList" => array("focus")
           ));
         } else {
-          return redirect("/interactive");
+          return Inertia::location("Interactive");
         }
       }
     }
