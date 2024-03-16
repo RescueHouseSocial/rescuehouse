@@ -65,6 +65,7 @@
   import DragAndDropImage from "../Components/DragAndDropImage.vue";
 
   import AuthenticatedLayout from "@/Layouts/AuthenticatedLayout.vue";
+  
   import { Head, useForm } from "@inertiajs/vue3";
 
   let isLoading = ref(false);

@@ -9,15 +9,38 @@ use Ramsey\Uuid\Uuid;
 use Illuminate\Support\Facades\Auth;
 
 use App\Models\Post;
-use App\Models\Interactive;
+// use App\Models\Interactive;
 
 class InteractiveController extends Controller
 {
 
-  public function show(Request $request): Response
+  public function index(Request $request): Response
   {
 
-    return Inertia::render("Interactive");
+    $posts = Post::join("interactives", "posts.postId", "=", "interactives.postId")
+      ->where("posts.active", 1)
+      ->where("posts.type", "interactive")
+      ->get(["posts.*", "interactives.datetime"]);
+
+    return Inertia::render("Interactive", [
+      "posts" => $posts,
+    ]);
+
+  }
+
+  public function show(Request $request, $postId = null): Response
+  {
+
+    $posts = Post::join("interactives", "posts.postId", "=", "interactives.postId")
+      ->where("posts.postId", $postId)
+      ->where("posts.active", 1)
+      ->where("posts.type", "interactive")
+      ->get(["posts.*", "interactives.datetime"]);
+
+    return Inertia::render("Interactive", [
+      "postId" => $postId,
+      "posts" => $posts,
+    ]);
 
   }
 

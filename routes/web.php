@@ -59,10 +59,12 @@ Route::middleware("auth")->group(function () {
   Route::get("/post/{postId?}", [PostController::class, "show"])->name("post");
   Route::put("/post", [PostController::class, "store"])->name("post.store");
 
-  Route::get("/interactive", [InteractiveController::class, "show"])->name("interactive");
+  Route::get("/interactive", [InteractiveController::class, "index"])->name("interactive.index");
+  Route::get("/interactive/{postId?}", [InteractiveController::class, "show"])->name("interactive");
   Route::put("/interactivestore", [InteractiveController::class, "store"])->name("interactive.store");
-  Route::put("/rescue", [RescueController::class, "store"])->name("rescue.store");
+
   Route::get("/rescueindex", [RescueController::class, "index"])->name("rescue.index");
+  Route::put("/rescue", [RescueController::class, "store"])->name("rescue.store");
 
   Route::put("/reply", [ReplyController::class, "store"])->name("reply.store");
 
@@ -81,7 +83,7 @@ Route::middleware("auth")->group(function () {
   Route::get("/search", [SearchController::class, "show"])->name("search");
   
   Route::get("/subscription", [SubscriptionController::class, "show"])->name("subscription");
-
+  
   Route::get("/settings", [SettingsController::class, "show"])->name("settings");
   Route::post("/settingsupdate", [SettingsController::class, "update"])->name("settings.update");
   Route::post("/settingsupdateavatar", [SettingsController::class, "updateavatar"])->name("settings.updateavatar");

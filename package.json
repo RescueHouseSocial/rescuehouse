@@ -20,6 +20,8 @@
     "dependencies": {
         "@egjs/flicking-plugins": "^4.7.1",
         "@egjs/vue3-flicking": "^4.11.2",
+        "@vonage/video-publisher": "^0.0.7",
+        "@vonage/video-subscribers": "^0.0.9",
         "@vuepic/vue-datepicker": "^8.2.0",
         "luxon": "^3.4.4",
         "uuidv4": "^6.2.13",

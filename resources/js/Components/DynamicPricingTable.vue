@@ -6,10 +6,39 @@
         <p class="mb-5 font-light text-gray-500 sm:text-xl">Here at Flowbite we focus on markets where technology, innovation, and capital can unlock long-term value and drive economic growth.</p>
       </div>
       <div class="space-y-8 lg:grid lg:grid-cols-3 sm:gap-6 xl:gap-10 lg:space-y-0">
-
-        <div class="flex flex-col p-6 mx-auto max-w-lg text-center text-gray-900 bg-gray-50 rounded-lg shadow cursor-pointer hover:bg-gray-100">
+        <div @click="handleSubscribeToggle('starter')" class="flex flex-col p-6 mx-auto max-w-lg text-center text-gray-900 bg-gray-100 rounded-lg shadow cursor-pointer hover:bg-gray-100">
           <h3 class="mb-4 text-2xl font-semibold">Starter</h3>
-          <p class="font-light text-gray-500 sm:text-lg">Best option for personal use & for your next project.</p>
+          <p class="font-light text-gray-500 sm:text-lg">Our Starter plan offers essential features to meet your needs. Perfect for individuals or small businesses just starting out.</p>
+          <div class="flex justify-center items-baseline my-8">
+            <span class="mr-2 text-5xl font-extrabold">$19</span>
+            <span class="text-gray-500">/month</span>
+          </div>
+          <ul role="list" class="mb-8 space-y-4 text-left">
+            <li class="flex items-center space-x-3">
+              <i class="fa-regular fa-circle-check fa-fw text-green-500"></i>
+              <span>post-ironic four dollar toast vegan</span>
+            </li>
+            <li class="flex items-center space-x-3">
+              <i class="fa-regular fa-circle-check fa-fw text-green-500"></i>
+              <span>post-ironic four dollar toast vegan</span>
+            </li>
+            <li class="flex items-center space-x-3">
+              <i class="fa-regular fa-circle-check fa-fw text-green-500"></i>
+              <span>post-ironic four dollar toast vegan</span>
+            </li>
+            <li class="flex items-center space-x-3">
+              <i class="fa-regular fa-circle-check fa-fw text-green-500"></i>
+              <span>post-ironic four dollar toast vegan</span>
+            </li>
+            <li class="flex items-center space-x-3">
+              <i class="fa-regular fa-circle-check fa-fw text-green-500"></i>
+              <span>post-ironic four dollar toast vegan</span>
+            </li>
+          </ul>
+        </div>
+        <div @click="handleSubscribeToggle('standard')" class="flex flex-col p-6 mx-auto max-w-lg text-center text-gray-900 bg-gray-50 rounded-lg shadow cursor-pointer hover:bg-gray-100">
+          <h3 class="mb-4 text-2xl font-semibold">Standard</h3>
+          <p class="font-light text-gray-500 sm:text-lg">Elevate your business to the next level with our Standard plan, designed and crafted solutions to meet your business needs.</p>
           <div class="flex justify-center items-baseline my-8">
             <span class="mr-2 text-5xl font-extrabold">$29</span>
             <span class="text-gray-500">/month</span>
@@ -17,30 +46,29 @@
           <ul role="list" class="mb-8 space-y-4 text-left">
             <li class="flex items-center space-x-3">
               <i class="fa-regular fa-circle-check fa-fw text-green-500"></i>
-              <span>Individual configuration</span>
+              <span>post-ironic four dollar toast vegan</span>
             </li>
             <li class="flex items-center space-x-3">
               <i class="fa-regular fa-circle-check fa-fw text-green-500"></i>
-              <span>No setup, or hidden fees</span>
+              <span>post-ironic four dollar toast vegan</span>
             </li>
             <li class="flex items-center space-x-3">
               <i class="fa-regular fa-circle-check fa-fw text-green-500"></i>
-              <span>Team size: <span class="font-semibold">1 developer</span></span>
+              <span>post-ironic four dollar toast vegan</span>
             </li>
             <li class="flex items-center space-x-3">
               <i class="fa-regular fa-circle-check fa-fw text-green-500"></i>
-              <span>Premium support: <span class="font-semibold">6 months</span></span>
+              <span>post-ironic four dollar toast vegan</span>
             </li>
             <li class="flex items-center space-x-3">
               <i class="fa-regular fa-circle-check fa-fw text-green-500"></i>
-              <span>Free updates: <span class="font-semibold">6 months</span></span>
+              <span>post-ironic four dollar toast vegan</span>
             </li>
           </ul>
         </div>
-
-        <div class="flex flex-col p-6 mx-auto max-w-lg text-center text-gray-900 bg-gray-50 rounded-lg shadow cursor-pointer hover:bg-gray-100">
-          <h3 class="mb-4 text-2xl font-semibold">Company</h3>
-          <p class="font-light text-gray-500 sm:text-lg">Relevant for multiple users, extended & premium support.</p>
+        <div @click="handleSubscribeToggle('premium')" class="flex flex-col p-6 mx-auto max-w-lg text-center text-gray-900 bg-gray-100 rounded-lg shadow cursor-pointer hover:bg-gray-100">
+          <h3 class="mb-4 text-2xl font-semibold">Premium</h3>
+          <p class="font-light text-gray-500 sm:text-lg">The very best advanced features, exclusive perks, our Premium plan will drive success and maximize your potential.</p>
           <div class="flex justify-center items-baseline my-8">
             <span class="mr-2 text-5xl font-extrabold">$99</span>
             <span class="text-gray-500">/month</span>
@@ -48,54 +76,23 @@
           <ul role="list" class="mb-8 space-y-4 text-left">
             <li class="flex items-center space-x-3">
               <i class="fa-regular fa-circle-check fa-fw text-green-500"></i>
-              <span>Individual configuration</span>
+              <span>post-ironic four dollar toast vegan</span>
             </li>
             <li class="flex items-center space-x-3">
               <i class="fa-regular fa-circle-check fa-fw text-green-500"></i>
-              <span>No setup, or hidden fees</span>
+              <span>post-ironic four dollar toast vegan</span>
             </li>
             <li class="flex items-center space-x-3">
               <i class="fa-regular fa-circle-check fa-fw text-green-500"></i>
-              <span>Team size: <span class="font-semibold">10 developers</span></span>
+              <span>post-ironic four dollar toast vegan</span>
             </li>
             <li class="flex items-center space-x-3">
               <i class="fa-regular fa-circle-check fa-fw text-green-500"></i>
-              <span>Premium support: <span class="font-semibold">24 months</span></span>
+              <span>post-ironic four dollar toast vegan</span>
             </li>
             <li class="flex items-center space-x-3">
               <i class="fa-regular fa-circle-check fa-fw text-green-500"></i>
-              <span>Free updates: <span class="font-semibold">24 months</span></span>
-            </li>
-          </ul>
-        </div>
-
-        <div class="flex flex-col p-6 mx-auto max-w-lg text-center text-gray-900 bg-gray-50 rounded-lg shadow cursor-pointer hover:bg-gray-100">
-          <h3 class="mb-4 text-2xl font-semibold">Enterprise</h3>
-          <p class="font-light text-gray-500 sm:text-lg">Best for large scale uses and extended redistribution rights.</p>
-          <div class="flex justify-center items-baseline my-8">
-            <span class="mr-2 text-5xl font-extrabold">$499</span>
-            <span class="text-gray-500">/month</span>
-          </div>
-          <ul role="list" class="mb-8 space-y-4 text-left">
-            <li class="flex items-center space-x-3">
-              <i class="fa-regular fa-circle-check fa-fw text-green-500"></i>
-              <span>Individual configuration</span>
-            </li>
-            <li class="flex items-center space-x-3">
-              <i class="fa-regular fa-circle-check fa-fw text-green-500"></i>
-              <span>No setup, or hidden fees</span>
-            </li>
-            <li class="flex items-center space-x-3">
-              <i class="fa-regular fa-circle-check fa-fw text-green-500"></i>
-              <span>Team size: <span class="font-semibold">100+ developers</span></span>
-            </li>
-            <li class="flex items-center space-x-3">
-              <i class="fa-regular fa-circle-check fa-fw text-green-500"></i>
-              <span>Premium support: <span class="font-semibold">36 months</span></span>
-            </li>
-            <li class="flex items-center space-x-3">
-              <i class="fa-regular fa-circle-check fa-fw text-green-500"></i>
-              <span>Free updates: <span class="font-semibold">36 months</span></span>
+              <span>post-ironic four dollar toast vegan</span>
             </li>
           </ul>
         </div>
@@ -103,3 +100,26 @@
     </div>
   </div>
 </template>
+
+<script setup>
+
+  // import axios from 'axios';
+  
+  // import { ref, computed } from "vue";
+
+  // const props = defineProps(["tokens"]);
+
+  // const freeType = "free";
+  // const exclusiveType = "exclusive";
+  // const premiumType = "premium";
+  
+  // let isLoading = ref(false);
+  // const checkoutTokens = ref([]);
+  // const currentCart = ref([]);
+
+  const handleSubscribeToggle = async (level) => {
+    console.log("handleSubscribeToggle " + level);
+  }
+
+</script>
+
