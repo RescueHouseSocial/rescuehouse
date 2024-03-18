@@ -9,11 +9,9 @@
         <div class="whitespace-break-spaces">{{ post.body }}</div>
       </div>
       <div class="my-8">
-        <div v-for="image in post.galleries" :key="image.id" class="flex flex-row">
-          <div>
-            <img :src="`/storage/gallery/medium/${image.path}`" class="h-10 w-10 rounded-lg" alt="post gallery"/>
-          </div>
-        </div>
+        <DynamicCarousel
+          :galleries="post.galleries"
+        />
       </div>
       <div class="mr-4 md:mr-0 justify-end">
         <div class="grid grid-cols-12 gap-0 place-items-left">
@@ -55,6 +53,8 @@
 </template>
 
 <script setup>
+
+  import DynamicCarousel from "../Components/DynamicCarousel.vue";
 
   import { defineProps, computed, ref } from "vue";
 

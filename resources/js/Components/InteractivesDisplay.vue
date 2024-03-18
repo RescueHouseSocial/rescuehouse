@@ -2,7 +2,7 @@
   <div id="InteractivesDisplay">
     <div class="flex flex-col justify-center">
       <div v-for="post in posts" :key="post.id">
-        <div class="py-8 px-8 mx-auto w-full">
+        <div class="py-4 px-8 mx-auto w-full">
           <div class="bg-gray-50 rounded-lg shadow">
             <div class="grid grid-cols-1 md:grid-cols-2 gap-0 p-4">
               <DynamicCarousel
