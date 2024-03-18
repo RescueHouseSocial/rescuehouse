@@ -2,12 +2,9 @@
   <div id="SliderGallery">
     <div class="w-full">
       <Flicking :options="{ circular: true }" :plugins="plugins">
-        <!-- <div v-for="(images, index) in post.media" :key="index" class="scroll-item w-full h-full mx-2">
-          <img :src="`${images.url}`" class="w-full h-full" alt="Media Images"/>
-        </div> -->
-        <img class="object-cover object-center rounded" alt="hero" src="https://picsum.photos/id/27/720/600">
-        <img class="object-cover object-center rounded" alt="hero" src="https://picsum.photos/id/27/720/600">
-        <img class="object-cover object-center rounded" alt="hero" src="https://picsum.photos/id/27/720/600">
+        <div v-for="image in galleries" :key="image.id">
+          <img :src="`/storage/gallery/medium/${image.path}`" class="h-full w-full" alt="hero"/>
+        </div>
         <template #viewport>
           <span class="flicking-arrow-prev h-full hover:bg-gradient-to-r from-gray-600"></span>
           <span class="flicking-arrow-next h-full hover:bg-gradient-to-l from-gray-600"></span>
@@ -28,6 +25,7 @@
 
   export default {
     name: "Home",
+    props: ["galleries"],
     components: {
       Flicking,
     },

@@ -84,6 +84,7 @@ class PostController extends Controller
   {
 
     $userId = Auth::user()->userId;
+    
     $request->validate([
       "body" => "required",
     ]);

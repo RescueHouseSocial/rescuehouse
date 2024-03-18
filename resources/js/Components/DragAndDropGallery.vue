@@ -69,7 +69,6 @@
         return fileSrc;
       },
       async handleUpload() {
-        console.log("i am handle upload!");
         this.isLoading = true;
         for (const file of this.files) {
           const formData = new FormData();

@@ -12,6 +12,7 @@ use OpenTok\Role;
 use Illuminate\Support\Facades\Auth;
 
 use App\Models\Post;
+use App\Models\Gallery;
 use App\Models\Interactive;
 
 class InteractiveController extends Controller
@@ -21,10 +22,21 @@ class InteractiveController extends Controller
   {
 
     $posts = Post::join("interactives", "posts.postId", "=", "interactives.postId")
+      ->leftJoin("galleries", "posts.postId", "=", "galleries.postId")
       ->where("posts.active", 1)
       ->where("posts.type", "interactive")
-      ->get(["posts.*", "interactives.datetime"]);
-
+      ->select("posts.*", "interactives.datetime")
+      ->orderBy("interactives.datetime", "asc")
+      ->distinct()
+      ->get();
+    $posts->each(function ($post) {
+      if (!empty($post->gallery)) {
+        $galleries = Gallery::whereIn("galleryId", $post->gallery)->get();
+        $post->galleries = $galleries;
+      } else {
+        $post->galleries = null;
+      }
+    });
     return Inertia::render("Interactive", [
       "posts" => $posts,
     ]);
@@ -76,7 +88,7 @@ class InteractiveController extends Controller
             "initialLayoutClassList" => array("focus")
           ));
         } else {
-          return Inertia::location("Interactive");
+          return Inertia::render("Interactive");
         }
       }
     }
