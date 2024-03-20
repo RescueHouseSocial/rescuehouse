@@ -20,6 +20,7 @@
                 :avatar="avatar"
                 :follow="follow"
                 @following="handleFollowing"
+                @messaging="handleMessaging"
               />
               <AccountLgPosts
                 :myposts="myposts"
@@ -48,12 +49,16 @@
 
   const props = defineProps(["users", "avatar", "follow", "followerscount", "followingcount", "postcount", "myposts", "myreplies", "mygalleries", "mybank"]);
 
+  const handleMessaging = async (addresseeId) => {
+    window.location.href = `/message/${addresseeId}`;
+  };
+
   const handleFollowing = async (following) => {
     try {
       const response = await axios.post(route("account.follow"), { following });
     } catch (error) {
       console.error("Error:", error);
     }
-  }
+  };
 
 </script>

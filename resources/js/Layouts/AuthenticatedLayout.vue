@@ -47,6 +47,7 @@
                   </span>
                 </template>
                 <template #content>
+                  <DropdownLink :href="route('messages')"> Messages </DropdownLink>
                   <DropdownLink :href="route('settings')"> Settings </DropdownLink>
                   <DropdownLink :href="route('subscription')"> Subscription </DropdownLink>
                   <DropdownLink :href="route('logout')" method="post" as="button">Log Out</DropdownLink>
@@ -106,6 +107,7 @@
             <div class="font-medium text-sm text-gray-500">{{ $page.props.auth.user.email }}</div>
           </div>
           <div class="mt-3 space-y-1">
+            <ResponsiveNavLink :href="route('messages')"> Messages </ResponsiveNavLink>
             <ResponsiveNavLink :href="route('settings')"> Settings </ResponsiveNavLink>
             <ResponsiveNavLink :href="route('subscription')"> Subscription </ResponsiveNavLink>
             <ResponsiveNavLink :href="route('logout')" method="post" as="button">Log Out</ResponsiveNavLink>
