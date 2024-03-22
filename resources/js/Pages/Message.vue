@@ -17,10 +17,16 @@
               </div>
             </div>
             <div class="flex flex-col col-span-4">
-              <div class="flex flex-row justify-end mb-4">
+              <div class="flex flex-row justify-between mb-4">
+                <div v-for="item in addressee" :key="item.id">
+                  <div class="flex flex-row items-center">
+                    <img :src="`/storage/avatars/medium/${item.path}`" class="w-8 h-8 rounded mr-4" alt="user avatar"/>
+                    <div>{{ item.name }}</div>
+                  </div>
+                </div>
                 <div>{{ displayDateTime }}</div>
               </div>
-              <div ref="scrollableDiv" class="max-h-96 w-full overflow-y-scroll">
+              <div ref="scrollableDiv" class="max-h-96 min-h-96 w-full overflow-y-scroll border-2 border-gray-200 bg-white">
                 <div v-for="item in message" :key="item.id">
                   <div :class="[userId === item.messengerId ? 'justify-end' : 'items-start', 'flex', 'mb-4']">
                     <img :src="`/storage/avatars/medium/${item.path}`" class="w-8 h-8 rounded border-2 border-transparent" alt="User Avatar">
@@ -40,7 +46,7 @@
               <div>
                 <form @submit.prevent="handleMessageSubmit" @input="updateCharacterCount" class="flex my-4">
                   <textarea v-model="form.body" class="h-12 w-full"></textarea>
-                  <button class="flex text-white bg-gray-500 border-0 py-2 px-8 focus:outline-none hover:bg-gray-600 rounded text-lg" type="submit">
+                  <button class="flex text-white bg-gray-500 border-0 py-2 px-8 focus:outline-none hover:bg-gray-600 rounded-tr rounded-br text-lg" type="submit">
                     <span v-if="isLoading">
                       <i class="fa-solid fa-spinner fa-fw fa-spin"></i>
                     </span>
@@ -76,12 +82,13 @@
   let characterCount = ref(0);
   const scrollableDiv = ref(null);
 
-  const props = defineProps(["userId", "message", "messages"]);
-  const currentThread = props.messages.map(message => message.threadId);
-
+  const props = defineProps(["userId", "message", "messages", "addressee"]);
+  // const currentThread = props.messages.map(message => message.threadId);
+  // console.log(currentThread[0]);
   const form = useForm({
-    thread: currentThread[0],
+    // thread: currentThread[0],
     body: "",
+    // addresseeId: props.addresseeId,
   });
 
   const displayDateTime = ref(DateTime.now().toLocaleString(DateTime.DATETIME_FULL));
@@ -124,7 +131,6 @@
   updateCharacterCount();
 
   async function scrollToBottom() {
-    console.log("Scroll To The Bottom");
     await new Promise(resolve => setTimeout(resolve, 1500));
     if (scrollableDiv.value) {
       scrollableDiv.value.scrollTop = scrollableDiv.value.scrollHeight + 200;

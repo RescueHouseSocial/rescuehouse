@@ -85,7 +85,9 @@ Route::middleware("auth")->group(function () {
   
   Route::get("/subscription", [SubscriptionController::class, "show"])->name("subscription");
 
-  Route::get("/message/{addresseeId?}", [MessageController::class, "index"])->name("message");
+  // NEW DIRECT MESSAGE
+  Route::get("/message/{addresseeId?}", [MessageController::class, "create"])->name("message.create");
+
   Route::get("/messages/{threadId?}", [MessageController::class, "show"])->name("messages");
   Route::put("/messagesstore", [MessageController::class, "store"])->name("messages.store");
   // Route::post("/messagescreate", [MessageController::class, "create"])->name("messages.create");

@@ -21,45 +21,70 @@ class MessageController extends Controller
   public function index(Request $request, $addresseeId = null): Response
   {
 
-    $messengerId = Auth::user()->userId;
-    $messages = Message::where("messengerId", $messengerId)
-      ->where("active", 1)
-      ->orderBy("updated_at", "desc")
-      ->get();
+    // $userId = Auth::user()->userId;
+    // $messengerId = Auth::user()->userId;
 
-    return Inertia::render("Message", [
-      "addresseeId" => $addresseeId,
-      "messages" => $messages,
-    ]);
+    // $addressee = User::select("users.name", "avatars.path")
+    //   ->leftJoin("avatars", "users.userId", "=", "avatars.userId")
+    //   ->where("users.userId", $addresseeId)
+    //   ->where("users.active", 1)
+    //   ->get();
+
+    // $message = Message::join("users", "messages.messengerId", "=", "users.userId")
+    //   ->leftJoin("avatars", "users.userId", "=", "avatars.userId")
+    //   ->select("messages.*", "users.name", "avatars.path")
+    //   ->where("messages.threadId", $threadId)
+    //   ->where("messages.active", 1)
+    //   ->where("users.active", 1)
+    //   ->orderBy("updated_at", "asc")
+    //   ->get();
+
+    // $messages = Message::select(DB::raw("MAX(id) as id"))
+    //   ->where("messengerId", $messengerId)
+    //   ->where("active", 1)
+    //   ->groupBy("threadId")
+    //   ->orderBy("updated_at", "desc")
+    //   ->get();
+    // $groupByMessages = Message::whereIn("id", $messages->pluck("id"))->get();
+
+    // return Inertia::render("Message", [
+    //   "addressee" => $addressee,
+    //   "userId" => $userId,
+    //   "message" => $message,
+    //   "messages" => $groupByMessages,
+    // ]);
 
   }
 
   /**
    * Show the form for creating a new resource.
    */
-  // public function create(Request $request)
-  // {
-    
-  //   $addresseeId = $request->input("userId");
+  public function create(Request $request, $addresseeId = null)
+  {
 
-  //   return redirect("/message")->with("addresseeId", $addresseeId);
-  //   return Inertia::render("Message", [
-  //     "addresseeId" => $addresseeId,
-  //   ]);
+    $addressee = User::select("users.userId", "users.name", "avatars.path")
+      ->leftJoin("avatars", "users.userId", "=", "avatars.userId")
+      ->where("users.userId", $addresseeId)
+      ->where("users.active", 1)
+      ->get();
 
-  // }
+    return Inertia::render("Messaging/New", [
+      "addressee" => $addressee,
+    ]);
+
+  }
 
   /**
    * Store a newly created resource in storage.
    */
   public function store(Request $request)
   {
-    
-    $thread = $request->input("thread");
-    if ($thread) {
-      $threadId = $thread;
+
+    $status = $request->input("status");
+    if ($status === "new") {
+      $threadId = Uuid::uuid4()->toString();
     } else {
-      $uuid = Uuid::uuid4()->toString();
+      $threadId = $request->input("thread");
     }
     $uuid = Uuid::uuid4()->toString();
     $messengerId = Auth::user()->userId;
@@ -82,9 +107,9 @@ class MessageController extends Controller
   {
 
     $userId = Auth::user()->userId;
-    $messengerId = Auth::user()->userId;
+    // $messengerId = Auth::user()->userId;
 
-    $message = Message::join("users", "messages.messengerId", "=", "users.userId")
+    $messages = Message::join("users", "messages.messengerId", "=", "users.userId")
       ->leftJoin("avatars", "users.userId", "=", "avatars.userId")
       ->select("messages.*", "users.name", "avatars.path")
       ->where("messages.threadId", $threadId)
@@ -93,19 +118,29 @@ class MessageController extends Controller
       ->orderBy("updated_at", "asc")
       ->get();
 
-    $messages = Message::select(DB::raw("MAX(id) as id"))
-      ->where("messengerId", $messengerId)
-      ->where("active", 1)
-      ->groupBy("threadId")
-      ->orderBy("updated_at", "desc")
-      ->get();
-    $groupByMessages = Message::whereIn("id", $messages->pluck("id"))->get();
+    // $messages = Message::select(DB::raw("MAX(id) as id"))
+    //   ->where("messengerId", $messengerId)
+    //   ->where("active", 1)
+    //   ->groupBy("threadId")
+    //   ->orderBy("updated_at", "desc")
+    //   ->get();
+    // $groupByMessages = Message::whereIn("id", $messages->pluck("id"))->get();
 
-    return Inertia::render("Message", [
-      "userId" => $userId,
-      "message" => $message,
-      "messages" => $groupByMessages,
-    ]);
+    // return Inertia::render("Message", [
+    //   "userId" => $userId,
+    //   "message" => $message,
+    //   "messages" => $groupByMessages,
+    // ]);
+
+    // $messages = Message::select("messages.*")
+    //   ->where("threadId", $threadId)
+    //   ->where("active", 1)
+    //   ->get();
+
+    return Inertia::render("Messaging/Home", [
+        "userId" => $userId,
+        "messages" => $messages,
+      ]);
 
   }
 
@@ -114,7 +149,9 @@ class MessageController extends Controller
    */
   public function edit(Message $message)
   {
+
     //
+
   }
 
   /**
@@ -122,7 +159,9 @@ class MessageController extends Controller
    */
   public function update(Request $request, Message $message)
   {
+
     //
+
   }
 
   /**
@@ -130,7 +169,9 @@ class MessageController extends Controller
    */
   public function destroy(Message $message)
   {
+
     //
+
   }
 
 }
