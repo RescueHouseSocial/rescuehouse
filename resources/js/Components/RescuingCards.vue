@@ -1,70 +1,16 @@
 <template>
   <div id="RescuingCards">
-    <div v-for="post in posts" :key="post.id">
-      <div class="w-full grid grid-cols-2 md:grid-cols-2 gap-4">
-        <div v-for="item in post.posts" :key="post.id">
-          <article class="p-6 my-4 bg-white rounded-lg border border-gray-200 shadow">
-            <div class="flex justify-between items-center mb-5 text-gray-500">
-              <span class="bg-primary-100 text-primary-800 text-xs font-medium inline-flex items-center px-2.5 py-0.5 rounded">
-                <i class="fa-solid fa-heart fa-fw"></i>
-                {{ item.type }}
-              </span>
-              <span class="text-sm">{{ formattedTime(item.datetime8601) }}</span>
-            </div>
-            <div class="w-50 h-50 inline-flex items-center justify-center rounded-full mb-5 flex-shrink-0">
-              <img src="https://picsum.photos/id/11/520/480" class="rounded"/>
-            </div>
-            <p class="mb-5 font-light text-gray-500">{{ item.body }}</p>
-            <div class="flex justify-between items-center">
-              <div class="flex items-center space-x-4">
-                <img :src="`/storage/avatars/medium/${item.path}`" class="h-8 w-8 rounded" alt="user avatar"/>
-                <span class="font-medium">{{ item.name }}</span>
-              </div>
-            </div>
-          </article>
+    <div class="grid max-w-screen-xl px-4 py-8 mx-auto lg:gap-8 xl:gap-0 lg:py-16 lg:grid-cols-12">
+      <div class="lg:mt-0 lg:col-span-5 lg:flex">
+        <img src="../../images/funddog.png" class="rounded-lg" alt="Fund Dog"/>
+      </div>
+      <div class="ml-auto place-self-center lg:col-span-7">
+        <h1 class="max-w-2xl mb-4 text-4xl font-extrabold tracking-tight leading-none md:text-5xl xl:text-6xl">fundraising events</h1>
+        <p class="max-w-2xl font-light text-gray-500 mb-4 lg:mb-8 md:text-lg lg:text-xl">At the heart of our mission to provide loving homes for animals in need lies our commitment to hosting impactful fundraising events. These gatherings serve as vital pillars of support, enabling us to continue our work of rehoming animals to safety and security.</p>
+        <div class="flex justify-center">
+          <button class="flex mx-auto text-white bg-gray-500 border-0 py-2 px-8 focus:outline-none hover:bg-gray-600 rounded text-lg">learn more</button>
         </div>
       </div>
     </div>
   </div>
 </template>
-
-<script>
-  import axios from "axios";
-
-  import { DateTime } from "luxon";
-
-  export default {
-    name: "RescuingCards",
-    data() {
-      return {
-        posts: [],
-      };
-    },
-    computed: {
-      formattedTime() {
-        return function(datetime8601) {
-          return DateTime.fromISO(datetime8601).toLocaleString(DateTime.DATETIME_FULL);
-        };
-      }
-    },
-    async mounted() {
-      this.getPosts();
-    },
-    methods: {
-      async getPosts() {
-        try {
-          const response = await axios.get(route("rescue.index"), {
-            headers: {
-              "X-CSRF-TOKEN": this.csrfToken,
-              "Content-Type": "multipart/form-data",
-            },
-          });
-          this.posts = response;
-        } catch (error) {
-          console.error(error); 
-        }
-      },
-    },
-  };
-
-</script>

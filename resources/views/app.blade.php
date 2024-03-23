@@ -16,6 +16,7 @@
     <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
     <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
     <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
+    <script src="https://js.pusher.com/8.2.0/pusher.min.js"></script>
     <script src="https://js.stripe.com/v3/"></script>
     <script src="https://static.opentok.com/v2/js/opentok.min.js"></script>
     <link rel="preconnect" href="https://fonts.bunny.net">

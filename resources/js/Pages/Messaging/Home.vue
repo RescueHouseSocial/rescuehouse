@@ -64,6 +64,15 @@
 
   import { DateTime } from "luxon";
 
+  var pusher = new Pusher("9320384060910ab45950", {
+    cluster: "us3"
+  });
+
+  var channel = pusher.subscribe("my-channel");
+  channel.bind("my-event", function(data) {
+    console.log(JSON.stringify(data));
+  });
+
   let isLoading = ref(false);
   let characterCount = ref(0);
   const scrollableDiv = ref(null);
@@ -74,7 +83,6 @@
   const form = useForm({
     thread: currentThread[0],
     body: "",
-    status: "home"
   });
 
   const displayDateTime = ref(DateTime.now().toLocaleString(DateTime.DATETIME_FULL));
@@ -89,7 +97,7 @@
   const handleMessageSubmit = async () => {
     isLoading.value = true;
     await new Promise(resolve => setTimeout(resolve, 1500));
-    form.put(route("messages.store"), {
+    form.put(route("messages.update"), {
       preserveScroll: true,
       onSuccess: () => {
         form.reset();

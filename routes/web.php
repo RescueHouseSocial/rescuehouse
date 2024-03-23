@@ -19,6 +19,7 @@ use App\Http\Controllers\SettingsController;
 use App\Http\Controllers\GalleryController;
 use App\Http\Controllers\FavoriteController;
 use App\Http\Controllers\CheckoutController;
+// use App\Http\Controllers\NotifyController;
 
 use App\Http\Controllers\PirateController;
 
@@ -99,6 +100,9 @@ Route::middleware("auth")->group(function () {
   Route::get("/checkout/{checkoutId}", [CheckoutController::class, "show"])->name("checkout");
   Route::post("/checkoutcreatePayment", [CheckoutController::class, "createPayment"])->name("checkout.createPayment");
   Route::post("/checkoutprocessPayment", [CheckoutController::class, "processPayment"])->name("checkout.processPayment");
+
+
+  // Route::post("/sendmessage", [NotifyController::class, "SendMessage"])->name("notify.sendmessage");
 
   // Route::get('/payment/success', function () {
   // return 'Payment Successful!';

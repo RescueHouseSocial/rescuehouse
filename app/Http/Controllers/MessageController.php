@@ -9,6 +9,8 @@ use Ramsey\Uuid\Uuid;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 
+use App\Events\NotifyEvent;
+
 use App\Models\User;
 use App\Models\Message;
 
@@ -57,6 +59,16 @@ class MessageController extends Controller
   }
 
   /**
+   * Show the refreshed data to the resource.
+   */
+  public function refresh(Request $request, $addresseeId = null)
+  {
+
+    dd("refresh something and display it");
+
+  }
+
+  /**
    * Show the form for creating a new resource.
    */
   public function create(Request $request, $addresseeId = null)
@@ -80,14 +92,9 @@ class MessageController extends Controller
   public function store(Request $request)
   {
 
-    $status = $request->input("status");
-    if ($status === "new") {
-      $threadId = Uuid::uuid4()->toString();
-    } else {
-      $threadId = $request->input("thread");
-    }
     $uuid = Uuid::uuid4()->toString();
     $messengerId = Auth::user()->userId;
+    $threadId = Uuid::uuid4()->toString();
     $body = $request->input("body");
     $message = new Message();
     $message->messageId = $uuid;
@@ -96,6 +103,7 @@ class MessageController extends Controller
     $message->addresseeId = $messengerId;
     $message->body = $body;
     $message->save();
+    event(new NotifyEvent("hello world"));
     return redirect("/messages/" . $threadId);
 
   }
@@ -138,9 +146,9 @@ class MessageController extends Controller
     //   ->get();
 
     return Inertia::render("Messaging/Home", [
-        "userId" => $userId,
-        "messages" => $messages,
-      ]);
+      "userId" => $userId,
+      "messages" => $messages,
+    ]);
 
   }
 
@@ -160,7 +168,19 @@ class MessageController extends Controller
   public function update(Request $request, Message $message)
   {
 
-    //
+    $uuid = Uuid::uuid4()->toString();
+    $messengerId = Auth::user()->userId;
+    $threadId = $request->input("thread");
+    $body = $request->input("body");
+    $message = new Message();
+    $message->messageId = $uuid;
+    $message->threadId = $threadId;
+    $message->messengerId = $messengerId;
+    $message->addresseeId = $messengerId;
+    $message->body = $body;
+    $message->save();
+    event(new NotifyEvent("hello world"));
+    return redirect("/messages/" . $threadId);
 
   }
 

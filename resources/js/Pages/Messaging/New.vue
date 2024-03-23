@@ -61,7 +61,6 @@
 
   const form = useForm({
     body: "",
-    status: "new"
   });
 
   const displayDateTime = ref(DateTime.now().toLocaleString(DateTime.DATETIME_FULL));
