@@ -26,7 +26,7 @@
                         <div class="flex flex-col leading-1.5 p-4 border-gray-200 bg-gray-100 rounded-e-xl rounded-es-xl">
                           <p class="text-sm font-normal text-gray-900">{{ item.body }}</p>
                         </div>
-                        <span class="flex justify-end text-sm font-normal text-gray-300">{{ item.status }}</span>
+                        <!-- <span class="flex justify-end text-sm font-normal text-gray-300">{{ item.status }}</span> -->
                       </div>
                     </div>
                   </div>
@@ -56,6 +56,8 @@
 
 <script setup>
 
+  import axios from "axios";
+
   import AuthenticatedLayout from "@/Layouts/AuthenticatedLayout.vue";
 
   import { ref, computed, onMounted } from "vue";
@@ -70,29 +72,43 @@
 
   var channel = pusher.subscribe("my-channel");
   channel.bind("my-event", function(data) {
-    console.log(JSON.stringify(data));
+    getAllThreadMessages();
   });
 
   let isLoading = ref(false);
   let characterCount = ref(0);
+  let messages = ref([]);
   const scrollableDiv = ref(null);
 
-  const props = defineProps(["userId", "messages", "addressee"]);
-  const currentThread = props.messages.map(message => message.threadId);
+  const props = defineProps(["userId", "threadId", "addressee"]);
 
   const form = useForm({
-    thread: currentThread[0],
+    thread: props.threadId,
     body: "",
   });
 
   const displayDateTime = ref(DateTime.now().toLocaleString(DateTime.DATETIME_FULL));
 
   onMounted(() => {
+    getAllThreadMessages();
     scrollToBottom();
     setInterval(() => {
       displayDateTime.value = DateTime.now().toLocaleString(DateTime.DATETIME_FULL);
     }, 1000);
   });
+
+  const getAllThreadMessages = async () => {
+    try {
+      const response = await axios.post(route("messages.refresh"), { 
+        threadId: props.threadId,  
+      });
+      messages.value = response.data.messages;
+      await new Promise(resolve => setTimeout(resolve, 1500));
+      scrollToBottom();
+    } catch (error) {
+      console.error('Error:', error);
+    }
+  };
 
   const handleMessageSubmit = async () => {
     isLoading.value = true;

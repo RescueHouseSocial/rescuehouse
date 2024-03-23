@@ -39,9 +39,6 @@ class NotifyEvent implements ShouldBroadcast
   {
 
     return ["my-channel"];
-    // return [
-    //   new PrivateChannel("channel-name"),
-    // ];
 
   }
 

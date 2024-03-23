@@ -91,7 +91,8 @@ Route::middleware("auth")->group(function () {
 
   Route::get("/messages/{threadId?}", [MessageController::class, "show"])->name("messages");
   Route::put("/messagesstore", [MessageController::class, "store"])->name("messages.store");
-  // Route::post("/messagescreate", [MessageController::class, "create"])->name("messages.create");
+  Route::put("/messagesupdate", [MessageController::class, "update"])->name("messages.update");
+  Route::post("/messagesrefresh", [MessageController::class, "refresh"])->name("messages.refresh");
   
   Route::get("/settings", [SettingsController::class, "show"])->name("settings");
   Route::post("/settingsupdate", [SettingsController::class, "update"])->name("settings.update");

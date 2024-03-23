@@ -7,7 +7,7 @@ use Inertia\Inertia;
 use Inertia\Response;
 use Ramsey\Uuid\Uuid;
 use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\DB;
+// use Illuminate\Support\Facades\DB;
 
 use App\Events\NotifyEvent;
 
@@ -61,10 +61,20 @@ class MessageController extends Controller
   /**
    * Show the refreshed data to the resource.
    */
-  public function refresh(Request $request, $addresseeId = null)
+  public function refresh(Request $request)
   {
 
-    dd("refresh something and display it");
+    $threadId = $request->input("threadId");
+    $messages = Message::join("users", "messages.messengerId", "=", "users.userId")
+    ->leftJoin("avatars", "users.userId", "=", "avatars.userId")
+    ->select("messages.*", "users.name", "avatars.path")
+    ->where("messages.threadId", $threadId)
+    ->where("messages.active", 1)
+    ->where("users.active", 1)
+    ->orderBy("updated_at", "asc")
+    ->get();
+
+    return response()->json(["messages" => $messages, "message" => "Fresh Messages for you successfully"]);
 
   }
 
@@ -103,7 +113,7 @@ class MessageController extends Controller
     $message->addresseeId = $messengerId;
     $message->body = $body;
     $message->save();
-    event(new NotifyEvent("hello world"));
+    event(new NotifyEvent("refresh"));
     return redirect("/messages/" . $threadId);
 
   }
@@ -116,15 +126,6 @@ class MessageController extends Controller
 
     $userId = Auth::user()->userId;
     // $messengerId = Auth::user()->userId;
-
-    $messages = Message::join("users", "messages.messengerId", "=", "users.userId")
-      ->leftJoin("avatars", "users.userId", "=", "avatars.userId")
-      ->select("messages.*", "users.name", "avatars.path")
-      ->where("messages.threadId", $threadId)
-      ->where("messages.active", 1)
-      ->where("users.active", 1)
-      ->orderBy("updated_at", "asc")
-      ->get();
 
     // $messages = Message::select(DB::raw("MAX(id) as id"))
     //   ->where("messengerId", $messengerId)
@@ -147,7 +148,7 @@ class MessageController extends Controller
 
     return Inertia::render("Messaging/Home", [
       "userId" => $userId,
-      "messages" => $messages,
+      "threadId" => $threadId,
     ]);
 
   }
@@ -179,8 +180,7 @@ class MessageController extends Controller
     $message->addresseeId = $messengerId;
     $message->body = $body;
     $message->save();
-    event(new NotifyEvent("hello world"));
-    return redirect("/messages/" . $threadId);
+    event(new NotifyEvent("refresh"));
 
   }
 
