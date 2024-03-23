@@ -12,7 +12,6 @@ return new class extends Migration
     public function up(): void
     {
         Schema::table('messages', function (Blueprint $table) {
-            $table->string("subject")->nullable()->default("");
             $table->text("body");
         });
     }
