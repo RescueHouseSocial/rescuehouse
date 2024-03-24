@@ -20,8 +20,8 @@
           </div>
           <div v-if="$page.url == '/'" class="container pt-4 pb-24 mx-auto">
             <div class="text-center mb-20">
-              <h1 class="text-orange-400 mb-4 uppercase">Rescue House</h1>
-              <p class="text-orange-400 mb-4 uppercase">Welcome to our social sanctuary, where every creature finds refuge and care.</p>
+              <h1 class="text-8xl font-medium text-orange-400 mb-4 uppercase">Rescue House</h1>
+              <p class="text-4xl font-medium text-orange-400 mb-4 uppercase">Welcome to our social sanctuary, where every creature finds refuge and care.</p>
               <!-- <div class="flex mt-6 justify-center">
                 <div class="w-16 h-1 rounded-full bg-gray-500 inline-flex"></div>
               </div> -->
