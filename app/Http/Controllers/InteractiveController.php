@@ -6,9 +6,9 @@ use Illuminate\Http\Request;
 use Inertia\Inertia;
 use Inertia\Response;
 use Ramsey\Uuid\Uuid;
-use OpenTok\OpenTok;
-use OpenTok\Session;
-use OpenTok\Role;
+use OpenTok\OpenTok; // move to live
+use OpenTok\Session;  // move to live
+use OpenTok\Role;  // move to live
 use Illuminate\Support\Facades\Auth;
 
 use App\Models\Post;
@@ -21,6 +21,7 @@ class InteractiveController extends Controller
   public function index(Request $request): Response
   {
 
+    // MOVE TO SHOW
     $posts = Post::join("interactives", "posts.postId", "=", "interactives.postId")
       ->leftJoin("galleries", "posts.postId", "=", "galleries.postId")
       ->where("posts.active", 1)
@@ -29,6 +30,7 @@ class InteractiveController extends Controller
       ->orderBy("interactives.datetime", "asc")
       ->distinct()
       ->get();
+
     $posts->each(function ($post) {
       if (!empty($post->gallery)) {
         $galleries = Gallery::whereIn("galleryId", $post->gallery)->get();
@@ -46,6 +48,7 @@ class InteractiveController extends Controller
   public function show(Request $request, $postId = null): Response
   {
 
+    // MOVE TO LIVE CONTROLLER SHOW
     $opentok_api_key = env("OPENTOK_API_KEY");
     $opentok_secret = env("OPENTOK_SECRET");
     $opentok = new OpenTok($opentok_api_key, $opentok_secret);
@@ -106,6 +109,7 @@ class InteractiveController extends Controller
   public function store(Request $request)
   {
 
+    // KEEP 
     $uuid = Uuid::uuid4()->toString();
     $userId = Auth::user()->userId;
 

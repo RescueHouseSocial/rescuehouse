@@ -8,7 +8,7 @@
     <div class="py-4">
       <div class="max-w-8xl min-h-screen bg-gray-100 mx-auto">
         <div class="flex justify-center">
-          <div v-if="postId">
+          <!-- <div v-if="postId">
             <DynamicLiveSession 
               :posts="posts"
               :opentok_api_key="opentok_api_key"
@@ -16,11 +16,11 @@
               :token="token"
             />
           </div>
-          <div v-else>
+          <div v-else> -->
             <InteractivesDisplay
               :posts="posts"
             />
-          </div>
+          <!-- </div> -->
         </div>
       </div>
     </div>
@@ -29,13 +29,14 @@
 
 <script setup>
 
-  import DynamicLiveSession from "../Components/DynamicLiveSession.vue";
+  // import DynamicLiveSession from "../Components/DynamicLiveSession.vue";
   import InteractivesDisplay from "../Components/InteractivesDisplay.vue";
 
   import AuthenticatedLayout from "@/Layouts/AuthenticatedLayout.vue";
 
   import { Head } from "@inertiajs/vue3";
 
-  const props = defineProps(["postId", "posts", "opentok_api_key", "sessionId", "token"]);
+  // const props = defineProps(["postId", "posts", "opentok_api_key", "sessionId", "token"]);
+  const props = defineProps(["posts"]);
 
 </script>

@@ -53,7 +53,7 @@
   const handleLiveSubmit = async (postId) => {
     isLoading.value = true;
     await new Promise(resolve => setTimeout(resolve, 1500));
-    window.location.href = `/interactive/${postId}`;
+    window.location.href = `/live/${postId}`;
     isLoading.value = false;
   };
 

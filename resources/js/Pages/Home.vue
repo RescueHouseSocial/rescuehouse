@@ -2,14 +2,6 @@
   <GuestLayout>
     <Head title="Home" />
     <div id="Home">
-      <!-- <div class="container px-5 py-24 mx-auto">
-        <div class="text-center mb-20">
-          <h1 class="sm:text-3xl text-2xl font-medium title-font text-gray-900 mb-4 uppercase">Welcome to our social sanctuary, where every creature finds refuge and care.</h1>
-          <div class="flex mt-6 justify-center">
-            <div class="w-16 h-1 rounded-full bg-gray-500 inline-flex"></div>
-          </div>
-        </div>
-      </div> -->
       <div class="bg-orange-400">
         <div class="py-24 px-4 mx-auto max-w-screen-xl sm:py-16 lg:px-6">
           <div class="mx-auto max-w-screen-sm text-center">

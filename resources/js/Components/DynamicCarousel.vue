@@ -4,7 +4,7 @@
       <div class="flex w-full md:w-96 overflow-hidden rounded">
         <div class="inner" ref="inner" :style="innerStyles">
           <div v-for="image in galleries" :key="image.id" class="inline-flex justify-center">
-            <img :src="`/storage/gallery/medium/${image.path}`" class="rounded" alt="hero"/>
+            <img :src="`/storage/gallery/medium/${image.path}`" class="rounded" alt="Gallery Image"/>
           </div>
         </div>
       </div>
@@ -98,22 +98,10 @@ export default {
 
 <style>
 
-  /* .carousel {
-    width: 450px;
-    overflow: hidden;
-  } */
-
   .inner {
     transition: transform 0.2s;
     white-space: nowrap;
   }
-
-  /* .card {
-    height: 450px;
-    width: 450px;
-    display: inline-flex;
-    justify-content: center;
-  } */
 
   button {
     margin-right: 5px;
