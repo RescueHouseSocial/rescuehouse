@@ -18,21 +18,32 @@
               </div>
             </div>
           </div>
-          <!-- <div v-if="$page.url == '/'" class="container pt-4 pb-24 mx-auto">
+          <div v-if="$page.url == '/'" class="container pt-4 pb-24 mx-auto">
             <div class="text-center mb-20">
-              <h1 class="text-8xl font-medium tracking-widest title-font text-orange-400 mb-4 uppercase">Rescue House</h1>
-              <h2 class="text-4xl font-medium title-font text-orange-400 mb-4 uppercase">Welcome to our social sanctuary, where every creature finds refuge and care.</h2>
-              <div class="flex mt-6 justify-center">
+              <h1 class="text-orange-400 mb-4 uppercase">Rescue House</h1>
+              <p class="text-orange-400 mb-4 uppercase">Welcome to our social sanctuary, where every creature finds refuge and care.</p>
+              <!-- <div class="flex mt-6 justify-center">
                 <div class="w-16 h-1 rounded-full bg-gray-500 inline-flex"></div>
-              </div>
+              </div> -->
             </div>
-          </div> -->
+          </div>
         </div>
       </div>
       <slot />
       <Footer></Footer>
     </div>
   </div>
+
+<!-- <div v-if="$page.url == '/'" class="container pt-4 pb-24 mx-auto">
+<div class="text-center mb-20">
+<h1 class="text-8xl font-medium tracking-widest title-font text-orange-400 mb-4 uppercase">Rescue House</h1>
+<h2 class="text-4xl font-medium title-font text-orange-400 mb-4 uppercase">Welcome to our social sanctuary, where every creature finds refuge and care.</h2>
+<div class="flex mt-6 justify-center">
+<div class="w-16 h-1 rounded-full bg-gray-500 inline-flex"></div>
+</div>
+</div>
+</div> -->
+
 </template>
 
 <script setup>
