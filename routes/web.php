@@ -6,6 +6,7 @@ use App\Http\Controllers\FeedsController;
 use App\Http\Controllers\AccountController;
 use App\Http\Controllers\PostController;
 use App\Http\Controllers\InteractiveController;
+use App\Http\Controllers\LiveController;
 use App\Http\Controllers\RescueController;
 use App\Http\Controllers\ReplyController;
 use App\Http\Controllers\MarketController;
@@ -61,9 +62,14 @@ Route::middleware("auth")->group(function () {
   Route::get("/post/{postId?}", [PostController::class, "show"])->name("post");
   Route::put("/post", [PostController::class, "store"])->name("post.store");
 
-  Route::get("/interactive", [InteractiveController::class, "index"])->name("interactive");
-  Route::get("/interactive/{postId?}", [InteractiveController::class, "show"])->name("interactive.show");
+  // Route::get("/interactive", [InteractiveController::class, "index"])->name("interactive");
+  Route::get("/interactive/{postId?}", [InteractiveController::class, "show"])->name("interactive");
   Route::put("/interactivestore", [InteractiveController::class, "store"])->name("interactive.store");
+
+
+  Route::get("/live/{liveId?}", [LiveController::class, "show"])->name("live.show");
+
+
 
   Route::get("/rescueindex", [RescueController::class, "index"])->name("rescue.index");
   Route::put("/rescue", [RescueController::class, "store"])->name("rescue.store");

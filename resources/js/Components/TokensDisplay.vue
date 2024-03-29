@@ -1,4 +1,12 @@
 <template>
+
+  <!-- NOT USED -->
+
+
+
+
+
+
   <div id="TokenGallery">
     <Flicking :options="{ circular: true }" :plugins="plugins">
       <div v-for="token in sortedTokens" :key="token.id">

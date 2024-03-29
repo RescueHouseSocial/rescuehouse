@@ -1,11 +1,16 @@
 <template>
-
-  <!-- DO NOT USE -->
-
-
-  <div id="DynamicLiveSession">
+  <div id="Many">
     <div id="publisher" class="mx-2 my-4 p-4 grid grid-cols-1 gap-4 bg-gray-50 rounded-lg shadow"></div>
-    <div id="subscriber" class="mx-2 my-4 p-4 grid grid-cols-1 md:grid-cols-4 gap-4 bg-gray-50 rounded-lg shadow"></div>
+    <!-- <div id="subscriber" class="mx-2 my-4 p-4 grid grid-cols-1 md:grid-cols-4 gap-4 bg-gray-50 rounded-lg shadow"></div> -->
+    <div id="subscriber" :class="[attendeeCount === 4 ? 'md:grid-cols-2' : (attendeeCount === 2 ? 'md:grid-cols-2' : (attendeeCount === 3 ? 'md:grid-cols-3' : (attendeeCount === 6 ? 'md:grid-cols-3' : 'md:grid-cols-4'))), 'grid', 'grid-cols-2', 'gap-2', 'my-4']">
+      <!-- <div v-for="index in attendeeCount" :key="index" class="items-center bg-gray-50 rounded-lg shadow">
+        <div class="min-h-80">
+          <div class="bg-black text-white w-full h-48 rounded-t-lg">
+            video
+          </div>
+        </div>
+      </div> -->
+    </div>
   </div>
 </template>
 
@@ -15,7 +20,9 @@
     name: "DynamicLiveSession",
     props: ["opentok_api_key", "sessionId", "token"],
     data() {
-      return {};
+      return {
+        attendeeCount: 12,
+      };
     },
     async mounted() {
       this.initializeSession();
@@ -30,8 +37,10 @@
           const subscriber = session.subscribe(event.stream, subscriberOptions);
           subscriber.on("videoElementCreated", function(event) {
             const videoElement = event.element;
-            videoElement.classList.add("h-52");
+            videoElement.classList.add("min-h-80");
             videoElement.classList.add("w-full");
+            videoElement.classList.add("h-48");
+            videoElement.classList.add("rounded-t-lg");
             document.getElementById("subscriber").appendChild(videoElement);
           });
         });
