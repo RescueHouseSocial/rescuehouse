@@ -37,11 +37,13 @@
           const subscriber = session.subscribe(event.stream, subscriberOptions);
           subscriber.on("videoElementCreated", function(event) {
             const videoElement = event.element;
-            videoElement.classList.add("min-h-80");
-            videoElement.classList.add("w-full");
-            videoElement.classList.add("h-48");
-            videoElement.classList.add("rounded-t-lg");
-            document.getElementById("subscriber").appendChild(videoElement);
+            const innerDiv = document.createElement("div");
+            innerDiv.classList.add("min-h-80");
+            innerDiv.classList.add("w-full");
+            // innerDiv.classList.add("h-48");
+            innerDiv.classList.add("rounded-t-lg");
+            innerDiv.appendChild(videoElement);
+            document.getElementById("subscriber").appendChild(innerDiv);
           });
         });
         var publisher = OT.initPublisher();

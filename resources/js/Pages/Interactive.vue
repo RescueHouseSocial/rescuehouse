@@ -29,14 +29,12 @@
 
 <script setup>
 
-  // import DynamicLiveSession from "../Components/DynamicLiveSession.vue";
   import InteractivesDisplay from "../Components/InteractivesDisplay.vue";
 
   import AuthenticatedLayout from "@/Layouts/AuthenticatedLayout.vue";
 
   import { Head } from "@inertiajs/vue3";
 
-  // const props = defineProps(["postId", "posts", "opentok_api_key", "sessionId", "token"]);
   const props = defineProps(["posts"]);
 
 </script>

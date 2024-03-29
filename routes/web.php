@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\ErrorController;
 use App\Http\Controllers\HomeController;
 
 use App\Http\Controllers\FeedsController;
@@ -42,6 +43,8 @@ use Inertia\Inertia;
 // Route::domain('admin.site.com')->group(function () {
 //   Route::get('/', 'AdminController@index');
 // });
+
+Route::get("/error", [ErrorController::class, "show"])->name("error");
 
 Route::get("/", [HomeController::class, "show"])->name("home");
 
