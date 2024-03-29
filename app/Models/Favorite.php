@@ -7,7 +7,18 @@ use Illuminate\Database\Eloquent\Model;
 
 class Favorite extends Model
 {
-    use HasFactory;
+  use HasFactory;
 
-    protected $fillable = ["userId", "postId"];
+  protected $fillable = ["userId", "postId"];
+
+  public static function loadFavoriteMetadata($postId)
+  {
+
+    return self::where("postId", $postId)
+    ->where("userId", auth()->user()->userId)
+    ->where("active", 1)
+    ->get();
+    
+  }
+
 }

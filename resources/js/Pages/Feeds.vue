@@ -122,8 +122,8 @@
   const social = async () => {
     activeTab.value = "social";
     isLoading.value = true;
-    await new Promise(resolve => setTimeout(resolve, 1500));
     const response = await axios.get(route("feeds.social"));
+    await new Promise(resolve => setTimeout(resolve, 500));
     socialposts.value = response.data.posts;
     isLoading.value = false;
   }
@@ -131,8 +131,8 @@
   const rescue = async () => {
     activeTab.value = "rescue";
     isLoading.value = true;
-    await new Promise(resolve => setTimeout(resolve, 1500));
     const response = await axios.get(route("feeds.rescue"));
+    await new Promise(resolve => setTimeout(resolve, 500));
     rescueposts.value = response.data.posts;
     isLoading.value = false;
   }
@@ -140,8 +140,8 @@
   const interactive = async () => {
     activeTab.value = "interactive";
     isLoading.value = true;
-    await new Promise(resolve => setTimeout(resolve, 1500));
     const response = await axios.get(route("feeds.interactive"));
+    await new Promise(resolve => setTimeout(resolve, 500));
     interactiveposts.value = response.data.posts;
     isLoading.value = false;
   }

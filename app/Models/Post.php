@@ -16,26 +16,75 @@ class Post extends Model
     "gallery" => "array",
   ];
 
-  // public function user()
-  // {
-
-  //   return $this->belongsTo(User::class, "userId");
-
-  // }
-
-  public function getAllPostsOrderedByCreatedAt()
+  public static function getPostsByType($type)
   {
 
-    return $this->join("users", "posts.userId", "=", "users.userId")
-    ->join("avatars", function ($join) {
-        $join->on("users.userId", "=", "avatars.userId")
-            ->where("avatars.active", "=", 1);
-    })
-    ->where("posts.active", "=", 1)
-    ->where("users.active", "=", 1)
-    ->orderBy("posts.created_at", "desc")
-    ->select("posts.*", "users.name", "avatars.path")
+    return self::join("users", "posts.userId", "=", "users.userId")
+      ->leftJoin("avatars", "users.userId", "=", "avatars.userId")
+      ->leftJoin("galleries", "posts.postId", "=", "galleries.postId")
+      ->leftJoin("favorites", function($join) {
+      $join->on("posts.postId", "=", "favorites.postId")
+        ->where("favorites.userId", "=", auth()->user()->userId)
+        ->where("favorites.active", "=", 1);
+      })
+      ->where("posts.type", $type)
+      ->where("posts.active", 1)
+      ->where("users.active", 1)
+      ->where("avatars.active", 1)
+      ->select("posts.*", "users.name", "avatars.path")
+      ->orderBy("posts.created_at", "desc")
+      ->distinct()
+      ->get();
+
+  }
+
+  public function loadPostMetadata()
+  {
+
+    $this->loadFavorites();
+    $this->loadFavoritesCount();
+    $this->loadRepliesCount();
+    $this->loadGalleries();
+
+  }
+
+  protected function loadFavorites()
+  {
+
+    $this->favorites = Favorite::where("postId", $this->postId)
+    ->where("userId", auth()->user()->userId)
+    ->where("active", 1)
     ->get();
+
+  }
+
+  protected function loadFavoritesCount()
+  {
+
+    $this->favoritescount = Favorite::where("postId", $this->postId)
+    ->where("userId", auth()->user()->userId)
+    ->where("active", 1)
+    ->count();
+
+  }
+
+  protected function loadRepliesCount()
+  {
+
+    $this->repliescount = Reply::where("postId", $this->postId)
+    ->where("active", 1)
+    ->count();
+
+  }
+
+  protected function loadGalleries()
+  {
+
+    if (!empty($this->gallery)) {
+      $this->galleries = Gallery::whereIn("galleryId", $this->gallery)->get();
+    } else {
+      $this->galleries = null;
+    }
 
   }
   

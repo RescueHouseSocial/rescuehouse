@@ -1,9 +1,12 @@
 <template>
   <div id="DynamicPostDisplay">
     <div class="flex flex-col mx-auto p-4 w-full">
-      <div class="flex flex-col-reverse md:flex-row md:justify-between">
-        <div>{{ post.title }}</div>
-        <small class="font-light text-gray-800 text-end mx-4 md:mx-0 block">{{ formatDate(post.datetime8601) }}</small>
+      <div class="flex flex-row justify-between">
+        <div class="flex flex-row">
+          <div v-if="post.path" class="items-center"><img :src="`/storage/avatars/medium/${post.path}`" class="h-12 w-12 rounded" alt="user avatar"/></div>
+          <div class="flex items-center"><a :href="`/account/${post.userId}`" class="mx-2">{{ post.name }}</a></div>
+        </div>
+        <div class="flex items-center"><small class="font-light text-gray-800 text-end mx-4 md:mx-0">{{ formatDate(post.datetime8601) }}</small></div>
       </div>
       <div class="my-8">
         <div class="whitespace-break-spaces">{{ post.body }}</div>
@@ -14,11 +17,10 @@
         />
       </div>
       <div class="mr-4 md:mr-0 justify-end">
-        <div class="grid grid-cols-12 gap-0 place-items-left">
-          <div v-if="post.path" class="col-span-1 items-center"><img :src="`/storage/avatars/medium/${post.path}`" class="h-full w-full rounded" alt="user avatar"/></div>
-          <div class="flex col-span-9 items-center"><a :href="`/account/${post.userId}`" class="mx-2">{{ post.name }}</a></div>
-          <div class="flex col-span-1">
-            <div class="flex flex-col items-center">
+        <div class="flex flex-row flex-nowrap justify-between">
+          <div class="flex flex-row">
+            <div class="flex flex-row items-center mx-2">
+              <div v-if="formattedFavoriteCount > 0" class="text-sm mr-1">{{ formattedFavoriteCount }}</div>
               <div @click="handleFavoriteToggle(post.postId)" class="hover:text-orange-400 cursor-pointer">
                 <span v-if="post.favorites && post.favorites.length > 0 || activeFavorite === false">
                   <i class="fa-solid fa-heart fa-fw fa-lg"></i>
@@ -27,25 +29,31 @@
                   <i class="fa-regular fa-heart fa-fw fa-lg"></i>
                 </span>
               </div>
-              <div class="text-sm font-light">{{ formattedFavoriteCount }}</div>
             </div>
           </div>
-          <div class="flex col-span-1">
-            <div class="flex flex-col items-center">
+          <div class="flex flex-row">
+            <div class="flex flex-row items-center mx-2">
+              <div v-if="formattedCommentCount > 0" class="text-sm mr-1">{{ formattedCommentCount }}</div>
               <div @click="handleCommentToggle(post.postId)" class="hover:text-orange-400 cursor-pointer">
                 <i class="fa-regular fa-comments fa-fw fa-lg"></i>
               </div>
-              <div class="text-sm font-light">{{ formattedCommentCount }}</div>
             </div>
-          </div>
-          <!-- <div class="flex col-span-1">
-            <div class="flex flex-col items-center">
-              <div @click="handleRepostToggle(post.postId)" class="hover:text-orange-400 cursor-pointer">
+            <div class="flex flex-row items-center mx-2">
+              <div @click="handleShareToggle(post.postId)" class="mx-1 hover:text-orange-400 cursor-pointer">
+                <i class="fa-regular fa-paper-plane fa-fw fa-lg"></i>
+              </div>
+            </div>
+            <div class="flex flex-row items-center mx-2">
+              <div @click="handleRepostToggle(post.postId)" class="mx-1 hover:text-orange-400 cursor-pointer">
                 <i class="fa-solid fa-retweet fa-fw fa-lg"></i>
               </div>
-              <div class="text-sm font-light">{{ formattedRepostCount }}</div>
             </div>
-          </div> -->
+            <div class="flex flex-row items-center mx-2">
+              <div @click="handleMessageToggle(post.userId)" class="mx-1 hover:text-orange-400 cursor-pointer">
+                <i class="fa-solid fa-at fa-fw fa-lg"></i>
+              </div>
+            </div>
+          </div>
         </div>
       </div>
     </div>
@@ -67,7 +75,25 @@
   let activeFavorite = ref();
 
   const formatDate = (datetime8601) => {
-    return DateTime.fromISO(datetime8601).toLocaleString(DateTime.DATETIME_FULL);
+    const pastDate = DateTime.fromISO(datetime8601);
+    const now = DateTime.now();
+    const diff = now.diff(pastDate, ["years", "months", "days", "hours"]).toObject();
+    console.table(diff);
+    if (diff.years > 0) {
+      const roundedYears = Math.round(diff.years);
+      return `${roundedYears} year${roundedYears !== 1 ? "s" : ""} ago`;
+    } else if (diff.months > 0) {
+      const roundedMonths = Math.round(diff.months);
+      return `${roundedMonths} month${roundedMonths !== 1 ? "s" : ""} ago`;
+    } else if (diff.days > 0) {
+      const roundedDays = Math.round(diff.days);
+      return `${roundedDays} day${roundedDays !== 1 ? "s" : ""} ago`;
+    } else if (diff.hours > 1) {
+      const roundedHours = Math.round(diff.hours);
+      return `${roundedHours} hour${roundedHours !== 1 ? "s" : ""} ago`;
+    } else {
+      return "1 hour ago";
+    }
   };
 
   const formattedFavoriteCount = computed(() => {
@@ -126,8 +152,16 @@
     window.location.href = `/post/${postId}`;
   };
 
+  const handleShareToggle = (postId) => {
+    console.log(postId);
+  };
+
   const handleRepostToggle = (postId) => {
     console.log(postId);
+  };
+
+  const handleMessageToggle = (postId) => {
+    window.location.href = `/message/${postId}`;
   };
 
 </script>
