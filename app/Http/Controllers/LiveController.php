@@ -68,7 +68,7 @@ class LiveController extends Controller
 
     foreach($posts as $post) {
 
-      if($post->sessionId === "") {
+      if ($post->sessionId === "" || $post->sessionId === null) {
         $session = $opentok->createSession();
         $sessionId = $session->getSessionId();
         $interactive = Interactive::where("postId", $postId)->firstOrFail();
