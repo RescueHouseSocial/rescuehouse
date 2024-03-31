@@ -32,62 +32,71 @@
           </div>
         </div>
         <div v-if="activeTab === 'social'">
-          <div class="w-full">
-            <div class="flex justify-center">
-              <span v-if="isLoading" class="my-8">
+          <div class="flex flex-col justify-center">
+            <div v-if="isLoading" class="my-8">
+              <div class="flex justify-center">
                 <i class="fa-solid fa-spinner fa-fw fa-spin"></i>
-              </span>
-              <span v-else>
-                <div class="py-8 px-8 mx-auto w-full md:w-1/2">
-                  <div class="grid gap-8 mb-4 md:grid-cols-1">
-                    <div v-for="post in socialposts" :key="post.id" class="items-center bg-gray-50 rounded-lg shadow">
+              </div>
+            </div>
+            <div v-else>
+              <div v-for="post in socialposts" :key="post.id">
+                <div class="py-4 px-8 mx-auto w-full md:w-3/5">
+                  <div class="items-center bg-gray-50 rounded-lg shadow">
+                    <div class="grid grid-cols-1 gap-4">
                       <DynamicPostDisplay
                         :post="post"
+                        :mybank="mybank"
                       />
                     </div>
                   </div>
                 </div>
-              </span>
+              </div>
             </div>
           </div>
         </div>
         <div v-if="activeTab === 'rescue'">
-          <div class="w-full">
-            <div class="flex justify-center">
-              <span v-if="isLoading" class="my-8">
+          <div class="flex flex-col justify-center">
+            <div v-if="isLoading" class="my-8">
+              <div class="flex justify-center">
                 <i class="fa-solid fa-spinner fa-fw fa-spin"></i>
-              </span>
-              <span v-else>
-                <div class="py-8 px-8 mx-auto w-full md:w-1/2">
-                  <div class="grid gap-8 mb-4 md:grid-cols-1">
-                    <div v-for="post in rescueposts" :key="post.id" class="items-center bg-gray-50 rounded-lg shadow">
+              </div>
+            </div>
+            <div v-else>
+              <div v-for="post in rescueposts" :key="post.id">
+                <div class="py-4 px-8 mx-auto w-full md:w-3/5">
+                  <div class="items-center bg-gray-50 rounded-lg shadow">
+                    <div class="grid grid-cols-1 gap-4">
                       <DynamicPostDisplay
                         :post="post"
+                        :mybank="mybank"
                       />
                     </div>
                   </div>
                 </div>
-              </span>
+              </div>
             </div>
           </div>
         </div>
         <div v-if="activeTab === 'interactive'">
-          <div class="w-full">
-            <div class="flex justify-center">
-              <span v-if="isLoading" class="my-8">
+          <div class="flex flex-col justify-center">
+            <div v-if="isLoading" class="my-8">
+              <div class="flex justify-center">
                 <i class="fa-solid fa-spinner fa-fw fa-spin"></i>
-              </span>
-              <span v-else>
-                <div class="py-8 px-8 mx-auto w-full md:w-1/2">
-                  <div class="grid gap-8 mb-4 md:grid-cols-1">
-                    <div v-for="post in interactiveposts" :key="post.id" class="items-center bg-gray-50 rounded-lg shadow">
+              </div>
+            </div>
+            <div v-else>
+              <div v-for="post in interactiveposts" :key="post.id">
+                <div class="py-4 px-8 mx-auto w-full md:w-3/5">
+                  <div class="items-center bg-gray-50 rounded-lg shadow">
+                    <div class="grid grid-cols-1 gap-4">
                       <DynamicPostDisplay
                         :post="post"
+                        :mybank="mybank"
                       />
                     </div>
                   </div>
                 </div>
-              </span>
+              </div>
             </div>
           </div>
         </div>
@@ -113,10 +122,12 @@
   let socialposts = ref([]);
   let rescueposts = ref([]);
   let interactiveposts = ref([]);
+  let mybank = ref([]);
 
   onMounted(async () => {
     const response = await axios.get(route("feeds.social"));
     socialposts.value = response.data.posts;
+    mybank.value = response.data.mybank;
   });
 
   const social = async () => {
@@ -125,6 +136,7 @@
     const response = await axios.get(route("feeds.social"));
     await new Promise(resolve => setTimeout(resolve, 500));
     socialposts.value = response.data.posts;
+    mybank.value = response.data.mybank;
     isLoading.value = false;
   }
 
@@ -134,6 +146,7 @@
     const response = await axios.get(route("feeds.rescue"));
     await new Promise(resolve => setTimeout(resolve, 500));
     rescueposts.value = response.data.posts;
+    mybank.value = response.data.mybank;
     isLoading.value = false;
   }
 
@@ -143,6 +156,7 @@
     const response = await axios.get(route("feeds.interactive"));
     await new Promise(resolve => setTimeout(resolve, 500));
     interactiveposts.value = response.data.posts;
+    mybank.value = response.data.mybank;
     isLoading.value = false;
   }
 

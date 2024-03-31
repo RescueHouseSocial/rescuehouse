@@ -122,28 +122,41 @@ class CheckoutController extends Controller
 
     $uuid = Uuid::uuid4()->toString();
     $userId = Auth::user()->userId;
+    $checkOutTokens = [];
     $checkouts = Checkout::where("active", 1)
       ->where("status", "open")
       ->where("checkoutId", $request->checkoutId)
       ->get();
+    foreach ($checkouts as $checkout) {
+      $checkOutTokens = json_decode($checkout->tokenId, true);
+    }
+    $bankTokens = [];
     $banks = Bank::where("active", 1)
       ->where("userId", $userId)
       ->get();
-    $tokens = [];
-    foreach ($checkouts as $checkout) {
-      $tokens = json_decode($checkout->tokenId, true);
+    if (!$banks->isEmpty()) {
+      foreach ($banks as $bank) {
+        $bankTokens = json_decode($bank->tokenId, true);
+      }
+      $mergedTokens = array_merge($checkOutTokens, $bankTokens);
+      $mergedTokensJson = json_encode($mergedTokens);
+      Bank::where("userId", $userId)
+        ->update(["active" => 0]);
+      Bank::create([
+        "bankId" => $uuid,
+        "userId" => $userId,
+        "tokenId" => $mergedTokensJson,
+      ]);
+    } else {
+      Bank::where("userId", $userId)
+        ->update(["active" => 0]);
+      Bank::create([
+        "bankId" => $uuid,
+        "userId" => $userId,
+        "tokenId" => $checkOutTokens,
+      ]);
     }
-    foreach ($banks as $bank) {
-      $tokens = json_decode($bank->tokenId, true);
-    }
-    $tokenId = json_encode($tokens);
-    Bank::where("userId", $userId)
-      ->update(["active" => 0]);
-    Bank::create([
-      "bankId" => $uuid,
-      "userId" => $userId,
-      "tokenId" => $tokenId,
-    ]);
+
     Checkout::where("checkoutId", $request->checkoutId)
       ->where("active", 1)
       ->update(["active" => 0, "status" => "closed"]);

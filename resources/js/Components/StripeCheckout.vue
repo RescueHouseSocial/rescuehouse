@@ -63,7 +63,6 @@
           console.error("Error:", error);
         });
       },
-      // async checkStatus() {},
       async handleStripeSubmit() {
         this.isLoading = true;
         await new Promise(resolve => setTimeout(resolve, 1500));
@@ -77,6 +76,7 @@
         if (error) {
           console.log(error);
         }
+        console.log(this.checkoutId);
         await axios.post(route("checkout.processPayment"), {
           checkoutId: this.checkoutId,
         })
@@ -88,7 +88,6 @@
         });
         this.isLoading = false;
       },
-      // async showMessage(messageText) {},
     }
   };
 

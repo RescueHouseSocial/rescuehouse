@@ -34,6 +34,7 @@ class PostController extends Controller
         })
         ->where("posts.postId", $postId)
         ->where("posts.active", 1)
+        ->where("avatars.active", 1)
         ->where("users.active", 1)
         ->select("posts.*", "users.name", "avatars.path")
         ->first();
@@ -43,6 +44,7 @@ class PostController extends Controller
         ->leftJoin("avatars", "users.userId", "=", "avatars.userId")
         ->where("replies.postId", $postId)
         ->where("replies.active", 1)
+        ->where("avatars.active", 1)
         ->where("users.active", 1)
         ->select("replies.*", "users.name", "avatars.path")
         ->orderBy("replies.created_at", "desc")
@@ -61,8 +63,6 @@ class PostController extends Controller
         ->where("active", 1)
         ->count();
       $posts->favoritescount = $favoritescount;
-      $loggedInUser = Auth::user();
-      $relatedUsers = $loggedInUser->getRelatedUsers();
       return Inertia::render("Single", [
         "posts" => $posts,
         "users" => $relatedUsers,

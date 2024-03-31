@@ -111,6 +111,8 @@ Route::middleware("auth")->group(function () {
   Route::post("/checkoutcreatePayment", [CheckoutController::class, "createPayment"])->name("checkout.createPayment");
   Route::post("/checkoutprocessPayment", [CheckoutController::class, "processPayment"])->name("checkout.processPayment");
 
+  Route::post("/bankprocessTransfer", [BankController::class, "processTransfer"])->name("bank.processTransfer");
+
 
   // Route::post("/sendmessage", [NotifyController::class, "SendMessage"])->name("notify.sendmessage");
 

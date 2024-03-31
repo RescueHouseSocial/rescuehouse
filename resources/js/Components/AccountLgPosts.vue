@@ -60,9 +60,9 @@
           <div class="grid grid-cols-2 md:grid-cols-6 gap-4">
             <div v-for="tokens in mybank" :key="tokens.id">
               <div v-for="token in tokens" :key="tokens.id">
-              <TokenItem 
-                :token="token"
-              />
+                <TokenItem 
+                  :token="token"
+                />
               </div>
             </div>
           </div>

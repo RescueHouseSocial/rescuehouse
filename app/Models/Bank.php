@@ -12,4 +12,13 @@ class Bank extends Model
 
   protected $fillable = ["bankId", "userId", "tokenId", "funded"];
 
+  // public static function getUserBank()
+  // {
+
+  //   return self::where("userId", auth()->user()->userId)
+  //   ->where("active", 1)
+  //   ->get();
+    
+  // }
+
 }

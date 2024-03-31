@@ -12,9 +12,7 @@ class Post extends Model
 
   protected $fillable = ["postId", "userId", "title", "body", "datetime8601", "visibility", "type", "status", "gallery"];
 
-  protected $casts = [
-    "gallery" => "array",
-  ];
+  protected $casts = ["gallery" => "array"];
 
   public static function getPostsByType($type)
   {

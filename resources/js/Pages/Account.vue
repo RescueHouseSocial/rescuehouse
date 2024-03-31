@@ -22,12 +22,12 @@
                 @following="handleFollowing"
                 @messaging="handleMessaging"
               />
-              <AccountLgPosts
+              <!-- <AccountLgPosts
                 :myposts="myposts"
                 :myreplies="myreplies"
                 :mygalleries="mygalleries"
                 :mybank="mybank"
-              />
+              /> -->
             </div>
           </div>
         </div>

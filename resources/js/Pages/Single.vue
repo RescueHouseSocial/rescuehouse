@@ -7,24 +7,20 @@
     </template>
     <div class="py-4">
       <div class="max-w-8xl min-h-screen bg-gray-100 mx-auto">
-        <div class="flex justify-center">
-          <div class="py-8 px-8 mx-auto w-full md:w-1/2">
-            <div class="grid gap-8 mb-4 md:grid-cols-1">
-              <div class="items-center bg-gray-50 rounded-lg shadow sm:flex">
+        <div class="flex flex-col justify-center">
+          <div class="py-4 px-8 mx-auto w-full md:w-3/5">
+            <div class="items-center bg-gray-50 rounded-lg shadow mb-4">
+              <div class="grid grid-cols-1 gap-4">
                 <DynamicPostDisplay
                   :post="posts"
                 />
               </div>
-              <div class="items-center bg-gray-50 rounded-lg shadow sm:flex">
-                <div class="flex flex-col mx-auto p-4 w-full">
-                  <DynamicReplies
-                    :post="posts"
-                    :users="users"
-                    :replies="replies"
-                  />
-                </div>
-              </div>
             </div>
+            <DynamicReplies
+              :post="posts"
+              :users="users"
+              :replies="replies"
+            />
           </div>
         </div>
       </div>

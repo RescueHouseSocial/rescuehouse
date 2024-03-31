@@ -7,7 +7,6 @@
     </template>
     <div class="py-4">
       <div class="max-w-8xl min-h-screen bg-gray-100 mx-auto">
-
         <div class="flex justify-center">
           <div class="text-sm font-medium text-center text-gray-500 border-b border-gray-200">
             <div class="flex flex-row justify-around">
@@ -32,7 +31,6 @@
             </div>
           </div>
         </div>
-
         <div class="w-full">
           <div v-if="activeTab === 'social'">
             <div class="flex justify-center">
@@ -47,7 +45,6 @@
             </div>
           </div>
         </div>
-
         <div class="w-full">
           <div v-if="activeTab === 'rescue'">
             <div class="flex justify-center">
@@ -62,7 +59,6 @@
             </div>
           </div>
         </div>
-
         <div class="w-full">
           <div v-if="activeTab === 'interactive'">
             <div class="flex justify-center">
@@ -77,7 +73,6 @@
             </div>
           </div>
         </div>
-
       </div>
     </div>
   </AuthenticatedLayout>

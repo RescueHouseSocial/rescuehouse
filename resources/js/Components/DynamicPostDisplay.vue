@@ -30,6 +30,15 @@
                 </span>
               </div>
             </div>
+            <div @click="showModal" class="hover:text-orange-400 cursor-pointer">
+              <i class="fa-solid fa-circle-dollar-to-slot fa-fw fa-lg"></i>
+            </div>
+            <Modal 
+              v-show="isModalVisible"
+              :postId="post.postId"
+              :mybank="mybank"
+              @close="closeModal"
+            />
           </div>
           <div class="flex flex-row">
             <div class="flex flex-row items-center mx-2">
@@ -63,6 +72,7 @@
 <script setup>
 
   import DynamicCarousel from "../Components/DynamicCarousel.vue";
+  import Modal from "../Components/DynamicModal.vue";
 
   import { defineProps, computed, ref } from "vue";
 
@@ -70,15 +80,15 @@
 
   import { DateTime } from "luxon";
 
-  const props = defineProps(["post"]);
+  const props = defineProps(["post", "mybank"]);
 
   let activeFavorite = ref();
+  let isModalVisible = ref(false);
 
   const formatDate = (datetime8601) => {
     const pastDate = DateTime.fromISO(datetime8601);
     const now = DateTime.now();
     const diff = now.diff(pastDate, ["years", "months", "days", "hours"]).toObject();
-    console.table(diff);
     if (diff.years > 0) {
       const roundedYears = Math.round(diff.years);
       return `${roundedYears} year${roundedYears !== 1 ? "s" : ""} ago`;
@@ -146,6 +156,14 @@
         console.error('Error:', error);
       }
     }
+  };
+
+  const showModal = () => {
+    isModalVisible.value = true;
+  };
+
+  const closeModal = () => {
+    isModalVisible.value = false;
   };
 
   const handleCommentToggle = (postId) => {

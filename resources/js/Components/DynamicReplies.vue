@@ -21,10 +21,18 @@
         </div>
       </form>
     </div>
-    <div v-for="post in replies" :key="post.id" class="items-center bg-gray-50 rounded-lg shadow sm:flex mb-4">
-      <DynamicPostDisplay
-        :post="post"
-      />
+    <div class="flex flex-col justify-center">
+      <div v-for="post in replies" :key="post.id">
+        <div class="py-4 mx-auto w-full">
+          <div class="items-center bg-gray-50 rounded-lg shadow">
+            <div class="grid grid-cols-1 gap-4">
+              <DynamicPostDisplay
+                :post="post"
+              />
+            </div>
+          </div>
+        </div>
+      </div>
     </div>
   </div>
 </template>

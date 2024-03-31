@@ -21,9 +21,11 @@ class ReplyController extends Controller
   {
 
     $userId = Auth::user()->userId;
+
     $request->validate([
       "body" => "required",
     ]);
+    
     $post = Reply::create([
       "postId" => $request->postId,
       "userId" => $userId,
