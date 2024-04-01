@@ -54,17 +54,19 @@
           </div>
         </div>
         <div class="grid grid-cols-1 md:grid-cols-2 gap-4 my-4 mx-4">
-          <div class="md:sticky md:top-0">
-            <AccountLgDisplay
-              :users="users"
-              :avatar="avatar"
-              :follow="follow"
-              :formattedPostCount="formattedPostCount"
-              :formattedFollowingCount="formattedFollowingCount"
-              :formattedFollowersCount="formattedFollowersCount"
-              @following="handleFollowing"
-              @messaging="handleMessaging"
-            />
+          <div>
+            <div class="md:sticky md:top-0 w-full">
+              <AccountLgDisplay
+                :users="users"
+                :avatar="avatar"
+                :follow="follow"
+                :formattedPostCount="formattedPostCount"
+                :formattedFollowingCount="formattedFollowingCount"
+                :formattedFollowersCount="formattedFollowersCount"
+                @following="handleFollowing"
+                @messaging="handleMessaging"
+              />
+            </div>
           </div>
           <div>
             <div v-if="activeTab === 'posts'">
@@ -112,19 +114,6 @@
                       </div>
                     </div>
                   </div>
-                  <!-- <div v-for="post in socialposts" :key="post.id">
-                    <div class="py-4 px-8 mx-auto w-full md:w-3/5">
-                      <div class="items-center bg-gray-50 rounded-lg shadow">
-                        <div class="grid grid-cols-1 gap-4">
-                          <DynamicPostDisplay
-                            :post="post"
-                            :mybank="mybank"
-                            @feed-refresh="handleFeedRefresh"
-                          />
-                        </div>
-                      </div>
-                    </div>
-                  </div> -->
                 </div>
               </div>
             </div>
@@ -137,19 +126,6 @@
                 </div>
                 <div v-else>
                   Following {{ formattedFollowingCount }}
-                  <!-- <div v-for="post in socialposts" :key="post.id">
-                    <div class="py-4 px-8 mx-auto w-full md:w-3/5">
-                      <div class="items-center bg-gray-50 rounded-lg shadow">
-                        <div class="grid grid-cols-1 gap-4">
-                          <DynamicPostDisplay
-                            :post="post"
-                            :mybank="mybank"
-                            @feed-refresh="handleFeedRefresh"
-                          />
-                        </div>
-                      </div>
-                    </div>
-                  </div> -->
                 </div>
               </div>
             </div>
@@ -162,19 +138,6 @@
                 </div>
                 <div v-else>
                   Followers {{ formattedFollowersCount }}
-                  <!-- <div v-for="post in socialposts" :key="post.id">
-                    <div class="py-4 px-8 mx-auto w-full md:w-3/5">
-                      <div class="items-center bg-gray-50 rounded-lg shadow">
-                        <div class="grid grid-cols-1 gap-4">
-                          <DynamicPostDisplay
-                            :post="post"
-                            :mybank="mybank"
-                            @feed-refresh="handleFeedRefresh"
-                          />
-                        </div>
-                      </div>
-                    </div>
-                  </div> -->
                 </div>
               </div>
             </div>
@@ -224,9 +187,7 @@
   import { ref, onMounted, defineProps, computed } from "vue";
 
   const props = defineProps(["users", "avatar", "follow", "followerscount", "followingcount", "postcount", "myposts", "myreplies", "mygalleries", "mybank"]);
-
-  console.log(props.myposts);
-
+  
   let isLoading = ref(false);
   let activeTab = ref("posts");
   let accountBiography = ref([]);
@@ -235,11 +196,9 @@
   let accountFollowers = ref([]);
   let accountBank = ref([]);
 
-  // onMounted(async () => {
-  //   const response = await axios.get(route("feeds.social"));
-  //   socialposts.value = response.data.posts;
-  //   mybank.value = response.data.mybank;
-  // });
+  const handleFeedRefresh = async () => {
+    console.log("refresh");
+  };
 
   const formattedFollowersCount = computed(() => {
     return formatNumber(props.followerscount);
