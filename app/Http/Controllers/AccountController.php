@@ -126,6 +126,7 @@ class AccountController extends Controller
         })
         ->where("posts.userId", auth()->user()->userId)
         ->where("posts.active", 1)
+        ->where("avatars.active", 1)
         ->where("users.active", 1)
         ->select("posts.*", "users.name", "avatars.path")
         ->orderBy("posts.created_at", "desc")
@@ -158,6 +159,7 @@ class AccountController extends Controller
         ->where("replies.userId", auth()->user()->userId)
         ->where("replies.active", 1)
         ->where("users.active", 1)
+        ->where("avatars.active", 1)
         ->select("replies.*", "users.name", "avatars.path")
         ->orderBy("replies.created_at", "desc")
         ->get();

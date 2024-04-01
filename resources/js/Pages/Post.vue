@@ -34,7 +34,7 @@
         <div class="w-full">
           <div v-if="activeTab === 'social'">
             <div class="flex justify-center">
-              <div class="py-8 px-8 mx-auto w-full md:w-1/2">
+              <div class="py-4 px-8 mx-auto w-full md:w-1/2">
                 <div class="grid gap-8 mb-4 md:grid-cols-1">
                   <DynamicPostSocial
                     :postId="postId"
@@ -48,7 +48,7 @@
         <div class="w-full">
           <div v-if="activeTab === 'rescue'">
             <div class="flex justify-center">
-              <div class="py-8 px-8 mx-auto w-full md:w-1/2">
+              <div class="py-4 px-8 mx-auto w-full md:w-1/2">
                 <div class="grid gap-8 mb-4 md:grid-cols-1">
                   <DynamicPostRescue
                     :postId="postId"
@@ -62,7 +62,7 @@
         <div class="w-full">
           <div v-if="activeTab === 'interactive'">
             <div class="flex justify-center">
-              <div class="py-8 px-8 mx-auto w-full md:w-1/2">
+              <div class="py-4 px-8 mx-auto w-full md:w-1/2">
                 <div class="grid gap-8 mb-4 md:grid-cols-1">
                   <DynamicPostInteractive
                     :postId="postId"
