@@ -80,10 +80,13 @@
 
   import { DateTime } from "luxon";
 
+  const emit = defineEmits(["feed-refresh"]);
+
   const props = defineProps(["post", "mybank"]);
 
   let activeFavorite = ref();
   let isModalVisible = ref(false);
+  let favoried = ref(false);
 
   const formatDate = (datetime8601) => {
     const pastDate = DateTime.fromISO(datetime8601);
@@ -140,22 +143,22 @@
   const handleFavoriteToggle = async (postId) => {
     if (props.post.favorites.length === 0) {
       activeFavorite.value = false;
-      let favoried = false;
-      try {
-        const response = await axios.post(route("favorite.store"), { favoried, postId });
-      } catch (error) {
-        console.error('Error:', error);
-      }
+      favoried.value = false;
     } else {
       props.post.favorites = [];
       activeFavorite.value = true;
-      let favoried = true;
-      try {
-        const response = await axios.post(route("favorite.store"), { favoried, postId });
-      } catch (error) {
-        console.error('Error:', error);
-      }
+      favoried.value = true;
     }
+    await axios.post(route("favorite.store"), {
+      favoried: favoried.value,
+      postId: postId,
+    })
+    .then(response => {
+      emit("feed-refresh");
+    })
+    .catch(error => {
+      console.error("Error:", error);
+    });
   };
 
   const showModal = () => {

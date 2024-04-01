@@ -148,12 +148,13 @@ class CheckoutController extends Controller
         "tokenId" => $mergedTokensJson,
       ]);
     } else {
+      $tokensJson = json_encode($checkOutTokens);
       Bank::where("userId", $userId)
         ->update(["active" => 0]);
       Bank::create([
         "bankId" => $uuid,
         "userId" => $userId,
-        "tokenId" => $checkOutTokens,
+        "tokenId" => $tokensJson,
       ]);
     }
 

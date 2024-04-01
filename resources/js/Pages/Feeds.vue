@@ -46,6 +46,7 @@
                       <DynamicPostDisplay
                         :post="post"
                         :mybank="mybank"
+                        @feed-refresh="handleFeedRefresh"
                       />
                     </div>
                   </div>
@@ -69,6 +70,7 @@
                       <DynamicPostDisplay
                         :post="post"
                         :mybank="mybank"
+                        @feed-refresh="handleFeedRefresh"
                       />
                     </div>
                   </div>
@@ -92,6 +94,7 @@
                       <DynamicPostDisplay
                         :post="post"
                         :mybank="mybank"
+                        @feed-refresh="handleFeedRefresh"
                       />
                     </div>
                   </div>
@@ -129,6 +132,17 @@
     socialposts.value = response.data.posts;
     mybank.value = response.data.mybank;
   });
+
+  const handleFeedRefresh = async () => {
+    const socialresponse = await axios.get(route("feeds.social"));
+    socialposts.value = socialresponse.data.posts;
+
+    const rescueresponse = await axios.get(route("feeds.rescue"));
+    rescueposts.value = rescueresponse.data.posts;
+
+    const interactiveresponse = await axios.get(route("feeds.interactive"));
+    interactiveposts.value = interactiveresponse.data.posts;
+  }
 
   const social = async () => {
     activeTab.value = "social";

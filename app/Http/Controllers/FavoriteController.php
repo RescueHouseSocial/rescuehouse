@@ -16,8 +16,8 @@ class FavoriteController extends Controller
   public function store(Request $request)
   {
     
-    $action = $request->input("favoried");
     $userId = Auth::user()->userId;
+    $action = $request->input("favoried");
     $postId = $request->input("postId");
     if ($action === false) {
       $favorite = new Favorite();
