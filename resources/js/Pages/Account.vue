@@ -53,12 +53,15 @@
             </div>
           </div>
         </div>
-        <div class="grid grid-cols-1 md:grid-cols-2 gap-4 my-4">
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-4 my-4 mx-4">
           <div class="md:sticky md:top-0">
             <AccountLgDisplay
               :users="users"
               :avatar="avatar"
               :follow="follow"
+              :formattedPostCount="formattedPostCount"
+              :formattedFollowingCount="formattedFollowingCount"
+              :formattedFollowersCount="formattedFollowersCount"
               @following="handleFollowing"
               @messaging="handleMessaging"
             />
@@ -74,7 +77,6 @@
                 <div v-else>
                   <div class="flex justify-center">
                     <div class="px-4 mx-auto w-full">
-                      {{ formattedPostCount }}
                       <div class="grid gap-4 mb-4 md:grid-cols-1">
                         <div v-for="post in myposts" :key="post.id" class="items-center bg-gray-50 rounded-lg shadow">
                           <DynamicPostDisplay

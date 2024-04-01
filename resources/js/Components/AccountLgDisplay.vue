@@ -26,6 +26,24 @@
               >Message</button>
             </div>
           </div>
+          <div class="mb-4">
+            <div class="max-w-screen-xl px-4 py-8 mx-auto text-center lg:py-16 lg:px-6">
+              <dl class="grid max-w-screen-md gap-8 mx-auto text-gray-900 grid-cols-3">
+                <div class="flex flex-col items-center justify-center">
+                  <dt class="mb-2 text-3xl md:text-4xl font-extrabold">{{ formattedPostCount }}</dt>
+                  <dd class="font-light text-gray-500">{{ formattedPostCount === 1 ? 'Posts' : 'Post' }}</dd>
+                </div>
+                <div class="flex flex-col items-center justify-center">
+                  <dt class="mb-2 text-3xl md:text-4xl font-extrabold">{{ formattedFollowingCount }}</dt>
+                  <dd class="font-light text-gray-500">Following</dd>
+                </div>
+                <div class="flex flex-col items-center justify-center">
+                  <dt class="mb-2 text-3xl md:text-4xl font-extrabold">{{ formattedFollowersCount }}</dt>
+                  <dd class="font-light text-gray-500">Followers</dd>
+                </div>
+              </dl>
+            </div>
+          </div>
           <div class="p-4">
             <h3 class="text-xl font-bold tracking-tight text-gray-900">{{ users.name }}</h3>
             <div v-if="users.location"><i class="text-gray-500 fa-solid fa-location-dot fa-fw"></i><span class="text-gray-500 mx-1">{{ users.location }}</span></div>
@@ -43,7 +61,7 @@
 
   const emit = defineEmits(["following", "messaging"]);
 
-  const props = defineProps(["users", "avatar", "follow"]);
+  const props = defineProps(["users", "avatar", "follow", "formattedPostCount", "formattedFollowingCount", "formattedFollowersCount"]);
 
   let isFollowing = props.follow;
   
