@@ -80,10 +80,6 @@
   };
 
   const handleFollowToggle = async () => {
-
-    console.log(isFollowing);
-    console.log(followee);
-
     isLoading.value = true;
     let payload = [];
     if (isFollowing === false) {

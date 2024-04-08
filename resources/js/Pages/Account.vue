@@ -115,22 +115,23 @@
                   </div>
                 </div>
                 <div v-else>
-                  <div v-for="following in myfollowing" :key="following.id" class="mx-4">
-                    <div class="w-full bg-gray-50 rounded-lg shadow mb-4">
-                      <div class="flex flex-col items-center p-4">
+                  <div v-if="myfollowing && myfollowing.length != 0">
+                    <div v-for="following in myfollowing" :key="following.id" class="mx-4">
+                      <a :href="`/account/${following.followingUser.userId}`" class="flex items-center bg-gray-50 rounded shadow flex-row md:max-w-xl hover:bg-gray-100 mb-4">
                         <div v-if="following.avatar.path && following.avatar.path != 'unknown.jpg'">
-                          <img :src="`/storage/avatars/medium/${following.avatar.path}`" class="w-24 h-24 mb-3 rounded shadow" alt="user avatar"/>
+                          <img :src="`/storage/avatars/medium/${following.avatar.path}`" class="object-cover w-full h-12 md:h-auto md:w-12 rounded-none rounded-s-lg" alt="user avatar"/>
                         </div>
                         <div v-else>
-                          <img src="../../images/paw.png" class="w-24 h-24 mb-3 rounded shadow" alt="user avatar"/>
+                          <img src="../../images/paw.png" class="object-cover w-full h-12 md:h-auto md:w-12 rounded-none rounded-s-lg" alt="user avatar"/>
                         </div>
-                        <a :href="`/account/${following.followingUser.userId}`" class="text-gray-600 hover:text-orange-400 hover:underline hover:underline-offset-1" :title="`Following ${following.followingUser.name}`"><h5 class="mb-1 text-xl font-medium text-gray-900">{{ following.followingUser.name }}</h5></a>
-                        <!-- <div class="flex mt-4 md:mt-6">
-                          <a href="#" class="inline-flex items-center px-4 py-2 text-sm font-medium text-center text-white bg-blue-700 rounded-lg hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300">Add friend</a>
-                          <a href="#" class="py-2 px-4 ms-2 text-sm font-medium text-gray-900 focus:outline-none bg-white rounded-lg border border-gray-200 hover:bg-gray-100 hover:text-blue-700 focus:z-10 focus:ring-4 focus:ring-gray-100">Message</a>
-                        </div> -->
-                      </div>
+                        <div class="flex flex-col justify-between leading-normal">
+                          <div class="mb-1 ml-4 text font-medium text-gray-900">{{ following.followingUser.name }}</div>
+                        </div>
+                      </a>
                     </div>
+                  </div>
+                  <div v-else>
+                    <p>There are active following at this time</p>
                   </div>
                 </div>
               </div>
@@ -143,22 +144,23 @@
                   </div>
                 </div>
                 <div v-else>
-                  <div v-for="followers in myfollowers" :key="followers.id" class="mx-4">
-                    <div class="w-full bg-gray-50 rounded-lg shadow mb-4">
-                      <div class="flex flex-col items-center p-4">
+                  <div v-if="myfollowers && myfollowers.length != 0">
+                    <div v-for="followers in myfollowers" :key="followers.id" class="mx-4">
+                      <a :href="`/account/${followers.followersUser.userId}`" class="flex items-center bg-gray-50 rounded shadow flex-row md:max-w-xl hover:bg-gray-100 mb-4">
                         <div v-if="followers.avatar.path && followers.avatar.path != 'unknown.jpg'">
-                          <img :src="`/storage/avatars/medium/${followers.avatar.path}`" class="w-24 h-24 mb-3 rounded shadow" alt="user avatar"/>
+                          <img :src="`/storage/avatars/medium/${followers.avatar.path}`" class="object-cover w-full h-12 md:h-auto md:w-12 rounded-none rounded-s-lg" alt="user avatar"/>
                         </div>
                         <div v-else>
-                          <img src="../../images/paw.png" class="w-24 h-24 mb-3 rounded shadow" alt="user avatar"/>
+                          <img src="../../images/paw.png" class="object-cover w-full h-12 md:h-auto md:w-12 rounded-none rounded-s-lg" alt="user avatar"/>
                         </div>
-                        <a :href="`/account/${followers.followersUser.userId}`" class="text-gray-600 hover:text-orange-400 hover:underline hover:underline-offset-1" :title="`Following ${followers.followersUser.name}`"><h5 class="mb-1 text-xl font-medium text-gray-900">{{ followers.followersUser.name }}</h5></a>
-                        <!-- <div class="flex mt-4 md:mt-6">
-                          <a href="#" class="inline-flex items-center px-4 py-2 text-sm font-medium text-center text-white bg-blue-700 rounded-lg hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300">Add friend</a>
-                          <a href="#" class="py-2 px-4 ms-2 text-sm font-medium text-gray-900 focus:outline-none bg-white rounded-lg border border-gray-200 hover:bg-gray-100 hover:text-blue-700 focus:z-10 focus:ring-4 focus:ring-gray-100">Message</a>
-                        </div> -->
-                      </div>
+                        <div class="flex flex-col justify-between leading-normal">
+                          <div class="mb-1 ml-4 text font-medium text-gray-900">{{ followers.followersUser.name }}</div>
+                        </div>
+                      </a>
                     </div>
+                  </div>
+                  <div v-else>
+                    <p>There are active followers at this time</p>
                   </div>
                 </div>
               </div>
@@ -171,18 +173,23 @@
                   </div>
                 </div>
                 <div v-else>
-                  <div class="flex flex-col mx-4 mx-auto">
-                    <div class="flex flex-wrap mb-4">
-                      <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
-                        <div v-for="tokens in mybank" :key="tokens.id">
-                          <div v-for="token in tokens" :key="tokens.id">
-                            <TokenItem 
-                              :token="token"
-                            />
+                  <div v-if="mybank && mybank.length != 0">
+                    <div class="flex flex-col mx-4 mx-auto">
+                      <div class="flex flex-wrap mb-4">
+                        <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
+                          <div v-for="tokens in mybank" :key="tokens.id">
+                            <div v-for="token in tokens" :key="tokens.id">
+                              <TokenItem 
+                                :token="token"
+                              />
+                            </div>
                           </div>
                         </div>
                       </div>
                     </div>
+                  </div>
+                  <div v-else>
+                    <p>The leger is empty at this time</p>
                   </div>
                 </div>
               </div>
