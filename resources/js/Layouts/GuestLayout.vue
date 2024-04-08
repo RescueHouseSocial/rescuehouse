@@ -1,12 +1,13 @@
 <template>
   <div id="GuestLayout">
     <div class="flex flex-col min-h-screen scroll-smooth">
-      <div :class="$page.url === '/' ? 'flex h-full w-full bg-gray-200' : 'bg-gray-400'">
+      <div :class="$page.url === '/' ? 'flex h-full w-full bg-gray-200' : 'bg-gray-300'">
         <div :class="$page.url === '/' ? 'flex-1 bg-hero bg-cover bg-center bg-no-repeat' : ''">
           <div class="container mx-auto flex flex-wrap my-4 flex-col md:flex-row items-center">
             <a href="/" class="flex items-center mb-4 md:mb-0"><img src="../../images/paw.png" alt="Logo"/></a>
-            <nav class="grid grid-cols-1 gap-4 md:ml-auto md:mr-auto items-center justify-center">
+            <nav class="grid grid-cols-2 gap-4 md:ml-auto md:mr-auto items-center justify-center">
               <a href="/about" class="text-white font-bold hover:text-orange-400 hover:underline underline-offset-1">About</a>
+              <a href="/support" class="text-white font-bold hover:text-orange-400 hover:underline underline-offset-1">Support</a>
             </nav>
             <div v-if="$page.props.auth.user" class="grid grid-cols-1 gap-4">
               <a :href="route('feeds')" class="text-white font-bold hover:text-orange-400 hover:underline underline-offset-1">Social</a>

@@ -1,6 +1,6 @@
 <template>
   <GuestLayout>
-    <div id="Register" class="bg-white min-h-screen border-t-2 border-gray-500">
+    <div class="bg-white min-h-screen">
       <div class="container px-5 py-24 mx-auto">
         <div class="flex justify-center">
           <form @submit.prevent="submit" class="w-full md:w-1/2">

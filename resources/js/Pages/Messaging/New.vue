@@ -14,7 +14,12 @@
                 <div class="flex flex-row justify-between">
                   <div v-for="item in addressee" :key="item.id">
                     <div class="flex flex-row items-center">
-                      <img :src="`/storage/avatars/medium/${item.path}`" class="w-8 h-8 rounded mr-4" alt="user avatar"/>
+                      <div v-if="item.path && item.path != 'unknown.jpg'">
+                        <img :src="`/storage/avatars/medium/${item.path}`" class="w-8 h-8 rounded mr-4" alt="user avatar"/>
+                      </div>
+                      <div v-else>
+                        <img src="../../../images/paw.png" class="w-8 h-8 rounded mr-4" alt="user avatar"/>
+                      </div>
                       <div>{{ item.name }}</div>
                     </div>
                   </div>

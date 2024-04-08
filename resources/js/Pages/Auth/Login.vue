@@ -1,6 +1,6 @@
 <template>
   <GuestLayout>
-    <div id="Login" class="bg-white min-h-screen border-t-2 border-gray-500">
+    <div class="bg-white min-h-screen">
       <div class="container px-5 py-24 mx-auto">
         <div v-if="status" class="mb-4 font-medium text-sm text-green-600">{{ status }}</div>
         <div class="flex justify-center">

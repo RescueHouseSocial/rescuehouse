@@ -1,7 +1,7 @@
 <template>
   <GuestLayout>
     <Head title="About" />
-    <div id="About" class="bg-white min-h-screen border-t-2 border-gray-500">
+    <div class="bg-white min-h-screen">
       <div class="container px-5 py-24 mx-auto">
         <div class="mb-24">
           <h1 class="text-3xl font-bold mb-6 text-center text-gray-700">Welcome</h1>

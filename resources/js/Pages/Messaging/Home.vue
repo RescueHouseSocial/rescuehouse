@@ -17,7 +17,12 @@
                 <div ref="scrollableDiv" class="max-h-96 min-h-96 w-full p-4 overflow-y-scroll border-2 border-gray-200 bg-white">
                   <div v-for="item in messages" :key="item.id">
                     <div :class="[userId === item.messengerId ? 'justify-end' : 'items-start', 'flex', 'mb-4']">
-                      <img :src="`/storage/avatars/medium/${item.path}`" class="w-8 h-8 rounded border-2 border-transparent" alt="User Avatar">
+                    <div v-if="item.path && item.path != 'unknown.jpg'" class="items-center">
+                      <img :src="`/storage/avatars/medium/${item.path}`" class="h-8 w-8 rounded border-2 border-transparent" alt="user avatar"/>
+                    </div>
+                    <div v-else>
+                      <img src="../../../images/paw.png" class="h-8 w-8 rounded border-2 border-transparent" alt="user avatar"/>
+                    </div>
                       <div class="flex flex-col gap-1 w-full max-w-[320px]">
                         <div class="flex items-center space-x-2">
                           <span class="text-sm font-semibold text-gray-900">{{ item.name }}</span>

@@ -3,8 +3,15 @@
     <div class="mx-4">
       <div class="bg-gray-50 rounded-lg shadow">
         <div class="p-4">
-          <div class="flex justify-center">
-            <img :src="`/storage/avatars/medium/${avatar.path}`" class="rounded-lg" alt="user avatar" />
+          <div class="flex justify-center items-center">
+            <div v-for="avatar in userAvatar" :key="avatar.id">
+              <div v-if="avatar.path && avatar.path != 'unknown.jpg'">
+                <img :src="`/storage/avatars/medium/${avatar.path}`" class="h-60 w-60 rounded" alt="user avatar"/>
+              </div>
+              <div v-else>
+                <img src="../../images/paw150.png" class="h-60 w-60 rounded" alt="user avatar"/>
+              </div>
+            </div>
           </div>
           <div class="flex flex-row justify-center">
             <div v-if="follow != null" class="flex justify-center p-4">
@@ -45,9 +52,9 @@
             </div>
           </div>
           <div class="p-4">
-            <h3 class="text-xl font-bold tracking-tight text-gray-900">{{ users.name }}</h3>
-            <div v-if="users.location"><i class="text-gray-500 fa-solid fa-location-dot fa-fw"></i><span class="text-gray-500 mx-1">{{ users.location }}</span></div>
-            <p class="mt-4 mb-4 font-light text-gray-500 whitespace-break-spaces">{{ users.biography }}</p>
+            <h3 class="text-xl font-bold tracking-tight text-gray-900">{{ users[0].name }}</h3>
+            <div v-if="users[0].location"><i class="text-gray-500 fa-solid fa-location-dot fa-fw"></i><span class="text-gray-500 mx-1">{{ users[0].location }}</span></div>
+            <p class="mt-4 mb-4 font-light text-gray-500 whitespace-break-spaces">{{ users[0].biography }}</p>
           </div>
         </div>
       </div>
@@ -61,28 +68,45 @@
 
   const emit = defineEmits(["following", "messaging"]);
 
-  const props = defineProps(["users", "avatar", "follow", "formattedPostCount", "formattedFollowingCount", "formattedFollowersCount"]);
+  const props = defineProps(["users", "userAvatar", "follow", "formattedPostCount", "formattedFollowingCount", "formattedFollowersCount"]);
 
   let isFollowing = props.follow;
-  
+  let followee = props.users[0].userId;
+
   let isLoading = ref(false);
 
   const handleMessageSubmit = async () => {
-    emit("messaging", props.users.userId);
+    emit("messaging", props.users[0].userId);
   };
 
   const handleFollowToggle = async () => {
+
+    console.log(isFollowing);
+    console.log(followee);
+
     isLoading.value = true;
+    let payload = [];
     if (isFollowing === false) {
       isFollowing = true;
-      emit("following", isFollowing);
+      payload = [
+        {
+          isFollowing: isFollowing,
+          followee: followee
+        }
+      ];
+      emit("following", payload);
       isLoading.value = false;
     } else {
       isFollowing = false;
-      emit("following", isFollowing);
+      payload = [
+        {
+          isFollowing: isFollowing,
+          followee: followee
+        }
+      ];
+      emit("following", payload);
       isLoading.value = false;
     }
-    window.location.reload();
   };
 
 </script>

@@ -13,41 +13,31 @@
               <div class="me-2">
                 <div @click="posts"
                   :class="{ 'text-orange-400 border-b-2 border-gray-600 rounded-t-lg active': activeTab === 'posts' }"
-                  class="inline-block p-4 border-b-2 border-transparent rounded-t-lg hover:text-gray-600 hover:border-gray-300 cursor-pointer">
-                  <!-- <h2 class="title-font font-medium sm:text-4xl text-3xl text-gray-900">0</h2> -->
-                  Posts
+                  class="inline-block p-4 border-b-2 border-transparent rounded-t-lg hover:text-gray-600 hover:border-gray-300 cursor-pointer">Posts
                 </div>
               </div>
               <div class="me-2">
                 <div @click="replies"
                   :class="{ 'text-orange-400 border-b-2 border-gray-600 rounded-t-lg active': activeTab === 'replies' }"
-                  class="inline-block p-4 border-b-2 border-transparent rounded-t-lg hover:text-gray-600 hover:border-gray-300 cursor-pointer">
-                  <!-- <h2 class="title-font font-medium sm:text-4xl text-3xl text-gray-900">0</h2> -->
-                  Replies
+                  class="inline-block p-4 border-b-2 border-transparent rounded-t-lg hover:text-gray-600 hover:border-gray-300 cursor-pointer">Replies
                 </div>
               </div>
               <div class="me-2">
                 <div @click="following"
                   :class="{ 'text-orange-400 border-b-2 border-gray-600 rounded-t-lg active': activeTab === 'following' }"
-                  class="inline-block p-4 border-b-2 border-transparent rounded-t-lg hover:text-gray-600 hover:border-gray-300 cursor-pointer">
-                  <!-- <h2 class="title-font font-medium sm:text-4xl text-3xl text-gray-900">0</h2> -->
-                  Following
+                  class="inline-block p-4 border-b-2 border-transparent rounded-t-lg hover:text-gray-600 hover:border-gray-300 cursor-pointer">Following
                 </div>
               </div>
               <div class="me-2">
                 <div @click="followers"
                   :class="{ 'text-orange-400 border-b-2 border-gray-600 rounded-t-lg active': activeTab === 'followers' }"
-                  class="inline-block p-4 border-b-2 border-transparent rounded-t-lg hover:text-gray-600 hover:border-gray-300 cursor-pointer">
-                  <!-- <h2 class="title-font font-medium sm:text-4xl text-3xl text-gray-900">0</h2> -->
-                  Followers
+                  class="inline-block p-4 border-b-2 border-transparent rounded-t-lg hover:text-gray-600 hover:border-gray-300 cursor-pointer">Followers
                 </div>
               </div>
               <div class="me-2">
                 <div @click="bank"
                   :class="{ 'text-orange-400 border-b-2 border-gray-600 rounded-t-lg active': activeTab === 'bank' }"
-                  class="inline-block p-4 border-b-2 border-transparent rounded-t-lg hover:text-gray-600 hover:border-gray-300 cursor-pointer">
-                  <!-- <h2 class="title-font font-medium sm:text-4xl text-3xl text-gray-900">0</h2> -->
-                  Bank
+                  class="inline-block p-4 border-b-2 border-transparent rounded-t-lg hover:text-gray-600 hover:border-gray-300 cursor-pointer">Bank
                 </div>
               </div>
             </div>
@@ -58,7 +48,7 @@
             <div class="md:sticky md:top-0 w-full">
               <AccountLgDisplay
                 :users="users"
-                :avatar="avatar"
+                :userAvatar="userAvatar"
                 :follow="follow"
                 :formattedPostCount="formattedPostCount"
                 :formattedFollowingCount="formattedFollowingCount"
@@ -125,7 +115,23 @@
                   </div>
                 </div>
                 <div v-else>
-                  Following {{ formattedFollowingCount }}
+                  <div v-for="following in myfollowing" :key="following.id" class="mx-4">
+                    <div class="w-full bg-gray-50 rounded-lg shadow mb-4">
+                      <div class="flex flex-col items-center p-4">
+                        <div v-if="following.avatar.path && following.avatar.path != 'unknown.jpg'">
+                          <img :src="`/storage/avatars/medium/${following.avatar.path}`" class="w-24 h-24 mb-3 rounded shadow" alt="user avatar"/>
+                        </div>
+                        <div v-else>
+                          <img src="../../images/paw.png" class="w-24 h-24 mb-3 rounded shadow" alt="user avatar"/>
+                        </div>
+                        <a :href="`/account/${following.followingUser.userId}`" class="text-gray-600 hover:text-orange-400 hover:underline hover:underline-offset-1" :title="`Following ${following.followingUser.name}`"><h5 class="mb-1 text-xl font-medium text-gray-900">{{ following.followingUser.name }}</h5></a>
+                        <!-- <div class="flex mt-4 md:mt-6">
+                          <a href="#" class="inline-flex items-center px-4 py-2 text-sm font-medium text-center text-white bg-blue-700 rounded-lg hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300">Add friend</a>
+                          <a href="#" class="py-2 px-4 ms-2 text-sm font-medium text-gray-900 focus:outline-none bg-white rounded-lg border border-gray-200 hover:bg-gray-100 hover:text-blue-700 focus:z-10 focus:ring-4 focus:ring-gray-100">Message</a>
+                        </div> -->
+                      </div>
+                    </div>
+                  </div>
                 </div>
               </div>
             </div>
@@ -137,7 +143,23 @@
                   </div>
                 </div>
                 <div v-else>
-                  Followers {{ formattedFollowersCount }}
+                  <div v-for="followers in myfollowers" :key="followers.id" class="mx-4">
+                    <div class="w-full bg-gray-50 rounded-lg shadow mb-4">
+                      <div class="flex flex-col items-center p-4">
+                        <div v-if="followers.avatar.path && followers.avatar.path != 'unknown.jpg'">
+                          <img :src="`/storage/avatars/medium/${followers.avatar.path}`" class="w-24 h-24 mb-3 rounded shadow" alt="user avatar"/>
+                        </div>
+                        <div v-else>
+                          <img src="../../images/paw.png" class="w-24 h-24 mb-3 rounded shadow" alt="user avatar"/>
+                        </div>
+                        <a :href="`/account/${followers.followersUser.userId}`" class="text-gray-600 hover:text-orange-400 hover:underline hover:underline-offset-1" :title="`Following ${followers.followersUser.name}`"><h5 class="mb-1 text-xl font-medium text-gray-900">{{ followers.followersUser.name }}</h5></a>
+                        <!-- <div class="flex mt-4 md:mt-6">
+                          <a href="#" class="inline-flex items-center px-4 py-2 text-sm font-medium text-center text-white bg-blue-700 rounded-lg hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300">Add friend</a>
+                          <a href="#" class="py-2 px-4 ms-2 text-sm font-medium text-gray-900 focus:outline-none bg-white rounded-lg border border-gray-200 hover:bg-gray-100 hover:text-blue-700 focus:z-10 focus:ring-4 focus:ring-gray-100">Message</a>
+                        </div> -->
+                      </div>
+                    </div>
+                  </div>
                 </div>
               </div>
             </div>
@@ -186,15 +208,15 @@
 
   import { ref, onMounted, defineProps, computed } from "vue";
 
-  const props = defineProps(["users", "avatar", "follow", "followerscount", "followingcount", "postcount", "myposts", "myreplies", "mygalleries", "mybank"]);
-  
+  const props = defineProps(["users", "userAvatar", "follow", "myfollowers", "followerscount", "myfollowing", "followingcount", "postcount", "myposts", "myreplies", "mygalleries", "mybank"]);
+
   let isLoading = ref(false);
   let activeTab = ref("posts");
-  let accountBiography = ref([]);
-  let accountPosts = ref([]);
-  let accountFollowing = ref([]);
-  let accountFollowers = ref([]);
-  let accountBank = ref([]);
+  // let accountBiography = ref([]);
+  // let accountPosts = ref([]);
+  // let accountFollowing = ref([]);
+  // let accountFollowers = ref([]);
+  // let accountBank = ref([]);
 
   const handleFeedRefresh = async () => {
     console.log("refresh");
@@ -223,9 +245,9 @@
     window.location.href = `/message/${addresseeId}`;
   };
 
-  const handleFollowing = async (following) => {
+  const handleFollowing = async (payload) => {
     try {
-      const response = await axios.post(route("account.follow"), { following });
+      const response = await axios.post(route("account.follow"), { payload });
     } catch (error) {
       console.error("Error:", error);
     }

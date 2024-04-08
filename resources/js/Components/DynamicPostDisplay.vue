@@ -3,7 +3,12 @@
     <div class="flex flex-col mx-auto p-4 w-full">
       <div class="flex flex-row justify-between">
         <div class="flex flex-row">
-          <div v-if="post.path" class="items-center"><img :src="`/storage/avatars/medium/${post.path}`" class="h-12 w-12 rounded" alt="user avatar"/></div>
+          <div v-if="post.path && post.path != 'unknown.jpg'" class="items-center">
+            <img :src="`/storage/avatars/medium/${post.path}`" class="h-12 w-12 rounded" alt="user avatar"/>
+          </div>
+          <div v-else>
+            <img src="../../images/paw.png" class="h-12 w-12 rounded" alt="user avatar"/>
+          </div>
           <div class="flex items-center"><a :href="`/account/${post.userId}`" class="mx-2">{{ post.name }}</a></div>
         </div>
         <div class="flex items-center"><small class="font-light text-gray-400 text-end mx-4 md:mx-0">{{ formatDate(post.datetime8601) }}</small></div>

@@ -1,6 +1,6 @@
 <template>
   <GuestLayout>
-    <div id="ForgotPassword" class="bg-white min-h-screen border-t-2 border-gray-500">
+    <div class="bg-white min-h-screen">
       <div class="container px-5 py-24 mx-auto">
         <div class="mb-4 text-sm text-gray-600">Forgot your password? No problem. Just let us know your email address and we will email you a password reset link that will allow you to choose a new one.</div>
         <div v-if="status" class="mb-4 font-medium text-sm text-green-600">{{ status }}</div>

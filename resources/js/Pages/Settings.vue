@@ -18,7 +18,12 @@
                   </div>
                   <div v-if="avatar" class="max-w-24 h-auto">
                     <label clas="leading-7 text-sm text-gray-600">Avatar</label>
-                    <img :src="`/storage/avatars/medium/${avatar.path}`" class="rounded-md" alt="user avatar"/>
+                    <div v-if="avatar.path && avatar.path != 'unknown.jpg'" class="items-center">
+                      <img :src="`/storage/avatars/medium/${avatar.path}`" class="h-12 w-12 rounded" alt="user avatar"/>
+                    </div>
+                    <div v-else>
+                      <img src="../../images/paw.png" class="h-12 w-12 rounded" alt="user avatar"/>
+                    </div>
                   </div>
                   <div class="flex flex-col mx-4 my-4 mx-auto">
                     <div class="mb-4">

@@ -27,23 +27,59 @@ class AccountController extends Controller
     if ($userId) {
       $user = User::where("userId", $userId)
         ->where("active", 1)
-        ->first();
-      $avatar = Avatar::where("userId", $userId)
+        ->get();
+      $userAvatar = Avatar::where("userId", $userId)
         ->where("active", 1)
-        ->first();
+        ->get();
       $follow = Follow::where("followee_id", $userId)
         ->where("follower_id", Auth::user()->userId)
-        ->where("active", true)
+        ->where("active", 1)
         ->exists();
+      $myfollowers = [];
+      $followers = Follow::where("followee_id", $userId)
+        ->where("active", 1)
+        ->get();
+      foreach($followers as $item) {
+        $followersUser = User::where("userId", $item->follower_id)
+          ->where("active", 1)
+          ->first();
+        $avatar = Avatar::where("userId", $item->follower_id)
+          ->where("active", 1)
+          ->first();
+        $myfollowers[] = [
+          "followersUser" => $followersUser,
+          "avatar" => $avatar
+        ];
+      }
+      $myfollowing = [];
+      $following = Follow::where("follower_id", $userId)
+        ->where("active", 1)
+        ->get();
+      foreach($following as $item) {
+        $followingUser = User::where("userId", $item->followee_id)
+          ->where("active", 1)
+          ->first();
+        $avatar = Avatar::where("userId", $item->followee_id)
+          ->where("active", 1)
+          ->first();
+        $myfollowing[] = [
+          "followingUser" => $followingUser,
+          "avatar" => $avatar
+        ];
+      }
+      $followerscount = 0;
       $followerscount = Follow::where("followee_id", $userId)
-        ->where("active", true)
+        ->where("active", 1)
         ->count();
+      $followingcount = 0;
       $followingcount = Follow::where("follower_id", $userId)
-        ->where("active", true)
+        ->where("active", 1)
         ->count();
+      $postcount = 0;
       $postcount = Post::where("userId", $userId)
-        ->where("active", true)
+        ->where("active", 1)
         ->count();
+      $myposts = [];
       $myposts = Post::join("users", "posts.userId", "=", "users.userId")
         ->leftJoin("avatars", "users.userId", "=", "avatars.userId")
         ->leftJoin("galleries", "posts.postId", "=", "galleries.postId")
@@ -73,6 +109,7 @@ class AccountController extends Controller
           $post->galleries = null;
         }
       });
+      $myreplies = [];
       $myreplies = Reply::join("users", "replies.userId", "=", "users.userId")
         ->leftJoin("avatars", "users.userId", "=", "avatars.userId")
         ->where("replies.userId", $userId)
@@ -88,7 +125,7 @@ class AccountController extends Controller
       $mybank = [];
       foreach ($banks as $bank) {
         $processedTokens = json_decode($bank->tokenId, true);
-        foreach ($processedTokens as $token) {
+        foreach($processedTokens as $token) {
           $bankForToken = Tokens::where("active", 1)
             ->where("tokenId", $token)
             ->get();
@@ -97,6 +134,7 @@ class AccountController extends Controller
           }
         }
       }
+      $mygalleries = [];
       $mygalleries = Gallery::where("userId", $userId)
         ->where("active", 1)
         ->get();
@@ -104,20 +142,56 @@ class AccountController extends Controller
       $userId = Auth::user()->userId;
       $user = User::where("userId", $userId)
         ->where("active", 1)
-        ->first();
-      $avatar = Avatar::where("userId", $userId)
+        ->get();
+      $userAvatar = Avatar::where("userId", $userId)
         ->where("active", 1)
-        ->first();
+        ->get();
       $follow = null;
+      $myfollowers = [];
+      $followers = Follow::where("followee_id", $userId)
+        ->where("active", 1)
+        ->get();
+      foreach($followers as $item) {
+        $followersUser = User::where("userId", $item->follower_id)
+          ->where("active", 1)
+          ->first();
+        $avatar = Avatar::where("userId", $item->follower_id)
+          ->where("active", 1)
+          ->first();
+        $myfollowers[] = [
+          "followersUser" => $followersUser,
+          "avatar" => $avatar
+        ];
+      }
+      $myfollowing = [];
+      $following = Follow::where("follower_id", $userId)
+        ->where("active", 1)
+        ->get();
+      foreach($following as $item) {
+        $followingUser = User::where("userId", $item->followee_id)
+          ->where("active", 1)
+          ->first();
+        $avatar = Avatar::where("userId", $item->followee_id)
+          ->where("active", 1)
+          ->first();
+        $myfollowing[] = [
+          "followingUser" => $followingUser,
+          "avatar" => $avatar
+        ];
+      }
+      $followerscount = 0;
       $followerscount = Follow::where("followee_id", $userId)
-        ->where("active", true)
+        ->where("active", 1)
         ->count();
+      $followingcount = 0;
       $followingcount = Follow::where("follower_id", $userId)
-        ->where("active", true)
+        ->where("active", 1)
         ->count();
+      $postcount = 0;
       $postcount = Post::where("userId", $userId)
-        ->where("active", true)
+        ->where("active", 1)
         ->count();
+      $myposts = [];
       $myposts = Post::join("users", "posts.userId", "=", "users.userId")
         ->leftJoin("avatars", "users.userId", "=", "avatars.userId")
         ->leftJoin("galleries", "posts.postId", "=", "galleries.postId")
@@ -156,6 +230,7 @@ class AccountController extends Controller
           $post->galleries = null;
         }
       });
+      $myreplies = [];
       $myreplies = Reply::join("users", "replies.userId", "=", "users.userId")
         ->leftJoin("avatars", "users.userId", "=", "avatars.userId")
         ->where("replies.userId", auth()->user()->userId)
@@ -180,14 +255,17 @@ class AccountController extends Controller
           }
         }
       }
+      $mygalleries = [];
       $mygalleries = Gallery::where("userId", auth()->user()->userId)
         ->where("active", 1)
         ->get();
     }
     return Inertia::render("Account", [
       "users" => $user,
-      "avatar" => $avatar,
+      "userAvatar" => $userAvatar,
       "follow" => $follow,
+      "myfollowers" => $myfollowers,
+      "myfollowing" => $myfollowing,
       "followerscount" => $followerscount,
       "followingcount" => $followingcount,
       "postcount" => $postcount,
@@ -202,10 +280,10 @@ class AccountController extends Controller
   public function follow(Request $request)
   {
 
-    $action = $request->input("following");
-    $refererUrl = $request->header("referer");
-    $followee_id = substr($refererUrl, strpos($refererUrl, "/account/") + strlen("/account/"));
-    $follower_id = Auth::user()->userId;
+    $payload = $request->input("payload");
+    $action = $payload[0]["isFollowing"];
+    $followee_id = $payload[0]["followee"]; // The Account to be followed
+    $follower_id = Auth::user()->userId; // the logged in person following
     if ($action === true) {
       $follow = new Follow();
       $follow->followee_id = $followee_id; // The Account to be followed
@@ -216,7 +294,6 @@ class AccountController extends Controller
       ->where("follower_id", $follower_id)
       ->update(["active" => false]);
     }
-
     return response()->json(["things" => $follower_id, "message" => "Followed successfully"]);
 
   }

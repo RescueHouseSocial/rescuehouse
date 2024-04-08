@@ -52,6 +52,10 @@ Route::get("/about", function () {
   return Inertia::render("About");
 });
 
+Route::get("/support", function () {
+  return Inertia::render("Support");
+});
+
 Route::middleware("auth")->group(function () {
 
   Route::get("/feeds", [FeedsController::class, "show"])->name("feeds");

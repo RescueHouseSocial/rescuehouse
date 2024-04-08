@@ -1,26 +1,26 @@
 <template>
-  <footer class="text-gray-600 body-font">
-    <div class="container px-5 py-24 mx-auto">
+  <footer class="text-gray-600 body-font bg-gray-200">
+    <div class="container px-4 py-4 mx-auto">
       <div class="flex flex-wrap md:text-left text-center order-first">
         <div class="lg:w-1/4 md:w-1/2 w-full px-4">
-          <h2 class="title-font font-medium text-gray-900 tracking-widest text-sm mb-3">pages</h2>
+          <!-- <h2 class="title-font font-medium text-gray-900 tracking-widest text-sm mb-3">pages</h2>
           <nav class="list-none mb-10">
             <li>
-              <a href="/about" class="text-gray-600 hover:text-gray-800">About</a>
+              <a href="/about" class="text-gray-600 hover:text-gray-400 hover:underline hover:underline-offset-1">About</a>
             </li>
             <li>
-              <a class="text-gray-600 hover:text-gray-800">Second Link</a>
+              <a href="/register" class="text-gray-600 hover:text-gray-400 hover:underline hover:underline-offset-1">Register</a>
             </li>
             <li>
-              <a class="text-gray-600 hover:text-gray-800">Third Link</a>
+              <a href="/login" class="text-gray-600 hover:text-gray-400 hover:underline hover:underline-offset-1">Login</a>
             </li>
             <li>
-              <a class="text-gray-600 hover:text-gray-800">Fourth Link</a>
+              <a href="/support" class="text-gray-600 hover:text-gray-400 hover:underline hover:underline-offset-1">Support</a>
             </li>
-          </nav>
+          </nav> -->
         </div>
         <div class="lg:w-1/4 md:w-1/2 w-full px-4">
-          <h2 class="title-font font-medium text-gray-900 tracking-widest text-sm mb-3">help</h2>
+          <!-- <h2 class="title-font font-medium text-gray-900 tracking-widest text-sm mb-3">help</h2>
             <nav class="list-none mb-10">
             <li>
               <a class="text-gray-600 hover:text-gray-800">First Link</a>
@@ -34,10 +34,10 @@
             <li>
               <a class="text-gray-600 hover:text-gray-800">Fourth Link</a>
             </li>
-          </nav>
+          </nav> -->
         </div>
         <div class="lg:w-1/4 md:w-1/2 w-full px-4">
-          <h2 class="title-font font-medium text-gray-900 tracking-widest text-sm mb-3">company</h2>
+          <!-- <h2 class="title-font font-medium text-gray-900 tracking-widest text-sm mb-3">company</h2>
           <nav class="list-none mb-10">
             <li>
               <a class="text-gray-600 hover:text-gray-800">First Link</a>
@@ -51,10 +51,25 @@
             <li>
               <a class="text-gray-600 hover:text-gray-800">Fourth Link</a>
             </li>
-          </nav>
+          </nav> -->
         </div>
         <div class="lg:w-1/4 md:w-1/2 w-full px-4">
-          <h2 class="title-font font-medium text-gray-900 tracking-widest text-sm mb-3">subscribe</h2>
+          <h2 class="title-font font-medium text-gray-900 tracking-widest text-sm mb-3">pages</h2>
+          <nav class="list-none">
+            <li>
+              <a href="/about" class="text-gray-600 hover:text-gray-400 hover:underline hover:underline-offset-1">About</a>
+            </li>
+            <li>
+              <a href="/register" class="text-gray-600 hover:text-gray-400 hover:underline hover:underline-offset-1">Register</a>
+            </li>
+            <li>
+              <a href="/login" class="text-gray-600 hover:text-gray-400 hover:underline hover:underline-offset-1">Login</a>
+            </li>
+            <li>
+              <a href="/support" class="text-gray-600 hover:text-gray-400 hover:underline hover:underline-offset-1">Support</a>
+            </li>
+          </nav>
+          <!-- <h2 class="title-font font-medium text-gray-900 tracking-widest text-sm mb-3">subscribe</h2>
           <div class="flex xl:flex-nowrap md:flex-nowrap lg:flex-wrap flex-wrap justify-center items-end md:justify-start">
             <div class="relative w-40 sm:w-auto xl:mr-4 lg:mr-0 sm:mr-4 mr-2">
               <label for="footer-field" class="leading-7 text-sm text-gray-600">Email Address</label>
@@ -62,11 +77,11 @@
             </div>
             <button class="flex mt-4 text-white bg-gray-500 border-0 py-2 px-8 focus:outline-none hover:bg-gray-600 rounded text-lg">Button</button>
           </div>
-          <p class="text-gray-500 text-sm mt-2 md:text-left text-center">no spam guarantee</p>
+          <p class="text-gray-500 text-sm mt-2 md:text-left text-center">no spam guarantee</p> -->
         </div>
       </div>
     </div>
-    <div class="bg-gray-100">
+    <div class="bg-white">
       <div class="container px-5 py-6 mx-auto flex items-center sm:flex-row flex-col">
         <a class="flex title-font font-medium items-center md:justify-start justify-center text-gray-900">
           <img src="../../images/paw.png"/>

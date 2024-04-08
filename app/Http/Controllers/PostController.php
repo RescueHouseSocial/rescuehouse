@@ -38,8 +38,10 @@ class PostController extends Controller
         ->where("users.active", 1)
         ->select("posts.*", "users.name", "avatars.path")
         ->first();
-      $galleryItems = Gallery::whereIn("galleryId", $posts->gallery)->get();
-      $posts->galleries = $galleryItems;
+      if(isset($posts->gallery) && !empty($posts->gallery)) {
+        $galleryItems = Gallery::where("galleryId", $posts->gallery)->get();
+        $posts->galleries = $galleryItems;
+      }
       $replies = Reply::join("users", "replies.userId", "=", "users.userId")
         ->leftJoin("avatars", "users.userId", "=", "avatars.userId")
         ->where("replies.postId", $postId)
@@ -52,17 +54,23 @@ class PostController extends Controller
       $repliescount = Reply::where("postId", $postId)
         ->where("active", 1)
         ->count();
-      $posts->repliescount = $repliescount;
+      if(isset($repliescount) && !empty($repliescount)) {
+        $posts->repliescount = $repliescount;
+      }
       $favorites = Favorite::where("postId", $postId)
         ->where("userId", auth()->user()->userId)
         ->where("active", 1)
         ->get();
-      $posts->favorites = $favorites;
+      if(!$favorites->isEmpty()) {
+        $posts->favorites = $favorites;
+      }
       $favoritescount = Favorite::where("postId", $postId)
         ->where("userId", auth()->user()->userId)
         ->where("active", 1)
         ->count();
-      $posts->favoritescount = $favoritescount;
+      if(isset($favoritescount) && !empty($favoritescount)) {
+        $posts->favoritescount = $favoritescount;
+      }
       return Inertia::render("Single", [
         "posts" => $posts,
         "users" => $relatedUsers,
