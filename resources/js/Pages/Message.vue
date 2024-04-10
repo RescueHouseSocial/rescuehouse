@@ -33,7 +33,7 @@
                       <img :src="`/storage/avatars/medium/${item.path}`" class="h-8 w-8 rounded border-2 border-transparent" alt="user avatar"/>
                     </div>
                     <div v-else>
-                      <img src="../../../images/paw.png" class="h-8 w-8 rounded border-2 border-transparent" alt="user avatar"/>
+                      <img src="../../images/paw.png" class="h-8 w-8 rounded border-2 border-transparent" alt="user avatar"/>
                     </div>
                     <div class="flex flex-col gap-1 w-full max-w-[320px]">
                       <div class="flex items-center space-x-2">

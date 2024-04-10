@@ -23,20 +23,21 @@
                       <div>{{ item.name }}</div>
                     </div>
                   </div>
-                  <div>{{ displayDateTime }}</div>
                 </div>
                 <div class="max-h-96 min-h-96 w-full border-2 border-gray-200 bg-white"></div>
                 <div>
                   <form @submit.prevent="handleMessageSubmit" @input="updateCharacterCount" class="flex my-4">
-                    <textarea v-model="form.body" class="h-12 w-full"></textarea>
-                    <button class="flex text-white bg-gray-500 border-0 py-2 px-8 focus:outline-none hover:bg-gray-600 rounded-tr rounded-br text-lg" type="submit">
-                      <span v-if="isLoading">
-                        <i class="fa-solid fa-spinner fa-fw fa-spin"></i>
-                      </span>
-                      <span v-else>
-                        Send
-                      </span>
-                    </button>
+                    <div class="flex flex-row w-full">
+                      <textarea v-model="form.body" class="h-12 w-full"></textarea>
+                      <button class="flex text-white bg-gray-500 border-0 py-2 px-8 focus:outline-none hover:bg-gray-600 rounded-tr rounded-br text-lg" type="submit">
+                        <span v-if="isLoading">
+                          <i class="fa-solid fa-spinner fa-fw fa-spin"></i>
+                        </span>
+                        <span v-else>
+                          Send
+                        </span>
+                      </button>
+                    </div>
                   </form>
                   <div class="text-sm text-gray-500 mt-2">{{ characterCount }}/60,000 characters</div>
                 </div>
@@ -68,13 +69,13 @@
     body: "",
   });
 
-  const displayDateTime = ref(DateTime.now().toLocaleString(DateTime.DATETIME_FULL));
+  // const displayDateTime = ref(DateTime.now().toLocaleString(DateTime.DATETIME_FULL));
 
-  onMounted(() => {
-    setInterval(() => {
-      displayDateTime.value = DateTime.now().toLocaleString(DateTime.DATETIME_FULL);
-    }, 1000);
-  });
+  // onMounted(() => {
+  //   setInterval(() => {
+  //     displayDateTime.value = DateTime.now().toLocaleString(DateTime.DATETIME_FULL);
+  //   }, 1000);
+  // });
 
   const handleMessageSubmit = async () => {
     isLoading.value = true;

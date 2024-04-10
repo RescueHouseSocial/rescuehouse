@@ -36,7 +36,7 @@
 
 <script setup>
 
-  import Footer from '@/Components/Footer.vue';
+  import Footer from "@/Components/Footer.vue";
 
 </script>
 

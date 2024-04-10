@@ -7,7 +7,7 @@ use Inertia\Inertia;
 use Inertia\Response;
 use Ramsey\Uuid\Uuid;
 use Illuminate\Support\Facades\Auth;
-// use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\DB;
 
 use App\Events\NotifyEvent;
 
@@ -41,7 +41,7 @@ class MessageController extends Controller
     ->where("avatars.active", 1)
     ->where("messages.active", 1)
     ->where("users.active", 1)
-    ->orderBy("updated_at", "asc")
+    ->orderBy("messages.updated_at", "asc")
     ->get();
 
     return response()->json(["messages" => $messages, "message" => "Fresh Messages for you successfully"]);
@@ -96,10 +96,58 @@ class MessageController extends Controller
   {
 
     $userId = Auth::user()->userId;
-    
+
+    $latestMessages = DB::table('messages')
+      ->select('threadId', DB::raw('MAX(created_at) as max_created_at'))
+      ->where('messengerId', $userId)
+      ->groupBy('threadId');
+
+    $messages = DB::table('messages')
+      ->joinSub($latestMessages, 'latest_messages', function ($join) {
+        $join->on('messages.threadId', '=', 'latest_messages.threadId')
+          ->on('messages.created_at', '=', 'latest_messages.max_created_at');
+      })
+    ->get();
+
+    // $otherMessengerIds = Message::join('messages as m2', 'messages.threadId', '=', 'm2.threadId')
+    //   ->where('messages.messengerId', $userId)
+    //   ->where('messages.messengerId', '!=', 'm2.messengerId')
+    //   ->groupBy('m2.messengerId')
+    //   // ->distinct()
+    //   ->pluck('m2.messengerId');
+
+    // $otherMessengerIds = $otherMessengerIds->reject(function ($value) use ($userId) {
+    //   return $value == $userId;
+    // });
+
+    $messegerList = [];
+    foreach($messages as $message ) {
+      // echo "<pre>";
+      // print_r($message->threadId);
+      $lists = Message::join("users", "messages.messengerId", "=", "users.userId")
+        ->leftJoin("avatars", "users.userId", "=", "avatars.userId")
+        ->select("messages.threadId", "messages.body", "users.name", "avatars.path")
+        ->where("messages.threadId", $message->threadId)
+        ->where("avatars.active", 1)
+        ->where("messages.active", 1)
+        ->where("users.active", 1)
+        ->limit(1)
+        ->orderBy("messages.updated_at", "asc")
+        ->get();
+      $messegerList[] = $lists;
+      // echo "<pre>";
+      // print_r($lists);
+    }
+
+    // echo "<pre>";
+    // print_r($messegerList);
+
+    // dd("die");
+
     return Inertia::render("Messaging/Home", [
       "userId" => $userId,
       "threadId" => $threadId,
+      "lists" => $messegerList,
     ]);
 
   }
